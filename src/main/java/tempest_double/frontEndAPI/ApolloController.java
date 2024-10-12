@@ -11,4 +11,9 @@ public class ApolloController {
         model.addAttribute("face","лиц");
         return "ghost.html";
     }
+    @GetMapping("/angelo")
+    public String no(Model model){
+        model.addAttribute("face","ciao");
+        return "ghost.html";
+    }
 }
