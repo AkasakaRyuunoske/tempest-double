@@ -16,13 +16,13 @@ public class HomeController {
 
     @GetMapping("/Home")
     public String home(Model model) {
-        model.addAttribute("currentValue", homeExample.getCurrentValue());
+        model.addAttribute("currentValue", homeExample.getCurrentEmoji());
         return "home";
     }
 
-    @GetMapping("/currentValue")
+    @GetMapping("/currentEmoji")
     @ResponseBody
-    public String getCurrentValue() {
-        return String.valueOf(homeExample.getCurrentValue());
+    public String getCurrentEmoji() {
+        return homeExample.getCurrentEmoji();
     }
 }
