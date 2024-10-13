@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home</title>
+    <script src="https://unpkg.com/htmx.org@2.0.3"
+            integrity="sha384-0895/pl2MU10Hqc6jd4RvrthNlDiE9U1tWmX7WRESftEDRosgxNsQG/Ze9YMRzHq"
+            crossorigin="anonymous"></script>
+</head>
+<body>
+<h1>Enter a word</h1>
+<form>
+    <label for="word1">Word</label>
+    <input type="text" id="word1" name="word1">
+    <button type="submit">Submit where? Dont know...</button>
+    <button type="reset">Reset</button>
+</form>
+
+<span hx-get="/currentValue"
+      hx-trigger="every 10ms"
+      hx-target="this"
+      hx-swap="innerHTML">
+    ᓚᘏᗢ
+</span>
+
+
+</body>
+</html>
