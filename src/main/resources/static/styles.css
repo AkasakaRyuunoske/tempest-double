@@ -1,3 +1,161 @@
-h1 {
-    color: blue
+/* Stile generale */
+body {
+    font-family: Montserrat, sans-serif;
+    color: #333;
+    background-color: #f4f4f9; /* Colore di sfondo originale */
+    margin: 0;
+    padding-top: 60px; /* Margine superiore per evitare sovrapposizioni con l'intestazione */
+    transition: padding 0.3s; /* Aggiungi una transizione per un effetto fluido */
+}
+
+/* Header fissa */
+.header {
+    background-color: #4a90e2;
+    padding: 10px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    position: fixed; /* Fissa l'intestazione */
+    width: 100%; /* Assicura che l'intestazione occupi tutta la larghezza */
+    top: 0; /* Posiziona l'intestazione in alto */
+    z-index: 1000; /* Porta l'intestazione in primo piano */
+}
+
+/* Sezione interna */
+.content {
+    background-color: transparent; /* Rimuovi il colore di sfondo */
+    padding: 20px; /* Spazio interno */
+    transition: padding-left 0.5s ease; /* Transizione per il padding quando il menu è aperto */
+}
+
+/* Altri stili */
+h1, h2, h3, h4 {
+    color: #2b3e50;
+}
+
+.header h1 {
+    color: #fff;
+    margin: 0; /* Mantiene l'allineamento */
+    padding-left: 10px; /* Aggiungi un po' di spazio tra il logo e il titolo, se necessario */
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    height: 40px; /* Imposta l'altezza del logo */
+    margin-right: 15px;
+    margin-left: 15px;
+}
+
+/* Pulsante menu */
+.menu-button {
+    background: none;
+    border: none;
+    color: white;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.dropdown-menu {
+    position: absolute;
+    top: 60px; /* Sotto l'intestazione */
+    left: 0;
+    background-color: #ffffff; /* Colore bianco */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none; /* Nascondi il menu inizialmente */
+    z-index: 2000; /* Aumenta per sovrapporre agli altri elementi */
+}
+
+/* Rendi visibile il menu quando ha la classe `show` */
+.dropdown-menu.show {
+    display: block;
+}
+
+.dropdown-menu ul {
+    list-style: none;
+    padding: 10px;
+    margin: 0; /* Rimosso margine */
+}
+
+.dropdown-menu li {
+    margin: 15px 0;
+}
+
+.dropdown-menu a {
+    text-decoration: none;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+.dropdown-menu a:hover {
+    color: #4a90e2; /* Cambia colore al passaggio del mouse */
+}
+
+/* Sezioni */
+section {
+    padding: 40px;
+    max-width: 800px;
+    margin: auto;
+}
+
+.features-section, .product-scope, .open-source {
+    background-color: #fff;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    margin-bottom: 30px;
+    padding: 20px;
+}
+
+h3 {
+    border-bottom: 2px solid #4a90e2; /* Sottolinea le intestazioni delle sezioni */
+    padding-bottom: 10px;
+}
+
+.image-placeholder {
+    height: 150px;
+    background-color: #e0e0e0;
+    color: #888;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 10px;
+    border-radius: 8px;
+    font-style: italic;
+}
+
+/* Animazioni */
+.animate-fade-in {
+    opacity: 0;
+    animation: fadeIn 1s ease-in forwards;
+}
+
+.animate-slide-up {
+    opacity: 0;
+    transform: translateY(20px);
+    animation: slideUp 1s ease-in forwards;
+}
+
+.animate-slide-in-left {
+    opacity: 0;
+    transform: translateX(-30px); /* Partenza da sinistra */
+    transition: transform 0.5s, opacity 0.5s;
+}
+
+.animate-slide-in-left.show {
+    opacity: 1;
+    transform: translateX(0); /* Fine animazione */
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
 }
