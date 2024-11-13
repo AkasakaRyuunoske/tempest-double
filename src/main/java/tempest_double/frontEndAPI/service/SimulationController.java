@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 @Controller
 public class SimulationController {
 
-    @GetMapping("/Simulation")
-    public String assets(Model model) {
+    @GetMapping("/simulation")
+    public String assets() {
         return "SimulationPage/simulation";
     }
 }

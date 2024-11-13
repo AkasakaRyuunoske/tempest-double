@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 @Controller
 public class AssetsController {
 
-    @GetMapping("/Assets")
-    public String assets(Model model) {
+    @GetMapping("/assets")
+    public String assets() {
         return "AssetsPage/assets";
     }
 }

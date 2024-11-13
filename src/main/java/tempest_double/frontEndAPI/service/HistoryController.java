@@ -6,8 +6,8 @@ import org.springframework.ui.Model;
 @Controller
 public class HistoryController {
 
-    @GetMapping("/History")
-    public String assets(Model model) {
+    @GetMapping("/history")
+    public String assets() {
         return "HistoryPage/history";
     }
 }

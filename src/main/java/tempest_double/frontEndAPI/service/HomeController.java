@@ -13,8 +13,8 @@ public class HomeController {
         this.homeExample = homeExample;
     }
 
-    @GetMapping("/Home")
-    public String home(Model model) {
+    @GetMapping("/home")
+    public String home() {
         return "HomePage/home";
     }
 }
