@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  mysql-db:
+  tempest-double-mysql:
     image: mysql:8.0
     container_name: tempest-double-mysql
     environment:
