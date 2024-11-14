@@ -4,12 +4,12 @@
 }
 
 @font-face {
-    font-family: Blinker;
-    src: url("static/Assets/font/Blinker-Black.ttf");
+    font-family: "Blinker";
+    src: url("/static/Assets/font/Blinker.ttf");
 }
 
 body {
-    font-family: "Blinker", sans-serif;
+    font-family: "Blinker", monospace;
     background-color: #efeffd;
     display: flex;
     flex-direction: column;
