@@ -2,22 +2,23 @@ header {
     background: #393E46;
 }
 
-.top-header{
+a {
+    text-decoration: none;
+    text-align: center;
+    color: #0B1215FF;
+    font-size: 1.2rem;
+}
+
+.top-header {
     width: -moz-available;
     width: -webkit-fill-available;
-    padding: 0.5rem;
+    padding: 0.5rem 1rem;
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     align-items: center;
     justify-content: flex-start;
     gap: 1rem;
-
-    a {
-        font-size: 1.2rem;
-        text-decoration: none;
-        color: #0B1215FF;
-    }
 }
 
 .bottom-header {
@@ -28,15 +29,9 @@ header {
 
     a {
         display: flex;
-        align-items: center;
-        justify-content: center;
-        align-content: center;
         flex-wrap: wrap;
-        flex-direction: row;
+        align-content: center;
         padding: 0.5rem;
-        font-size: 1rem;
-        text-decoration: none;
-        color: #0B1215FF;
         border-bottom-style: solid;
         border-bottom-color: transparent;
     }
@@ -49,16 +44,17 @@ header {
 }
 
 .logo-image {
-    border-radius: .5rem;
+    border-radius: 0.5rem;
     height: auto;
     max-width: 2rem;
-}
-
-.project-name {
-    font-size: 1.2rem;
 }
 
 .material-icons {
     color: #0B1215FF;
 }
 
+@media (max-width: 420px) {
+    a {
+        font-size: 1rem;
+    }
+}
