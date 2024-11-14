@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="header">
+
+    <head>
+        <meta charset="UTF-8">
+        <title>Header</title>
+        <link rel="stylesheet" href="/AssetsPage/css/header.css">
+        <link rel="stylesheet" href="/AssetsPage/css/styles1.css">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    </head>
+
+    <body>
+
+    <header>
+
+        <div class="menu">
+            <div class="menu-button">
+                <button class="menu-button" aria-label="Toggle menu">
+                    <i class="material-icons">&#xe5d2;</i>
+                </button>
+            </div>
+
+            <nav>
+                <div>
+                    <a href="#home">Home</a>
+                </div>
+
+                <div>
+                    <a href="#assets">Assets</a>
+                </div>
+
+                <div>
+                    <a href="#simulation">Simulation</a>
+                </div>
+
+                <div>
+                    <a href="#history">History</a>
+                </div>
+            </nav>
+        </div>
+
+        <div>
+            <img id="logo-image" src="/AssetsPage/img/logo.png" alt="Logo">
+        </div>
+
+        <div class="project-name">
+            <h1 th:text="${@environment.getProperty('spring.application.name')}"></h1>
+        </div>
+
+    </header>
+
+    <script src="/AssetsPage/js/header.js"></script>
+    </body>
+
+</th:block>
+</html>

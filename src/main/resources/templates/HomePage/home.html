@@ -3,35 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <title th:text="${@environment.getProperty('spring.application.name')}">Project Name</title>
-    <link rel="stylesheet" href="HomePage/css/styles.css">
+
+<!--    <link rel="stylesheet" href="HomePage/css/styles.css">-->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
-<!-- Header (buttons, logo and project name) -->
-<header class="header">
-    <button class="menu-button" onclick="toggleMenu()">
-        &#9776; <!-- menu icon -->
-    </button>
-    <div class="logo-container">
-        <img src="HomePage/img/logo.png" alt="Logo" class="logo" style="border-radius: 30%">
-        <h1 th:text="${@environment.getProperty('spring.application.name')}"></h1>
-    </div>
-</header>
+<th:block th:replace="~{AssetsPage/header :: header}"></th:block>
 
-<!-- Menu (change with real page names)-->
-<nav id="dropdown-menu" class="dropdown-menu">
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Assets</a></li>
-        <li><a href="#">Simulation</a></li>
-        <li><a href="#">History</a></li>
-    </ul>
-</nav>
-
-<!-- welcome section -->
 <div class="content">
     <h1 class="animate-slide-in-left">Home</h1>
 
@@ -93,7 +74,10 @@
         sviluppato senza costi aggiuntivi. Questo approccio ci consente di mantenere il software accessibile e in
         continuo miglioramento, favorendo l’innovazione e l'uso in ambienti professionali ed educativi.</p>
 
-<script src="HomePage/js/script.js"></script>
 </div>
+
 </body>
+
+<script src="HomePage/js/script.js"></script>
+
 </html>

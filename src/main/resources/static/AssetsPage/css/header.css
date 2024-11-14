@@ -1,0 +1,59 @@
+header {
+    background: #393E46;
+    padding: 0.9rem;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 1rem;
+}
+
+nav {
+    display: flex;
+    width: 100%;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+
+.menu-button {
+    display: flex;
+    justify-content: center;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+nav {
+    display: none;
+}
+
+nav.show {
+    background: #393E46;
+    display: flex;
+    position: fixed;
+    top: 5rem;
+    left: 0;
+    max-width: 20%;
+    gap: 1rem;
+    padding: 1rem;
+
+    a {
+        font-size: 1.4rem;
+        text-decoration: none;
+        color: #0B1215FF;
+    }
+}
+
+#logo-image {
+    object-fit: cover;
+    border-radius: .5rem;
+    height: auto;
+    max-width: 3rem;
+}
+
+.project-name {
+    font-size: 0.9rem;
+
+}

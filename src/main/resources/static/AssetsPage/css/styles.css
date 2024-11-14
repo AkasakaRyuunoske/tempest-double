@@ -2,14 +2,11 @@
 body {
     font-family: Montserrat, sans-serif;
     color: #2b3e50;
-    background-color: #efeffd; /* original background color */
+    background-color: #efeffd;
     margin: 0;
-    padding-top: 60px; /* superior margin to avoid going on header */
-    transition: padding 0.3s; /* transition for a smoother effect */
 }
 
-/* fixed header */
-.header {
+header {
     background: linear-gradient(to bottom, #4a5b7e, #5aabf5);
     padding: 10px;
     text-align: left;
