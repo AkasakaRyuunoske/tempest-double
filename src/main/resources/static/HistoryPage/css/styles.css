@@ -4,7 +4,7 @@ body {
     color: #2b3e50;
     background-color: #efeffd; /* original background color */
     margin: 0;
-    padding-top: 60px; /* superior margin to avoid going on header */
+    padding-top: 80px; /* superior margin to avoid going on header */
     transition: padding 0.3s; /* transition for a smoother effect */
 }
 
@@ -30,45 +30,7 @@ body {
     transition: padding-left 0.5s ease; /* transition for padding */
 }
 
-.pagename {
-    background-color: #efeffd;
-    padding-left: 2%;
-    padding-right: 2%;
-    transition: padding-left 0.5s ease;
-}
-
-.pagename h1 {
-    color: #2b3e50;
-    font-size: 40px;
-    border-bottom: 2px solid #5aabf5;
-    padding-bottom: 10px;
-}
-
 /* other styles */
-h2 {
-    color: #2b3e50;
-    font-size: 32px;
-}
-
-h3 {
-    color: #2b3e50;
-    font-size: 26px;
-    line-height: 1.8;
-    border-bottom: 2px solid #5aabf5;
-    padding-bottom: 10px;
-}
-
-h4 {
-    color: #2b3e50;
-    font-size: 22px;
-}
-
-p {
-    color: #000000;
-    line-height: 1.6;
-    font-size: 18px;
-}
-
 .header h1 {
     color: #f4f4f9;
     margin: 0;
@@ -174,10 +136,12 @@ p {
     color: #2b3e50;
     font-size: 24px;
     margin-top: 0;
+    border-bottom: 2px solid #5aabf5;
+    line-height: 1.8;
 }
 
 .session-card p {
-    margin: 5px 0;
+    margin: 10px 0;
     color: #2b3e50;
 }
 
@@ -196,8 +160,18 @@ p {
     text-align: center;
 }
 
-/* responsiveness of menu on mobile devices */
+/* responsiveness on mobile devices */
 @media (max-width: 768px) {
+    .content {
+        padding-left: 2%; /* internal space */
+        padding-right: 2%;
+    }
+
+    /* other styles */
+    .header h1 {
+        font-size: 20px;
+    }
+
     .dropdown-menu {
         width: 100%;
         padding-top: 20px;
@@ -219,6 +193,24 @@ p {
     .dropdown-menu a {
         padding: 15px 0;
         font-size: 18px;
+    }
+
+    .session-card h3 {
+        font-size: 20px;
+    }
+
+    .session-card p {
+        font-size: 14px;
+        line-height: 1.4;
+    }
+
+    .card-content {
+        display: grid;
+    }
+
+    .durata, .asset, .esito {
+        text-align: left;
+        margin-bottom: -12px;
     }
 }
 
