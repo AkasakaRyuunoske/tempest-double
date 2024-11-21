@@ -7,6 +7,11 @@ a {
     text-align: center;
     color: #0B1215FF;
     font-size: 1.2rem;
+    transition: all 0.7s ease;
+}
+
+.project-name {
+    font-size: 1.4rem;
 }
 
 .top-header {
