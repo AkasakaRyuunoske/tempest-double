@@ -1,10 +1,8 @@
 package tempest_double.entity.Asset;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import tempest_double.entity.JsonConverter;
 
 import java.util.Map;
@@ -18,6 +16,7 @@ import java.util.Map;
 public class Asset {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
     private int id;
 
     @Column(nullable = false)
@@ -32,4 +31,9 @@ public class Asset {
 
     @Column(nullable = false)
     private String role;
+
+    @Override
+    public String toString(){
+        return "{'id':" + id + ", 'type':'" + type + "', 'configuration':'" + configuration + "', 'name':'" + name + "', 'role': '" + role + "'}";
+    }
 }
