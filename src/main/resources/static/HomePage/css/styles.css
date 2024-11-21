@@ -146,6 +146,22 @@ p {
     transform: scaleX(1);
 }
 
+.img-responsive {
+    width: 100%;
+    height: auto;
+    display: block;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.img-scaled {
+    width: 60%;
+}
+
+.img-full {
+    width: 100%;
+}
+
 /* responsiveness on mobile devices */
 @media (max-width: 768px) {
     .content {
@@ -177,8 +193,21 @@ p {
         font-size: 14px;
     }
 
+    .logo {
+        margin-right: 0;
+        margin-left: 5px;
+    }
+
     .header h1 {
         font-size: 20px;
+    }
+
+    .img-responsive {
+        border-radius: 6px;
+    }
+
+    .img-scaled {
+        width: 80%;
     }
 
     .dropdown-menu {
@@ -202,6 +231,12 @@ p {
     .dropdown-menu a {
         padding: 15px 0;
         font-size: 18px;
+    }
+}
+
+@media (max-width: 470px) {
+    .img-scaled {
+        width: 100%;
     }
 }
 
