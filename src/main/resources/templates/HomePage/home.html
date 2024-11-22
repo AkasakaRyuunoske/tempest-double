@@ -12,28 +12,15 @@
 
 <!-- Header (buttons, logo and project name) -->
 <header class="header">
-    <button class="menu-button" onclick="toggleMenu()">
-        &#9776; <!-- menu icon -->
-    </button>
     <div class="logo-container">
         <img src="HomePage/img/logo.png" alt="Logo" class="logo" style="border-radius: 30%">
         <h1 th:text="${@environment.getProperty('spring.application.name')}"></h1>
     </div>
 </header>
 
-<!-- Menu (change with real page names)-->
-<nav id="dropdown-menu" class="dropdown-menu">
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Assets</a></li>
-        <li><a href="#">Simulation</a></li>
-        <li><a href="#">History</a></li>
-    </ul>
-</nav>
-
-<!-- welcome section -->
 <div class="content">
 
+    <!-- welcome section -->
     <h2 class="animate-slide-in-left">Benvenuti nel nostro portale di simulazione avanzata!</h2>
     <p class="animate-slide-in-left">Il nostro software offre una piattaforma innovativa e intuitiva per simulare e
         monitorare il funzionamento di vari asset, connettendo dispositivi produttori e consumatori di energia in un
@@ -77,7 +64,14 @@
     <p class="animate-slide-in-left">Simulando il comportamento di dispositivi domestici intelligenti, il software
         consente agli utenti di esplorare scenari che aumentano il comfort abitativo e riducono il consumo energetico
         nelle abitazioni, come illuminazione intelligente e sistemi di riscaldamento/raffreddamento efficienti.</p>
-    <img src="HomePage/img/Smart-Home.jpg" alt="Smart Home" class="animate-slide-in-left img-responsive img-scaled">
+    <img src="HomePage/img/Smart-Home.jpg" alt="Smart Home" class="img-responsive img-scaled" id="smart-home-img">
+
+    <div id="popup" class="popup hidden">
+        <div id="popup-content" class="popup-content">
+            <h3 id="popup-title">Dettagli</h3>
+            <p id="popup-description">Informazioni su cosa rappresenta l'icona</p>
+        </div>
+    </div>
 
     <h4 class="animate-slide-in-left">Education e Training</h4>
     <p class="animate-slide-in-left">Il nostro software rappresenta uno strumento didattico avanzato e user-friendly
