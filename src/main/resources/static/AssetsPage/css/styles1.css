@@ -1,0 +1,22 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+@font-face {
+    font-family: Blinker;
+    src: url("static/Assets/font/Blinker-Black.ttf");
+}
+
+body {
+    font-family: "Blinker", sans-serif;
+    background-color: #efeffd;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+main{
+    flex: 1;
+}
+
