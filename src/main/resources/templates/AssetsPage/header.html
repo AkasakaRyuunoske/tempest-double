@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="header">
+    <head>
+        <meta charset="UTF-8">
+        <title>Header</title>
+        <link rel="stylesheet" href="/AssetsPage/css/header.css">
+        <link rel="stylesheet" href="/AssetsPage/css/styles1.css">
+    </head>
+
+    <body>
+    <header>
+        <div class="logo-content">
+            <img class="logo-image" src="/AssetsPage/img/logo.png" alt="Logo">
+            <a href="/home"
+               th:text="${@environment.getProperty('spring.application.name')}" class="project-name"></a>
+        </div>
+
+        <nav class="bottom-header">
+            <a href="/home">Home</a>
+            <a href="/assets">Assets & Topologies</a>
+            <a href="/simulation">Simulation</a>
+            <a href="/history">History</a>
+        </nav>
+    </header>
+    </body>
+</th:block>
+</html>
