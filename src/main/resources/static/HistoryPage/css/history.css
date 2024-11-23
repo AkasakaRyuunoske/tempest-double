@@ -4,7 +4,7 @@ body {
     color: #2b3e50;
     background-color: #efeffd; /* original background color */
     margin: 0;
-    padding-top: 60px; /* superior margin to avoid going on header */
+    padding-top: 80px; /* superior margin to avoid going on header */
     transition: padding 0.3s; /* transition for a smoother effect */
 }
 
@@ -22,42 +22,19 @@ body {
     z-index: 1000; /* header is pinned */
 }
 
+/* internal section */
+.content {
+    background-color: #efeffd;
+    padding-left: 5%; /* internal space */
+    padding-right: 5%;
+    transition: padding-left 0.5s ease; /* transition for padding */
+}
+
+/* other styles */
 .header h1 {
     color: #f4f4f9;
     margin: 0;
     padding-left: 10px;
-}
-
-/* internal section */
-.content {
-    background-color: #efeffd;
-    padding-left: 12%; /* internal space */
-    padding-right: 12%;
-    transition: padding-left 0.5s ease; /* transition for padding */
-}
-
-h2 {
-    color: #2b3e50;
-    font-size: 32px;
-}
-
-h3 {
-    color: #2b3e50;
-    font-size: 26px;
-    line-height: 1.8;
-    border-bottom: 2px solid #5aabf5;
-    padding-bottom: 10px;
-}
-
-h4 {
-    color: #2b3e50;
-    font-size: 22px;
-}
-
-p {
-    color: #000000;
-    line-height: 1.6;
-    font-size: 18px;
 }
 
 .logo-container {
@@ -71,62 +48,41 @@ p {
     margin-left: 15px;
 }
 
-/* Controls the size of the images on different screen sizes */
-.img-responsive {
-    width: 100%;
-    height: auto;
-    display: block;
+.session-card {
+    background-color: #ffffff;
     border-radius: 10px;
-    overflow: hidden;
-}
-
-.img-scaled {
-    width: 60%;
-}
-
-.img-full {
-    width: 100%;
-}
-
-/* Popup Style */
-.popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.3);
-    justify-content: center;
-    align-items: center;
-    z-index: 1000;
-    display: none;
-}
-
-.popup.show {
-    display: flex;
-}
-
-.popup-content {
-    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 20px;
-    border-radius: 8px;
-    width: 300px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.session-card h3 {
+    color: #2b3e50;
+    font-size: 24px;
+    margin-top: 0;
+    border-bottom: 2px solid #5aabf5;
+    line-height: 1.8;
+}
+
+.session-card p {
+    margin: 10px 0;
+    color: #2b3e50;
+}
+
+.session-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.card-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.durata, .asset, .esito {
     text-align: center;
-    position: absolute;
-    opacity: 0;
-    transition: opacity 1s ease, transform 1s ease;
-    transform: scale(0.9);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-}
-
-.popup.show .popup-content {
-    opacity: 1;
-    transform: scale(1);
-}
-
-.popup-content h3 {
-    font-size: 22px;
-    line-height: 1.4;
 }
 
 /* transitions */
@@ -170,59 +126,26 @@ p {
     }
 
     /* other styles */
-    .content h1 {
-        font-size: 25px;
-        line-height: 1.6;
-    }
-
-    h2 {
-        font-size: 22px;
-    }
-
-    h3 {
-        font-size: 18px;
-        line-height: 1.6;
-    }
-
-    h4 {
-        font-size: 16px;
-    }
-
-    p {
-        line-height: 1.5;
-        font-size: 14px;
-    }
-
-    .logo {
-        margin-right: 0;
-        margin-left: 5px;
-    }
-
     .header h1 {
         font-size: 20px;
     }
 
-    .img-responsive {
-        border-radius: 6px;
+    .session-card h3 {
+        font-size: 20px;
     }
 
-    .img-scaled {
-        width: 80%;
+    .session-card p {
+        font-size: 14px;
+        line-height: 1.4;
     }
 
-    .popup-content {
-        width: 50%;
+    .card-content {
+        display: grid;
     }
 
-    .popup-content h3 {
-        font-size: 16px;
-        line-height: 1.3;
-    }
-}
-
-@media (max-width: 470px) {
-    .img-scaled {
-        width: 100%;
+    .durata, .asset, .esito {
+        text-align: left;
+        margin-bottom: -12px;
     }
 }
 

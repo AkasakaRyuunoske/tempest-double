@@ -12,36 +12,22 @@
 
 <!-- Header (buttons, logo and project name) -->
 <header class="header">
-    <button class="menu-button" onclick="toggleMenu()">
-        &#9776; <!-- menu icon -->
-    </button>
     <div class="logo-container">
         <img src="HomePage/img/logo.png" alt="Logo" class="logo" style="border-radius: 30%">
         <h1 th:text="${@environment.getProperty('spring.application.name')}"></h1>
     </div>
 </header>
 
-<!-- Menu (change with real page names)-->
-<nav id="dropdown-menu" class="dropdown-menu">
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Assets</a></li>
-        <li><a href="#">Simulation</a></li>
-        <li><a href="#">History</a></li>
-    </ul>
-</nav>
-
-<!-- welcome section -->
 <div class="content">
-    <h1 class="animate-slide-in-left">Home</h1>
 
+    <!-- welcome section -->
     <h2 class="animate-slide-in-left">Benvenuti nel nostro portale di simulazione avanzata!</h2>
     <p class="animate-slide-in-left">Il nostro software offre una piattaforma innovativa e intuitiva per simulare e
         monitorare il funzionamento di vari asset, connettendo dispositivi produttori e consumatori di energia in un
         ambiente virtuale dettagliato e configurabile. Sviluppato con tecnologia open source e senza costi aggiuntivi,
         il nostro prodotto consente agli utenti di sperimentare e ottimizzare sistemi complessi come Smart Grid,
         automazione industriale, e dispositivi per Smart Home.</p>
-    <div class="image-placeholder animate-slide-in-left">Immagine di qualcosa</div>
+    <img src="HomePage/img/Energie-Rinnovabili.jpg" alt="Energie Rinnovabili" class="animate-slide-in-left img-responsive img-full">
 
 
     <!-- features section -->
@@ -51,13 +37,13 @@
         offrendo la possibilità di interrompere e visualizzare in tempo reale ogni modifica effettuata. Gli utenti
         possono creare una topologia che integra asset produttori e consumatori, garantendo un’accurata rappresentazione
         delle interazioni tra dispositivi.</p>
-    <div class="image-placeholder animate-slide-in-left">Immagine flusso di dispositivi</div>
+    <img src="HomePage/img/Fonti-Rinnovabili.jpg" alt="Fonti Rinnovabili" class="animate-slide-in-left img-responsive img-scaled">
 
     <h4 class="animate-slide-in-left">Visualizzazione dei Dati e Esportazione</h4>
     <p class="animate-slide-in-left">I dati generati possono essere visualizzati in grafici interattivi e tabelle
         aggiornate in tempo reale, oltre a essere esportabili per ulteriori analisi. L’accesso ai dati storici delle
         simulazioni già eseguite consente una visione completa e comparativa delle prestazioni del sistema.</p>
-    <img src="HomePage/img/Immagine-Grafico.png" alt="Immagine Grafico" class="animate-slide-in-left" style="width: 60%; height: 60%; border-radius: 10px">
+    <img src="HomePage/img/Immagine-Grafico.png" alt="Immagine Grafico" class="animate-slide-in-left img-responsive img-scaled">
 
     <!-- scope of the product -->
     <h3 class="animate-slide-in-left">Ambito del Prodotto</h3>
@@ -66,7 +52,7 @@
     <p class="animate-slide-in-left">Con la simulazione di reti energetiche intelligenti, gli utenti possono ottimizzare
         il consumo energetico e la distribuzione tra dispositivi come pannelli solari, riscaldatori, e raffreddatori,
         per creare un ecosistema energetico efficiente e monitorato in dettaglio.</p>
-    <img src="HomePage/img/Impianto-Fotovoltaico.png" alt="Impianto fotovoltaico" class="animate-slide-in-left" style="width: 100%; height: 100%; border-radius: 10px">
+    <img src="HomePage/img/Impianto-Fotovoltaico.png" alt="Impianto fotovoltaico" class="animate-slide-in-left img-responsive img-full">
 
     <h4 class="animate-slide-in-left">Automazione Industriale</h4>
     <p class="animate-slide-in-left">Nei contesti industriali, il software permette la simulazione delle interazioni
@@ -78,7 +64,14 @@
     <p class="animate-slide-in-left">Simulando il comportamento di dispositivi domestici intelligenti, il software
         consente agli utenti di esplorare scenari che aumentano il comfort abitativo e riducono il consumo energetico
         nelle abitazioni, come illuminazione intelligente e sistemi di riscaldamento/raffreddamento efficienti.</p>
-    <div class="image-placeholder animate-slide-in-left">Immagine esempio casa intelligente</div>
+    <img src="HomePage/img/Smart-Home.jpg" alt="Smart Home" class="img-responsive img-scaled" id="smart-home-img">
+
+    <div id="popup" class="popup hidden">
+        <div id="popup-content" class="popup-content">
+            <h3 id="popup-title">Dettagli</h3>
+            <p id="popup-description">Informazioni su cosa rappresenta l'icona</p>
+        </div>
+    </div>
 
     <h4 class="animate-slide-in-left">Education e Training</h4>
     <p class="animate-slide-in-left">Il nostro software rappresenta uno strumento didattico avanzato e user-friendly
