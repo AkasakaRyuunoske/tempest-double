@@ -3,7 +3,7 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${@environment.getProperty('spring.application.name')}"></title>
-    <link rel="stylesheet" href="HomePage/css/styles1.css">
+    <link rel="stylesheet" href="HomePage/css/home.css">
 </head>
 <body>
 
@@ -20,8 +20,7 @@
             aggiuntivi,
             il nostro prodotto consente agli utenti di sperimentare e ottimizzare sistemi complessi come Smart Grid,
             automazione industriale, e dispositivi per Smart Home.</p>
-        <div class="image-placeholder animate-slide-in-left">Immagine di qualcosa</div>
-
+        <img src="HomePage/img/Energie-Rinnovabili.jpg" alt="Energie Rinnovabili" class="animate-slide-in-left img-responsive img-full">
 
         <!-- features section -->
         <h3 class="animate-slide-in-left">Funzionalità Principali</h3>
@@ -31,7 +30,7 @@
             possono creare una topologia che integra asset produttori e consumatori, garantendo un’accurata
             rappresentazione
             delle interazioni tra dispositivi.</p>
-        <div class="image-placeholder animate-slide-in-left">Immagine flusso di dispositivi</div>
+        <img src="HomePage/img/Fonti-Rinnovabili.jpg" alt="Fonti Rinnovabili" class="animate-slide-in-left img-responsive img-scaled">
 
         <h4 class="animate-slide-in-left">Visualizzazione dei Dati e Esportazione</h4>
         <p class="animate-slide-in-left">I dati generati possono essere visualizzati in grafici interattivi e tabelle
@@ -60,26 +59,26 @@
             e topologie configurabili.</p>
         <div class="image-placeholder animate-slide-in-left">Immagine esempio linea di produzione</div>
 
-        <h4 class="animate-slide-in-left">Smart Home e Domotica</h4>
-        <p class="animate-slide-in-left">Simulando il comportamento di dispositivi domestici intelligenti, il software
-            consente agli utenti di esplorare scenari che aumentano il comfort abitativo e riducono il consumo
-            energetico
-            nelle abitazioni, come illuminazione intelligente e sistemi di riscaldamento/raffreddamento efficienti.</p>
-        <div class="image-placeholder animate-slide-in-left">Immagine esempio casa intelligente</div>
+    <h4 class="animate-slide-in-left">Smart Home e Domotica</h4>
+    <p class="animate-slide-in-left">Simulando il comportamento di dispositivi domestici intelligenti, il software
+        consente agli utenti di esplorare scenari che aumentano il comfort abitativo e riducono il consumo energetico
+        nelle abitazioni, come illuminazione intelligente e sistemi di riscaldamento/raffreddamento efficienti.</p>
+    <img src="HomePage/img/Smart-Home.jpg" alt="Smart Home" class="img-responsive img-scaled" id="smart-home-img">
 
-        <h4 class="animate-slide-in-left">Education e Training</h4>
-        <p class="animate-slide-in-left">Il nostro software rappresenta uno strumento didattico avanzato e user-friendly
-            per studenti e professionisti, aiutandoli a comprendere i principi dell’Internet of Things, delle topologie
-            di
-            rete, e dell’ottimizzazione energetica.</p>
-        <div class="image-placeholder animate-slide-in-left">Immagine esempio formazione</div>
+    <div id="popup" class="popup hidden">
+        <div id="popup-content" class="popup-content">
+            <h3 id="popup-title">Dettagli</h3>
+            <p id="popup-description">Informazioni su cosa rappresenta l'icona</p>
+        </div>
+    </div>
 
-        <!-- Open Source section -->
-        <h3 class="animate-slide-in-left">Tecnologie Open Source</h3>
-        <p class="animate-slide-in-left">Costruito con tecnologie moderne come Java, Spring Boot, HTMX, e MySQL,
-            il nostro software è completamente open source, il che significa che può essere liberamente utilizzato e
-            sviluppato senza costi aggiuntivi. Questo approccio ci consente di mantenere il software accessibile e in
-            continuo miglioramento, favorendo l’innovazione e l'uso in ambienti professionali ed educativi.</p>
+
+    <h4 class="animate-slide-in-left">Education e Training</h4>
+    <p class="animate-slide-in-left">Il nostro software rappresenta uno strumento didattico avanzato e user-friendly
+        per studenti e professionisti, aiutandoli a comprendere i principi dell’Internet of Things, delle topologie
+        di
+        rete, e dell’ottimizzazione energetica.</p>
+    <div class="image-placeholder animate-slide-in-left">Immagine esempio formazione</div>
 
     </div>
 </main>
