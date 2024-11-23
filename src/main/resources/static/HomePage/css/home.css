@@ -36,6 +36,16 @@ body {
     transition: padding-left 0.5s ease; /* transition for padding */
 }
 
+
+/* other styles */
+.content h1 {
+    color : #2b3e50;
+    font-size: 36px;
+    line-height: 1.8;
+    border-bottom: 2px solid #5aabf5;
+    padding-bottom: 10px;
+}
+
 h2 {
     color: #2b3e50;
     font-size: 32px;
@@ -60,6 +70,13 @@ p {
     font-size: 18px;
 }
 
+.header h1 {
+    color: #f4f4f9;
+    margin: 0;
+    padding-left: 10px;
+}
+
+
 .logo-container {
     display: flex;
     align-items: center;
@@ -70,6 +87,7 @@ p {
     margin-right: 15px;
     margin-left: 15px;
 }
+
 
 /* Controls the size of the images on different screen sizes */
 .img-responsive {
@@ -127,6 +145,7 @@ p {
 .popup-content h3 {
     font-size: 22px;
     line-height: 1.4;
+
 }
 
 /* transitions */
