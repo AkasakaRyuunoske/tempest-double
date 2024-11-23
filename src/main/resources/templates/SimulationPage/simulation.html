@@ -1,26 +1,74 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${@environment.getProperty('spring.application.name')}">Project Name</title>
-    <link rel="stylesheet" href="SimulationPage/css/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation</title>
+    <link rel="stylesheet" href="/SimulationPage/css/simulation.css">
+    <link rel="stylesheet" href="/AssetsPage/css/styles1.css">
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
 
 <th:block th:replace="~{AssetsPage/header :: header}"></th:block>
+<main>
 
-<div class="content">
-    <h1 class="animate-slide-in-left">Simulation</h1>
+    <div class="simulation-container">
 
+        <div class="graph-container">
+            <div class="graph" id="consumptionGraph"></div>
+            <div class="graph" id="productionGraph"></div>
+        </div>
 
+        <div class="progress-container">
 
-</div>
+            <div class="progress-bars">
+                <div>
+                    <div><h3>Washing Machine</h3></div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="washingMachineBar">0%</div>
+                    </div>
+                </div>
 
+                <div>
+                    <div><h3>Refrigerator</h3></div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="refrigeratorBar">0%</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div><h3>Air Conditioner</h3></div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="airConditionerBar">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="progress-bars">
+                <div>
+                    <div><h3>Solar Panel</h3></div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="solarPanelBar">0%</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div><h3>Wind Turbine</h3></div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="windTurbineBar">0%</div>
+                    </div>
+                </div>
+
+                <div>
+                    <div><h3>Accumulator</h3></div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="accumulatorBar">0%</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 </body>
-
-<script src="SimulationPage/js/script.js"></script>
-
+<script src="/SimulationPage/js/simulation.js"></script>
 </html>

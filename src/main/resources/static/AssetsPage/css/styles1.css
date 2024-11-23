@@ -8,11 +8,16 @@ body {
     background-color: #efeffd;
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
-    width: fit-content;
 }
 
 main{
     flex: 1;
+    padding: 1.1rem;
+}
+
+@media (max-width: 420px) {
+    body {
+        width: max-content;
+    }
 }
 
