@@ -10,8 +10,6 @@ public class AssetServiceImplementation implements AssetService{
 
     @Override
     public void printAsset() {
-        Asset asset = assetRepository.findById(2);
-        System.out.println("Printing found asset!");
-        System.out.println(asset.getConfiguration());
+        System.out.println("Not implemented");
     }
 }
