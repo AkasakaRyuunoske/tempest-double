@@ -10,31 +10,15 @@
 </head>
 <body>
 
-<!-- Header (buttons, logo and project name) -->
-<header class="header">
-    <button class="menu-button" onclick="toggleMenu()">
-        &#9776; <!-- menu icon -->
-    </button>
-    <div class="logo-container">
-        <img src="HomePage/img/logo.png" alt="Logo" class="logo" style="border-radius: 30%">
-        <h1 th:text="${@environment.getProperty('spring.application.name')}"></h1>
-    </div>
-</header>
-
-<!-- Menu (change with real page names)-->
-<nav id="dropdown-menu" class="dropdown-menu">
-    <ul>
-        <li><a href="#">Home</a></li>
-        <li><a href="#">Assets</a></li>
-        <li><a href="#">Simulation</a></li>
-        <li><a href="#">History</a></li>
-    </ul>
-</nav>
+<th:block th:replace="~{AssetsPage/header :: header}"></th:block>
 
 <div class="content">
     <h1 class="animate-slide-in-left">Assets</h1>
 
-    <script src="AssetsPage/js/script.js"></script>
 </div>
+
 </body>
+
+<script src="AssetsPage/js/script.js"></script>
+
 </html>
