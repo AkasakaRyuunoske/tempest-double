@@ -1,0 +1,58 @@
+.simulation-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.graph-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.progress-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.graph {
+    flex: 1;
+    padding: 1rem;
+    background-color: #FFFFFFFF;
+    min-height: 25rem;
+}
+
+.progress-bars {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.progress-bar-container {
+    width: 100%;
+    background-color: #DDDDDDFF;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    height: 2.5rem;
+}
+
+.progress-bar {
+    height: 100%;
+    background-color: #455271FF;
+    text-align: center;
+    line-height: 2.4rem;
+    color: #FFFFFFFF;
+    transition: 0.6s ease;
+}
+
+h3 {
+    font-weight: 200;
+}
+
+@media (max-width: 420px) {
+    .graph-container {
+        flex-direction: column;
+    }
+}
