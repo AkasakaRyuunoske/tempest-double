@@ -1,4 +1,4 @@
-package tempest_double.frontEndAPI.service;
+package tempest_double.frontEndAPI;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
@@ -7,7 +7,7 @@ import org.springframework.ui.Model;
 public class SimulationController {
 
     @GetMapping("/simulation")
-    public String assets() {
-        return "SimulationPage/simulation";
+    public String simulation() {
+        return "simulation";
     }
 }

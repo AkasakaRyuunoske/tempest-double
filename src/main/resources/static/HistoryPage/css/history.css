@@ -4,7 +4,6 @@ body {
     color: #2b3e50;
     background-color: #efeffd; /* original background color */
     margin: 0;
-    padding-top: 80px; /* superior margin to avoid going on header */
     transition: padding 0.3s; /* transition for a smoother effect */
 }
 
