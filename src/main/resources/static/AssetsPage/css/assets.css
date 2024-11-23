@@ -2,11 +2,13 @@
 body {
     font-family: Montserrat, sans-serif;
     color: #2b3e50;
-    background-color: #efeffd;
+    background-color: #efeffd; /* original background color */
     margin: 0;
+    transition: padding 0.3s; /* transition for a smoother effect */
 }
 
-header {
+/* fixed header */
+.header {
     background: linear-gradient(to bottom, #4a5b7e, #5aabf5);
     padding: 10px;
     text-align: left;

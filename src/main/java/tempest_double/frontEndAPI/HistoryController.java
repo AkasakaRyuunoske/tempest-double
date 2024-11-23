@@ -1,4 +1,4 @@
-package tempest_double.frontEndAPI.service;
+package tempest_double.frontEndAPI;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.ui.Model;
@@ -7,8 +7,8 @@ import org.springframework.ui.Model;
 public class HistoryController {
 
     @GetMapping("/history")
-    public String assets() {
-        return "HistoryPage/history";
+    public String history() {
+        return "history";
     }
 }
 

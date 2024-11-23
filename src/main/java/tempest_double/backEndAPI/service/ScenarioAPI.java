@@ -1,9 +1,11 @@
-package tempest_double.entity.Scenario;
+package tempest_double.backEndAPI.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tempest_double.entity.Asset.Asset;
+import tempest_double.entity.Scenario.Scenario;
+import tempest_double.entity.Scenario.ScenarioService;
 
 import java.util.List;
 import java.util.Map;

@@ -8,6 +8,9 @@ import jakarta.persistence.Converter;
 import java.io.IOException;
 import java.util.Map;
 
+/**
+ * Very important class used by all entities that have a JSON type field.
+ * */
 @Converter
 public class JsonConverter implements AttributeConverter<Map<String, Object>, String> {
 
