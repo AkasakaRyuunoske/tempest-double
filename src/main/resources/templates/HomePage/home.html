@@ -1,61 +1,66 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${@environment.getProperty('spring.application.name')}">Project Name</title>
-
-<!--    <link rel="stylesheet" href="HomePage/css/styles.css">-->
-<!--    <link rel="preconnect" href="https://fonts.googleapis.com">-->
-<!--    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>-->
-<!--    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${@environment.getProperty('spring.application.name')}"></title>
+    <link rel="stylesheet" href="HomePage/css/styles1.css">
 </head>
 <body>
 
 
 <th:block th:replace="~{AssetsPage/header :: header}"></th:block>
 
+<main>
+    <div class="content">
+        <h1 class="animate-slide-in-left">Home</h1>
 
-<div class="content">
-
-    <!-- welcome section -->
-    <h2 class="animate-slide-in-left">Benvenuti nel nostro portale di simulazione avanzata!</h2>
-    <p class="animate-slide-in-left">Il nostro software offre una piattaforma innovativa e intuitiva per simulare e
-        monitorare il funzionamento di vari asset, connettendo dispositivi produttori e consumatori di energia in un
-        ambiente virtuale dettagliato e configurabile. Sviluppato con tecnologia open source e senza costi aggiuntivi,
-        il nostro prodotto consente agli utenti di sperimentare e ottimizzare sistemi complessi come Smart Grid,
-        automazione industriale, e dispositivi per Smart Home.</p>
-    <img src="HomePage/img/Energie-Rinnovabili.jpg" alt="Energie Rinnovabili" class="animate-slide-in-left img-responsive img-full">
+        <h2 class="animate-slide-in-left">Benvenuti nel nostro portale di simulazione avanzata!</h2>
+        <p class="animate-slide-in-left">Il nostro software offre una piattaforma innovativa e intuitiva per simulare e
+            monitorare il funzionamento di vari asset, connettendo dispositivi produttori e consumatori di energia in un
+            ambiente virtuale dettagliato e configurabile. Sviluppato con tecnologia open source e senza costi
+            aggiuntivi,
+            il nostro prodotto consente agli utenti di sperimentare e ottimizzare sistemi complessi come Smart Grid,
+            automazione industriale, e dispositivi per Smart Home.</p>
+        <div class="image-placeholder animate-slide-in-left">Immagine di qualcosa</div>
 
 
-    <!-- features section -->
-    <h3 class="animate-slide-in-left">Funzionalità Principali</h3>
-    <h4 class="animate-slide-in-left">Simulazione Realistica e Intuitiva</h4>
-    <p class="animate-slide-in-left">La piattaforma permette di configurare e avviare simulazioni con pochi clic,
-        offrendo la possibilità di interrompere e visualizzare in tempo reale ogni modifica effettuata. Gli utenti
-        possono creare una topologia che integra asset produttori e consumatori, garantendo un’accurata rappresentazione
-        delle interazioni tra dispositivi.</p>
-    <img src="HomePage/img/Fonti-Rinnovabili.jpg" alt="Fonti Rinnovabili" class="animate-slide-in-left img-responsive img-scaled">
+        <!-- features section -->
+        <h3 class="animate-slide-in-left">Funzionalità Principali</h3>
+        <h4 class="animate-slide-in-left">Simulazione Realistica e Intuitiva</h4>
+        <p class="animate-slide-in-left">La piattaforma permette di configurare e avviare simulazioni con pochi clic,
+            offrendo la possibilità di interrompere e visualizzare in tempo reale ogni modifica effettuata. Gli utenti
+            possono creare una topologia che integra asset produttori e consumatori, garantendo un’accurata
+            rappresentazione
+            delle interazioni tra dispositivi.</p>
+        <div class="image-placeholder animate-slide-in-left">Immagine flusso di dispositivi</div>
 
-    <h4 class="animate-slide-in-left">Visualizzazione dei Dati e Esportazione</h4>
-    <p class="animate-slide-in-left">I dati generati possono essere visualizzati in grafici interattivi e tabelle
-        aggiornate in tempo reale, oltre a essere esportabili per ulteriori analisi. L’accesso ai dati storici delle
-        simulazioni già eseguite consente una visione completa e comparativa delle prestazioni del sistema.</p>
-    <img src="HomePage/img/Immagine-Grafico.png" alt="Immagine Grafico" class="animate-slide-in-left img-responsive img-scaled">
+        <h4 class="animate-slide-in-left">Visualizzazione dei Dati e Esportazione</h4>
+        <p class="animate-slide-in-left">I dati generati possono essere visualizzati in grafici interattivi e tabelle
+            aggiornate in tempo reale, oltre a essere esportabili per ulteriori analisi. L’accesso ai dati storici delle
+            simulazioni già eseguite consente una visione completa e comparativa delle prestazioni del sistema.</p>
+        <img src="HomePage/img/Immagine-Grafico.png" alt="Immagine Grafico" class="animate-slide-in-left"
+             style="width: 60%; height: 60%; border-radius: 10px">
 
-    <!-- scope of the product -->
-    <h3 class="animate-slide-in-left">Ambito del Prodotto</h3>
-    <p class="animate-slide-in-left">Il nostro software è stato sviluppato per adattarsi a una vasta gamma di applicazioni:</p>
-    <h4 class="animate-slide-in-left">Settori Energetici e Smart Grid</h4>
-    <p class="animate-slide-in-left">Con la simulazione di reti energetiche intelligenti, gli utenti possono ottimizzare
-        il consumo energetico e la distribuzione tra dispositivi come pannelli solari, riscaldatori, e raffreddatori,
-        per creare un ecosistema energetico efficiente e monitorato in dettaglio.</p>
-    <img src="HomePage/img/Impianto-Fotovoltaico.png" alt="Impianto fotovoltaico" class="animate-slide-in-left img-responsive img-full">
+        <!-- scope of the product -->
+        <h3 class="animate-slide-in-left">Ambito del Prodotto</h3>
+        <p class="animate-slide-in-left">Il nostro software è stato sviluppato per adattarsi a una vasta gamma di
+            applicazioni:</p>
+        <h4 class="animate-slide-in-left">Settori Energetici e Smart Grid</h4>
+        <p class="animate-slide-in-left">Con la simulazione di reti energetiche intelligenti, gli utenti possono
+            ottimizzare
+            il consumo energetico e la distribuzione tra dispositivi come pannelli solari, riscaldatori, e
+            raffreddatori,
+            per creare un ecosistema energetico efficiente e monitorato in dettaglio.</p>
+        <img src="HomePage/img/Impianto-Fotovoltaico.png" alt="Impianto fotovoltaico" class="animate-slide-in-left"
+             style="width: 100%; height: 100%; border-radius: 10px">
 
-    <h4 class="animate-slide-in-left">Automazione Industriale</h4>
-    <p class="animate-slide-in-left">Nei contesti industriali, il software permette la simulazione delle interazioni
-        tra macchinari, ottimizzando i processi produttivi e riducendo i tempi di fermo grazie a scenari personalizzati
-        e topologie configurabili.</p>
-    <div class="image-placeholder animate-slide-in-left">Immagine esempio linea di produzione</div>
+        <h4 class="animate-slide-in-left">Automazione Industriale</h4>
+        <p class="animate-slide-in-left">Nei contesti industriali, il software permette la simulazione delle interazioni
+            tra macchinari, ottimizzando i processi produttivi e riducendo i tempi di fermo grazie a scenari
+            personalizzati
+            e topologie configurabili.</p>
+        <div class="image-placeholder animate-slide-in-left">Immagine esempio linea di produzione</div>
+
 
     <h4 class="animate-slide-in-left">Smart Home e Domotica</h4>
     <p class="animate-slide-in-left">Simulando il comportamento di dispositivi domestici intelligenti, il software
@@ -70,9 +75,11 @@
         </div>
     </div>
 
+
     <h4 class="animate-slide-in-left">Education e Training</h4>
     <p class="animate-slide-in-left">Il nostro software rappresenta uno strumento didattico avanzato e user-friendly
-        per studenti e professionisti, aiutandoli a comprendere i principi dell’Internet of Things, delle topologie di
+        per studenti e professionisti, aiutandoli a comprendere i principi dell’Internet of Things, delle topologie
+        di
         rete, e dell’ottimizzazione energetica.</p>
     <div class="image-placeholder animate-slide-in-left">Immagine esempio formazione</div>
 
@@ -83,7 +90,8 @@
         sviluppato senza costi aggiuntivi. Questo approccio ci consente di mantenere il software accessibile e in
         continuo miglioramento, favorendo l’innovazione e l'uso in ambienti professionali ed educativi.</p>
 
-</div>
+    </div>
+</main>
 
 </body>
 
