@@ -1,7 +1,28 @@
 .simulation-container {
     display: flex;
     flex-direction: column;
-    gap: 2rem;
+}
+
+.top-progress-container{
+    display: flex;
+    justify-content: space-around;
+    gap: 1.5rem;
+}
+
+.top-progress-section {
+    display: flex;
+    flex-direction: column;
+    width: -webkit-fill-available;
+}
+
+.top-progress-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.progress-value {
+    display: flex;
 }
 
 .graph-container {
@@ -18,8 +39,7 @@
 
 .graph {
     flex: 1;
-    padding: 1rem;
-    background-color: #FFFFFFFF;
+    background-color: rgba(162, 109, 109, 0.2);
     min-height: 25rem;
 }
 
@@ -40,7 +60,7 @@
 
 .progress-bar {
     height: 100%;
-    background-color: #455271FF;
+    background-color: #455271;
     text-align: center;
     line-height: 2.4rem;
     color: #FFFFFFFF;
