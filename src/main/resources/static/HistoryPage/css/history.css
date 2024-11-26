@@ -1,27 +1,3 @@
-/* general style */
-body {
-    font-family: Montserrat, sans-serif;
-    color: #2b3e50;
-    background-color: #efeffd; /* original background color */
-    margin: 0;
-    transition: padding 0.3s; /* transition for a smoother effect */
-}
-
-/* fixed header */
-.header {
-    background: linear-gradient(to bottom, #4a5b7e, #5aabf5);
-    padding: 10px;
-    text-align: left;
-    display: flex;
-    align-items: center;
-    justify-content: flex-start;
-    position: fixed;
-    width: 100%;
-    top: 0; /* moves the header on top */
-    z-index: 1000; /* header is pinned */
-}
-
-/* internal section */
 .content {
     background-color: #efeffd;
     padding-left: 5%; /* internal space */
