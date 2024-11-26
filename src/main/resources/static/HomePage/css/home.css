@@ -1,197 +1,36 @@
-
 .content {
-    background-color: #efeffd;
-    padding-left: 12%; /* internal space */
-    padding-right: 12%;
-    transition: padding-left 0.5s ease; /* transition for padding */
-}
 
-/* other styles */
-.content h1 {
-    color : #2b3e50;
-    font-size: 36px;
-    line-height: 1.8;
-    border-bottom: 2px solid #5aabf5;
-    padding-bottom: 10px;
-}
-
-h2 {
-    color: #2b3e50;
-    font-size: 32px;
-}
-
-h3 {
-    color: #2b3e50;
-    font-size: 26px;
-    line-height: 1.8;
-    border-bottom: 2px solid #5aabf5;
-    padding-bottom: 10px;
-}
-
-h4 {
-    color: #2b3e50;
-    font-size: 22px;
-}
-
-p {
-    color: #000000;
-    line-height: 1.6;
-    font-size: 18px;
-}
-
-.logo-container {
-    display: flex;
-    align-items: center;
-}
-
-.logo {
-    height: 40px;
-    margin-right: 15px;
-    margin-left: 15px;
-}
-
-/* menu button */
-.menu-button {
-    background: none;
-    border: none;
-    color: #f4f4f9;
-    font-size: 28px;
-    cursor: pointer;
-    transition: transform 0.2s ease;
-}
-
-.menu-button:hover {
-    color: #2b3e50;
-    transform: scale(1.2);
-}
-
-.dropdown-menu {
-    position: fixed;
-    top: 60px; /* under header */
-    left: 0;
-    height: 100%;
-    width: 20%;
-    background: linear-gradient(to bottom, #5aabf5, #4a5b7e); /* same as header */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    opacity: 0;
-    visibility: hidden;
-    transform: translateX(-100%);
-    z-index: 1000;
-    transition: transform 0.5s ease, opacity 0.5s ease, visibility 0s linear 0.5s; /* transition: left to right */
-}
-
-/* menu visible with class `show` */
-.dropdown-menu.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(0);
-    transition: transform 0.5s ease, opacity 0.5s ease, visibility 0s;
-}
-
-.dropdown-menu ul {
-    list-style: none;
-    padding: 10px;
-    margin: 0;
-}
-
-.dropdown-menu li {
-    margin: 10px 0;
-    position: relative;
-}
-
-.dropdown-menu a {
-    text-decoration: none;
-    color: #f4f4f9;
-    transition: color 0.3s ease;
-    padding: 10px 0;
-    display: block;
-    font-size: 20px;
-}
-
-.dropdown-menu a:hover {
-    color: #2b3e50; /* changes color when passed over with mouse */
-}
-
-/* adds line between elements */
-.dropdown-menu a::after {
-    content: '';
-    display: block;
-    height: 1%;
-    background: #ffffff;
-    width: 100%;
-    position: absolute;
-    left: 0;
-    bottom: -5px;
-    transform: scaleX(1);
-}
-
-/* responsiveness of menu on mobile devices */
-@media (max-width: 768px) {
-    .dropdown-menu {
-        width: 100%;
-        padding-top: 20px;
+    h1, h2, h3, h4{
+        color: #455271;
+        animation: animate-slide-in-left 0.5s ease-out forwards;
     }
 
-    .dropdown-menu ul {
-        padding: 0;
+    p {
+        color: #000000;
+        line-height: 1.6;
+        animation: animate-slide-in-left 0.5s ease-out forwards;
     }
 
-    .dropdown-menu li {
-        margin: 15px 0;
-    }
-
-    .menu-button {
-        font-size: 28px;
-    }
-
-    /* more space between elements */
-    .dropdown-menu a {
-        padding: 15px 0;
-        font-size: 18px;
+    img {
+        animation: animate-slide-in-left 0.5s ease-out forwards;
     }
 }
 
 .image-placeholder {
-    height: 150px;
-    background-color: #e0e0e0;
-    color: #888;
+    background-color: #E0E0E0E6;
+    color: #888888FF;
     display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    border-radius: 8px;
     font-style: italic;
+    animation: animate-slide-in-left 0.5s ease-out forwards;
 }
 
-/* transitions */
-.animate-fade-in {
-    opacity: 0;
-    animation: fadeIn 1s ease-in forwards;
-}
-
-.animate-slide-up {
-    opacity: 0;
-    transform: translateY(20px);
-    animation: slideUp 1s ease-in forwards;
-}
-
-.animate-slide-in-left {
-    opacity: 0;
-    transform: translateX(-30px); /* starting left to right */
-    transition: transform 0.5s, opacity 0.5s;
-}
-
-.animate-slide-in-left.show {
-    opacity: 1;
-    transform: translateX(0); /* end transition */
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
-}
-
-@keyframes slideUp {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
+@keyframes animate-slide-in-left {
+    0% {
+        opacity: 0;
+        transform: translateX(-1.8rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
+    }
 }
