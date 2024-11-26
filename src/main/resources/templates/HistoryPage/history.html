@@ -1,84 +1,84 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${@environment.getProperty('spring.application.name')}">Project Name</title>
     <link rel="stylesheet" href="HistoryPage/css/history.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/AssetsPage/css/styles.css">
 </head>
 <body>
 
 <th:block th:replace="~{AssetsPage/header :: header}"></th:block>
 
-<div class="content">
-
-    <div class="session-card animate-slide-in-left">
-        <div class="card-header">
-            <h3>Nome dello scenario</h3>
+<main>
+    <div class="content">
+        <div class="history-card">
+            <div class="card-header">
+                <h3>Scenario Name</h3>
+            </div>
+            <hr>
+            <div class="card-content">
+                <div class="date-time">
+                    <p><strong>Start: </strong>14/11/2024, 14:36</p>
+                    <p><strong>End: </strong>14/11/2024, 14:37</p>
+                </div>
+                <div class="duration">
+                    <p><strong>Duration: </strong>0h 1min 0s</p>
+                </div>
+                <div class="asset">
+                    <p><strong>Assets Used: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
+                </div>
+                <div class="result">
+                    <p><strong>Completed Successfully</strong></p>
+                </div>
+            </div>
         </div>
-        <div class="card-content">
-            <div class="data-ora">
-                <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
-                <p><strong>Fine: </strong>14/11/2024, 14:37</p>
+
+        <div class="history-card">
+            <div class="card-header">
+                <h3>Scenario Name</h3>
             </div>
-            <div class="durata">
-                <p><strong>Durata: </strong>0h 1min 0s</p>
+            <hr>
+            <div class="card-content">
+                <div class="date-time">
+                    <p><strong>Start: </strong>14/11/2024, 14:36</p>
+                    <p><strong>End:  </strong>14/11/2024, 14:37</p>
+                </div>
+                <div class="duration">
+                    <p><strong>Duration: </strong>0h 1min 0s</p>
+                </div>
+                <div class="asset">
+                    <p><strong>Assets Used: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
+                </div>
+                <div class="result">
+                    <p><strong>Completed Successfully</strong></p>
+                </div>
             </div>
-            <div class="asset">
-                <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
+        </div>
+
+        <div class="history-card">
+            <div class="card-header">
+                <h3>Scenario Name</h3>
             </div>
-            <div class="esito">
-                <p><strong>Terminato con successo</strong></p>
+            <hr>
+            <div class="card-content">
+                <div class="date-time">
+                    <p><strong>Start: </strong>14/11/2024, 14:36</p>
+                    <p><strong>End:  </strong>14/11/2024, 14:37</p>
+                </div>
+                <div class="duration">
+                    <p><strong>Duration: </strong>0h 1min 0s</p>
+                </div>
+                <div class="asset">
+                    <p><strong>Assets Used: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
+                </div>
+                <div class="result">
+                    <p><strong>Completed Successfully</strong></p>
+                </div>
             </div>
         </div>
     </div>
-
-    <div class="session-card animate-slide-in-left">
-        <div class="card-header">
-            <h3>Nome dello scenario</h3>
-        </div>
-        <div class="card-content">
-            <div class="data-ora">
-                <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
-                <p><strong>Fine: </strong>14/11/2024, 14:37</p>
-            </div>
-            <div class="durata">
-                <p><strong>Durata: </strong>0h 1min 0s</p>
-            </div>
-            <div class="asset">
-                <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
-            </div>
-            <div class="esito">
-                <p><strong>Terminato con successo</strong></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="session-card animate-slide-in-left">
-        <div class="card-header">
-            <h3>Nome dello scenario</h3>
-        </div>
-        <div class="card-content">
-            <div class="data-ora">
-                <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
-                <p><strong>Fine: </strong>14/11/2024, 14:37</p>
-            </div>
-            <div class="durata">
-                <p><strong>Durata: </strong>0h 1min 0s</p>
-            </div>
-            <div class="asset">
-                <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
-            </div>
-            <div class="esito">
-                <p><strong>Terminato con successo</strong></p>
-            </div>
-        </div>
-    </div>
-</div>
-
+</main>
 </body>
 <script src="HistoryPage/js/history.js"></script>
-
 </html>
