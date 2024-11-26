@@ -15,9 +15,20 @@ main{
     padding: 1.1rem;
 }
 
-@media (max-width: 420px) {
+@media (max-width: 360px) {
     body {
-        width: max-content;
+        width: min-content;
+    }
+}
+
+@keyframes animate-slide-in-left {
+    0% {
+        opacity: 0;
+        transform: translateX(-1.8rem);
+    }
+    100% {
+        opacity: 1;
+        transform: translateX(0);
     }
 }
 
