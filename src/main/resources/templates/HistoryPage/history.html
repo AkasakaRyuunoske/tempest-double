@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${@environment.getProperty('spring.application.name')}">Project Name</title>
+    <link rel="stylesheet" href="HistoryPage/css/history.css">
+    <link rel="stylesheet" href="/AssetsPage/css/styles.css">
+</head>
+<body>
+
+<th:block th:replace="~{AssetsPage/header :: header}"></th:block>
+
+<main>
+    <div class="content">
+        <div class="history-card">
+            <div class="card-header">
+                <h3>Scenario Name</h3>
+            </div>
+            <hr>
+            <div class="card-content">
+                <div class="date-time">
+                    <p><strong>Start: </strong>14/11/2024, 14:36</p>
+                    <p><strong>End: </strong>14/11/2024, 14:37</p>
+                </div>
+                <div class="duration">
+                    <p><strong>Duration: </strong>0h 1min 0s</p>
+                </div>
+                <div class="asset">
+                    <p><strong>Assets Used: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
+                </div>
+                <div class="result">
+                    <p><strong>Completed Successfully</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="history-card">
+            <div class="card-header">
+                <h3>Scenario Name</h3>
+            </div>
+            <hr>
+            <div class="card-content">
+                <div class="date-time">
+                    <p><strong>Start: </strong>14/11/2024, 14:36</p>
+                    <p><strong>End:  </strong>14/11/2024, 14:37</p>
+                </div>
+                <div class="duration">
+                    <p><strong>Duration: </strong>0h 1min 0s</p>
+                </div>
+                <div class="asset">
+                    <p><strong>Assets Used: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
+                </div>
+                <div class="result">
+                    <p><strong>Completed Successfully</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="history-card">
+            <div class="card-header">
+                <h3>Scenario Name</h3>
+            </div>
+            <hr>
+            <div class="card-content">
+                <div class="date-time">
+                    <p><strong>Start: </strong>14/11/2024, 14:36</p>
+                    <p><strong>End:  </strong>14/11/2024, 14:37</p>
+                </div>
+                <div class="duration">
+                    <p><strong>Duration: </strong>0h 1min 0s</p>
+                </div>
+                <div class="asset">
+                    <p><strong>Assets Used: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
+                </div>
+                <div class="result">
+                    <p><strong>Completed Successfully</strong></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</body>
+<script src="HistoryPage/js/history.js"></script>
+</html>

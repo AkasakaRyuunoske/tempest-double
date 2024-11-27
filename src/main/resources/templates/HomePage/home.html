@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${@environment.getProperty('spring.application.name')}"></title>
+    <link rel="stylesheet" href="/AssetsPage/css/styles.css">
+    <link rel="stylesheet" href="HomePage/css/home.css">
+</head>
+<body>
+
+<th:block th:replace="~{AssetsPage/header :: header}"></th:block>
+
+<main>
+    <div class="content">
+        <h1>Home</h1>
+        <br>
+        <hr>
+        <br>
+        <h2>Benvenuti nel nostro portale di simulazione avanzata!</h2>
+        <p>Il nostro software offre una piattaforma innovativa e intuitiva per simulare e
+            monitorare il funzionamento di vari asset, connettendo dispositivi produttori e consumatori di energia in un
+            ambiente virtuale dettagliato e configurabile. Sviluppato con tecnologia open source e senza costi
+            aggiuntivi,
+            il nostro prodotto consente agli utenti di sperimentare e ottimizzare sistemi complessi come Smart Grid,
+            automazione industriale, e dispositivi per Smart Home.</p>
+        <br>
+        <img src="HomePage/img/Energie-Rinnovabili.jpg" alt="Energie Rinnovabili">
+        <br>
+        <h3>Funzionalità Principali</h3>
+        <br>
+        <hr>
+        <br>
+        <h4>Simulazione Realistica e Intuitiva</h4>
+        <p>La piattaforma permette di configurare e avviare simulazioni con pochi clic,
+            offrendo la possibilità di interrompere e visualizzare in tempo reale ogni modifica effettuata. Gli utenti
+            possono creare una topologia che integra asset produttori e consumatori, garantendo un’accurata
+            rappresentazione
+            delle interazioni tra dispositivi.</p>
+        <br>
+        <img src="HomePage/img/Fonti-Rinnovabili.jpg" alt="Fonti Rinnovabili">
+        <br>
+        <h4>Visualizzazione dei Dati e Esportazione</h4>
+        <p class="animate-slide-in-left">I dati generati possono essere visualizzati in grafici interattivi e tabelle
+            aggiornate in tempo reale, oltre a essere esportabili per ulteriori analisi. L’accesso ai dati storici delle
+            simulazioni già eseguite consente una visione completa e comparativa delle prestazioni del sistema.</p>
+        <br>
+        <img src="HomePage/img/Immagine-Grafico.png" alt="Immagine Grafico">
+        <br>
+        <h3>Ambito del Prodotto</h3>
+        <br>
+        <hr>
+        <br>
+        <p>Il nostro software è stato sviluppato per adattarsi a una vasta gamma di
+            applicazioni:</p>
+        <h4>Settori Energetici e Smart Grid</h4>
+        <p>Con la simulazione di reti energetiche intelligenti, gli utenti possono
+            ottimizzare
+            il consumo energetico e la distribuzione tra dispositivi come pannelli solari, riscaldatori, e
+            raffreddatori,
+            per creare un ecosistema energetico efficiente e monitorato in dettaglio.</p>
+        <br>
+        <img src="HomePage/img/Impianto-Fotovoltaico.png" alt="Impianto fotovoltaico">
+        <br>
+        <h4>Automazione Industriale</h4>
+        <p>Nei contesti industriali, il software permette la simulazione delle interazioni
+            tra macchinari, ottimizzando i processi produttivi e riducendo i tempi di fermo grazie a scenari
+            personalizzati
+            e topologie configurabili.</p>
+        <h4>Smart Home e Domotica</h4>
+        <p>Simulando il comportamento di dispositivi domestici intelligenti, il software
+            consente agli utenti di esplorare scenari che aumentano il comfort abitativo e riducono il consumo
+            energetico
+            nelle abitazioni, come illuminazione intelligente e sistemi di riscaldamento/raffreddamento efficienti.</p>
+        <br>
+        <img src="HomePage/img/Smart-Home.jpg" alt="Smart Home">
+        <br>
+        <h4>Education e Training</h4>
+        <p>Il nostro software rappresenta uno strumento didattico avanzato e user-friendly
+            per studenti e professionisti, aiutandoli a comprendere i principi dell’Internet of Things, delle topologie
+            di
+            rete, e dell’ottimizzazione energetica.</p>
+        <div>Immagine esempio formazione</div>
+    </div>
+</main>
+</body>
+</html>
