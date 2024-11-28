@@ -3,10 +3,33 @@
     flex-direction: column;
 }
 
+.start-button {
+    display: flex;
+    justify-content: center;
+
+    button {
+        font-family: Verdana, monospace;
+        font-size: 1.1rem;
+        width: 7rem;
+        padding: 0.4rem;
+        border-radius: 0.3rem;
+        border: 0.1rem #455271 solid;
+    }
+
+    button:hover {
+        background-color: #7A8BB3;
+    }
+}
+
 .top-progress-container{
     display: flex;
     justify-content: space-around;
     gap: 1.5rem;
+
+    h3 {
+        font-weight: 200;
+        padding-bottom: 0.3rem;
+    }
 }
 
 .top-progress-section {
@@ -31,16 +54,26 @@
     gap: 2rem;
 }
 
-.progress-container {
-    display: flex;
-    justify-content: space-between;
-    gap: 2rem;
-}
-
 .graph {
     flex: 1;
     background-color: rgba(162, 109, 109, 0.2);
     min-height: 25rem;
+}
+
+.progress-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+
+    h3 {
+        font-weight: 200;
+        padding-bottom: 0.3rem;
+    }
+
+    img {
+        width: 2rem;
+        padding-bottom: 0.3rem;
+    }
 }
 
 .progress-bars {
@@ -50,29 +83,72 @@
     gap: 1.5rem;
 }
 
+.consumption-progress-bars {
+    .progress-bar {
+        background-color: #FF8A8A;
+    }
+}
+
+.production-progress-bars {
+    .progress-bar {
+        background-color: #597445;
+    }
+}
+
 .progress-bar-container {
     width: 100%;
     background-color: #DDDDDDFF;
     border-radius: 0.5rem;
     overflow: hidden;
-    height: 2.5rem;
+    height: 0.4rem;
 }
 
 .progress-bar {
     height: 100%;
-    background-color: #455271;
     text-align: center;
     line-height: 2.4rem;
     color: #FFFFFFFF;
     transition: 0.6s ease;
 }
 
-h3 {
-    font-weight: 200;
+.value-display {
+    text-align: start ;
 }
 
-@media (max-width: 420px) {
+#satisfactionBar {
+    background-color: #789DBC;
+}
+
+#productionBar {
+    background-color: #597445;
+}
+
+#accumulatorChargeBar {
+    background-color: #8967B3;
+}
+
+.consumption-unit-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.production-unit-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+@media (max-width: 690px) {
     .graph-container {
+        flex-direction: column;
+    }
+
+    .progress-container {
+        flex-direction: column;
+    }
+
+    .top-progress-container{
         flex-direction: column;
     }
 }

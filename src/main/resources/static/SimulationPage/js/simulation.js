@@ -1,4 +1,3 @@
-
 const maxCapacities = {
     satisfaction: 100,
     production: 200,
@@ -14,24 +13,31 @@ const maxCapacities = {
 const consumptionGraph = new CanvasJS.Chart("consumptionGraph", {
     title: { text: "Consumption", fontSize: 25, fontFamily: "Verdana"},
     axisY: { title: "MW", includeZero: false },
-    data: [{ type: "line", color: "#64749A", dataPoints: [] }]
+    data: [{ type: "line", color: "#FF8A8A", dataPoints: [] }]
 });
 
 const productionGraph = new CanvasJS.Chart("productionGraph", {
     title: { text: "Production", fontSize: 25, fontFamily: "Verdana"},
     axisY: { title: "MW", includeZero: false },
-    data: [{ type: "line", color: "#64749A", dataPoints: [] }]
+    data: [{ type: "line", color: "#597445", dataPoints: [] }]
 });
 
 let consumptionData = [];
 let productionData = [];
 let xValue = 0;
 
-function updateProgressBar(id, value, maxCapacity) {
+function updateProgressBar(id, value, maxCapacity, valueDisplayId) {
     const bar = document.getElementById(id);
+    const valueDisplay = document.getElementById(valueDisplayId);
     const percentage = (value / maxCapacity) * 100;
+
     bar.style.width = percentage + "%";
-    bar.textContent = value.toFixed(2) + " MW";
+
+    bar.textContent = "";
+
+    if (valueDisplay) {
+        valueDisplay.textContent = value.toFixed(2) + " MW";
+    }
 }
 
 function updateMWValues(currentId, maxId, currentValue, maxValue) {
@@ -40,7 +46,6 @@ function updateMWValues(currentId, maxId, currentValue, maxValue) {
 }
 
 function updateDashboard() {
-
     const satisfactionValue = Math.random() * maxCapacities.satisfaction;
     const productionValue = Math.random() * maxCapacities.production;
     const accumulatorValue = Math.random() * maxCapacities.accumulator;
@@ -58,20 +63,20 @@ function updateDashboard() {
     consumptionGraph.render();
     productionGraph.render();
 
-    updateProgressBar("satisfactionBar", satisfactionValue, maxCapacities.satisfaction);
-    updateProgressBar("productionBar", productionValue, maxCapacities.production);
-    updateProgressBar("accumulatorChargeBar", accumulatorValue, maxCapacities.accumulator);
+    updateProgressBar("satisfactionBar", satisfactionValue, maxCapacities.satisfaction, "satisfaction-value");
+    updateProgressBar("productionBar", productionValue, maxCapacities.production, "production-value");
+    updateProgressBar("accumulatorChargeBar", accumulatorValue, maxCapacities.accumulator, "accumulator-charge-value");
 
     updateMWValues("current-satisfaction", "max-satisfaction", satisfactionValue, maxCapacities.satisfaction);
     updateMWValues("current-production", "max-production", productionValue, maxCapacities.production);
     updateMWValues("current-charge", "max-charge", accumulatorValue, maxCapacities.accumulator);
 
-    updateProgressBar("washingMachineBar", Math.random() * maxCapacities.washingMachine, maxCapacities.washingMachine);
-    updateProgressBar("refrigeratorBar", Math.random() * maxCapacities.refrigerator, maxCapacities.refrigerator);
-    updateProgressBar("airConditionerBar", Math.random() * maxCapacities.airConditioner, maxCapacities.airConditioner);
-    updateProgressBar("solarPanelBar", Math.random() * maxCapacities.solarPanel, maxCapacities.solarPanel);
-    updateProgressBar("windTurbineBar", Math.random() * maxCapacities.windTurbine, maxCapacities.windTurbine);
-    updateProgressBar("accumulatorBar", Math.random() * maxCapacities.accumulatorBar, maxCapacities.accumulatorBar);
+    updateProgressBar("washingMachineBar", Math.random() * maxCapacities.washingMachine, maxCapacities.washingMachine, "washing-machine-value");
+    updateProgressBar("refrigeratorBar", Math.random() * maxCapacities.refrigerator, maxCapacities.refrigerator, "refrigerator-value");
+    updateProgressBar("airConditionerBar", Math.random() * maxCapacities.airConditioner, maxCapacities.airConditioner, "air-conditioner-value");
+    updateProgressBar("solarPanelBar", Math.random() * maxCapacities.solarPanel, maxCapacities.solarPanel, "solar-panel-value");
+    updateProgressBar("windTurbineBar", Math.random() * maxCapacities.windTurbine, maxCapacities.windTurbine, "wind-turbine-value");
+    updateProgressBar("accumulatorBar", Math.random() * maxCapacities.accumulatorBar, maxCapacities.accumulatorBar, "accumulator-value");
 
     xValue++;
 }
