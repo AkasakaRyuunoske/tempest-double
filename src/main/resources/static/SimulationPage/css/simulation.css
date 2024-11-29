@@ -14,10 +14,23 @@
         padding: 0.4rem;
         border-radius: 0.3rem;
         border: 0.1rem #455271 solid;
+        background-color: transparent;
+        transition: all 0.6s ease;
     }
 
     button:hover {
         background-color: #7A8BB3;
+        transition: all 0.6s ease;
+    }
+
+    button.stop {
+        border-color: #C3423F;
+        transition: all 0.6s ease;
+    }
+
+    button.stop:hover {
+        background-color: #B37A7A;
+        transition: all 0.7s ease;
     }
 }
 
@@ -83,11 +96,6 @@
     gap: 1.5rem;
 }
 
-.consumption-progress-bars {
-    .progress-bar {
-        background-color: #FF8A8A;
-    }
-}
 
 .production-progress-bars {
     .progress-bar {
@@ -108,7 +116,7 @@
     text-align: center;
     line-height: 2.4rem;
     color: #FFFFFFFF;
-    transition: 0.6s ease;
+    transition: 0.7s ease;
 }
 
 .value-display {

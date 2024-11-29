@@ -5,7 +5,6 @@
 
 body {
     font-family: Verdana, monospace;
-    background-color: #efeffd;
     display: flex;
     flex-direction: column;
 }
