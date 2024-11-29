@@ -1,3 +1,5 @@
+let updateInterval = null;
+
 const maxCapacities = {
     satisfaction: 100,
     production: 200,
@@ -110,8 +112,6 @@ function updateMWValues(currentId, maxId, currentValue, maxValue) {
     document.getElementById(maxId).textContent = maxValue.toFixed(2);
 }
 
-setProgressBarColors();
-
 function updateDashboard() {
     const washingMachineValue = Math.random() * maxCapacities.washingMachine;
     const refrigeratorValue = Math.random() * maxCapacities.refrigerator;
@@ -157,19 +157,26 @@ function updateDashboard() {
     xValue++;
 }
 
-setInterval(updateDashboard, 1000);
-
-
 function toggleStartStop() {
     const startButton = document.querySelector(".start-button button");
 
     if (startButton.textContent === "Start") {
         startButton.textContent = "Stop";
         startButton.classList.add("stop");
+        if (!updateInterval) {
+            updateInterval = setInterval(updateDashboard, 1000);
+        }
     } else {
         startButton.textContent = "Start";
         startButton.classList.remove("stop");
+        if (updateInterval) {
+            clearInterval(updateInterval);
+            updateInterval = null;
+        }
     }
 }
 
-document.querySelector('.start-button button').addEventListener("click", toggleStartStop);
+document.querySelector(".start-button button").addEventListener("click", toggleStartStop);
+
+setProgressBarColors();
+
