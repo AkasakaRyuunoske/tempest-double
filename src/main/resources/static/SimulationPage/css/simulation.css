@@ -1,0 +1,162 @@
+.simulation-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.start-button {
+    display: flex;
+    justify-content: center;
+
+    button {
+        font-family: Verdana, monospace;
+        font-size: 1.1rem;
+        width: 7rem;
+        padding: 0.4rem;
+        border-radius: 0.3rem;
+        border: 0.1rem #455271 solid;
+        background-color: transparent;
+        transition: all 0.6s ease;
+    }
+
+    button:hover {
+        background-color: #7A8BB3;
+        transition: all 0.6s ease;
+    }
+
+    button.stop {
+        border-color: #C3423F;
+        transition: all 0.6s ease;
+    }
+
+    button.stop:hover {
+        background-color: #B37A7A;
+        transition: all 0.7s ease;
+    }
+}
+
+.top-progress-container{
+    display: flex;
+    justify-content: space-around;
+    gap: 1.5rem;
+
+    h3 {
+        font-weight: 200;
+        padding-bottom: 0.3rem;
+    }
+}
+
+.top-progress-section {
+    display: flex;
+    flex-direction: column;
+    width: -webkit-fill-available;
+}
+
+.top-progress-info-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.progress-value {
+    display: flex;
+}
+
+.graph-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+}
+
+.graph {
+    flex: 1;
+    background-color: rgba(162, 109, 109, 0.2);
+    min-height: 25rem;
+}
+
+.progress-container {
+    display: flex;
+    justify-content: space-between;
+    gap: 2rem;
+
+    h3 {
+        font-weight: 200;
+        padding-bottom: 0.3rem;
+    }
+
+    img {
+        width: 2rem;
+        padding-bottom: 0.3rem;
+    }
+}
+
+.progress-bars {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+
+.production-progress-bars {
+    .progress-bar {
+        background-color: #597445;
+    }
+}
+
+.progress-bar-container {
+    width: 100%;
+    background-color: #DDDDDDFF;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    height: 0.4rem;
+}
+
+.progress-bar {
+    height: 100%;
+    text-align: center;
+    line-height: 2.4rem;
+    color: #FFFFFFFF;
+    transition: 0.7s ease;
+}
+
+.value-display {
+    text-align: start ;
+}
+
+#satisfactionBar {
+    background-color: #789DBC;
+}
+
+#productionBar {
+    background-color: #597445;
+}
+
+#accumulatorChargeBar {
+    background-color: #8967B3;
+}
+
+.consumption-unit-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.production-unit-info {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+@media (max-width: 690px) {
+    .graph-container {
+        flex-direction: column;
+    }
+
+    .progress-container {
+        flex-direction: column;
+    }
+
+    .top-progress-container{
+        flex-direction: column;
+    }
+}

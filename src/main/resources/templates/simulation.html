@@ -1,26 +1,144 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${@environment.getProperty('spring.application.name')}">Project Name</title>
-    <link rel="stylesheet" href="SimulationPage/css/styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Simulation</title>
+    <link rel="stylesheet" href="/SimulationPage/css/simulation.css">
+    <link rel="stylesheet" href="/AssetsPage/css/styles.css">
+    <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
+<th:block th:replace="~{Components/header.html :: header}"></th:block>
+<main>
+    <div class="start-button"><button>Start</button></div>
+    <br>
+    <hr>
+    <br>
+    <div class="top-progress-container">
+        <div class="top-progress-section">
+            <div><h3>Satisfaction</h3></div>
+            <div class="top-progress-info-container">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="satisfactionBar">0 MW</div>
+                </div>
+                <div class="progress-value">
+                    <div id="current-satisfaction">0</div>&nbsp;MW /&nbsp;<div id="max-satisfaction">100</div>&nbsp;MW
+                </div>
+            </div>
+        </div>
 
-<th:block th:replace="~{Components/header :: header}"></th:block>
+        <div class="top-progress-section">
+            <div><h3>Production</h3></div>
+            <div class="top-progress-info-container">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="productionBar">0 MW</div>
+                </div>
+                <div class="progress-value">
+                    <div id="current-production">0</div>&nbsp;MW /&nbsp;<div id="max-production">100</div>&nbsp;MW
+                </div>
+            </div>
+        </div>
 
-<div class="content">
-    <h1 class="animate-slide-in-left">Simulation</h1>
+        <div class="top-progress-section">
+            <div><h3>Accumulator Charge</h3></div>
+            <div class="top-progress-info-container">
+                <div class="progress-bar-container">
+                    <div class="progress-bar" id="accumulatorChargeBar">0 MW</div>
+                </div>
+                <div class="progress-value">
+                    <div id="current-charge">0</div>&nbsp;MW /&nbsp;<div id="max-charge">100</div> &nbsp;MW
+                </div>
+            </div>
+        </div>
+    </div>
+    <br>
+    <hr>
+    <br>
+    <div class="simulation-container">
+        <div class="graph-container">
+            <div class="graph" id="consumptionGraph"></div>
+            <div class="graph" id="productionGraph"></div>
+        </div>
 
+        <br>
+        <br>
+        <hr>
+        <br>
 
+        <div class="progress-container">
 
-</div>
+            <div class="progress-bars consumption-progress-bars" >
+                <div class="consumption-unit">
+                    <div class="consumption-unit-info">
+                        <img src="/SimulationPage/img/washingMachine.svg" alt="Washing Machine">
+                        <h3>Washing Machine</h3>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="washingMachineBar">0 MW</div>
+                    </div>
+                    <div id="washing-machine-value" class="value-display">0 MW</div>
+                </div>
 
+                <div class="consumption-unit">
+                    <div class="consumption-unit-info">
+                        <img src="/SimulationPage/img/refrigerator.svg" alt="Refrigerator">
+                        <h3>Refrigerator</h3>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="refrigeratorBar"></div>
+                    </div>
+                    <div id="refrigerator-value" class="value-display">0 MW</div>
+                </div>
+
+                <div class="consumption-unit">
+                    <div class="consumption-unit-info">
+                        <img src="/SimulationPage/img/airConditioner.svg" alt="Air Conditioner">
+                        <h3>Air Conditioner</h3>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="airConditionerBar">0 MW</div>
+                    </div>
+                    <div id="air-conditioner-value" class="value-display">0 MW</div>
+                </div>
+            </div>
+
+            <div class="progress-bars production-progress-bars">
+                <div class="production-unit">
+                    <div class="production-unit-info">
+                        <img src="/SimulationPage/img/solarPanel.svg" alt="Solar Panel">
+                        <h3>Solar Panel</h3>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="solarPanelBar">0 MW</div>
+                    </div>
+                    <div id="solar-panel-value" class="value-display">0 MW</div>
+                </div>
+
+                <div class="production-unit">
+                    <div class="production-unit-info">
+                        <img src="/SimulationPage/img/windTurbine.svg" alt="Wind Turbine">
+                        <h3>Wind Turbine</h3>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="windTurbineBar">0 MW</div>
+                    </div>
+                    <div id="wind-turbine-value" class="value-display">0 MW</div>
+                </div>
+
+                <div class="production-unit">
+                    <div class="production-unit-info">
+                        <img src="/SimulationPage/img/accumulator.svg" alt="Accumulator">
+                        <h3>Accumulator</h3>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" id="accumulatorBar">0 MW</div>
+                    </div>
+                    <div id="accumulator-value" class="value-display">0 MW</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
 </body>
-
-<script src="SimulationPage/js/script.js"></script>
-
+<script src="/SimulationPage/js/simulation.js"></script>
 </html>
