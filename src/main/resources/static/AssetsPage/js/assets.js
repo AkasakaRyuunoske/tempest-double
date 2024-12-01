@@ -214,29 +214,31 @@ document.addEventListener("DOMContentLoaded", function () {
         }
 
         document.getElementById("load").addEventListener("click", function () {
-            const exampleJson = {
-                name: "unnamed_scenario",
-                environmentConfiguration: {field: "value"},
-                assets: {asset1: 1, asset2: 3},
-                topology: {
-                    nodes: [
-                        {id: "node1", name: "Wind Turbine", position: {x: 50, y: 50}},
-                        {id: "node2", name: "Air Condition", position: {x: 200, y: 50}},
-                        {id: "node3", name: "Generic Consumer", position: {x: 350, y: 50}},
-                        {id: "node1733057724804", name: "New Node", position: {x: 300, y: 300}},
-                        {id: "node1733057726148", name: "New Node", position: {x: 72, y: 308}},
-                    ],
-                    connections: [
-                        {source: "node1", target: "node2"},
-                        {source: "node2", target: "node3"},
-                        {source: "jsPlumb_1_30", target: "node1733057724804"},
-                    ],
-                },
-                description: "None",
-            };
+            let name = document.getElementById("scenario_name")
 
-            // Load the example JSON
-            loadCanvasState(exampleJson);
+            fetch("/api/v1/scenario/" + name.value, {
+                method: "GET",
+                headers: {
+                    "Content-Type": "application/json",
+                }
+            })
+                .then((response) => {
+                    if (!response.ok) {
+                        throw new Error(`HTTP error! status: ${response.status}`);
+                    }
+
+                    return response.json();
+                })
+                .then((data) => {
+                    loadCanvasState(data);
+                    console.log("Successfully saved canvas state:", data);
+                    alert("Canvas state saved successfully!");
+                })
+                .catch((error) => {
+                    console.error("Error saving canvas state:", error);
+                    alert("Failed to save canvas state.");
+                });
+
         });
     });
 });
@@ -291,9 +293,10 @@ function handleScrollAnimation() {
 
 document.getElementById("save").addEventListener("click", function () {
     const canvasState = saveCanvasState();
+    let name = document.getElementById("scenario_name")
 
-    scenario = {
-        "name": "unnamed_scenario",
+    let scenario = {
+        "name": name.value,
         "environmentConfiguration":
             {"field": "value"},
         "assets":
