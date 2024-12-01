@@ -1,9 +1,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     jsPlumb.ready(function () {
-        // Initialize jsPlumb
         jsPlumb.setContainer("canvas");
 
-        // Function to create a new node
         function createNode(id, label, x, y) {
             const node = document.createElement("div");
             node.id = id;
@@ -28,7 +26,6 @@ document.addEventListener("DOMContentLoaded", function () {
             return node;
         }
 
-        // Enable text editing on nodes
         function enableTextEditing(node) {
             node.addEventListener("dblclick", function () {
                 const currentText = node.querySelector("span").innerText;
@@ -61,7 +58,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
 
-        // Add connection points to the node
         function enableConnectionPoints(node) {
             const positions = ["Top", "Bottom", "Left", "Right"];
 
@@ -80,16 +76,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 connectionHandle.style.cursor = "pointer";
 
                 switch (position) {
-                    case "Top":
-                        connectionHandle.style.top = "-5px";
-                        connectionHandle.style.left = "50%";
-                        connectionHandle.style.transform = "translateX(-50%)";
-                        break;
-                    case "Bottom":
-                        connectionHandle.style.top = "35px";
-                        connectionHandle.style.left = "50%";
-                        connectionHandle.style.transform = "translateX(-50%)";
-                        break;
+                    // Uncomment to allow connections points in top/bottom positions.
+//                    case "Top":
+//                        connectionHandle.style.top = "-5px";
+//                        connectionHandle.style.left = "50%";
+//                        connectionHandle.style.transform = "translateX(-50%)";
+//                        break;
+//                    case "Bottom":
+//                        connectionHandle.style.top = "35px";
+//                        connectionHandle.style.left = "50%";
+//                        connectionHandle.style.transform = "translateX(-50%)";
+//                        break;
                     case "Left":
                         connectionHandle.style.left = "-5px";
                         connectionHandle.style.top = "50%";
@@ -102,7 +99,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         break;
                 }
 
-                // Make the connection handle a source for connections
                 jsPlumb.makeSource(connectionHandle, {
                     parent: node,
                     anchor: position,
@@ -113,11 +109,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 });
             });
 
-            // Make the node a target for connections
             jsPlumb.makeTarget(node, {
                 anchor: "Continuous",
                 endpoint: ["Dot", {radius: 5}],
-                endpointStyle: {fill: "red"},
+                endpointStyle: {fill: "blue"},
             });
         }
 
@@ -176,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
             target: "node3",
             anchors: ["Right", "Left"],
             connector: "Straight",
-            paintStyle: {stroke: "red", strokeWidth: 2},
+            paintStyle: {stroke: "blue", strokeWidth: 2},
             endpoint: ["Dot", {radius: 5}],
             endpointStyle: {fill: "red"},
         });
@@ -187,8 +182,102 @@ document.addEventListener("DOMContentLoaded", function () {
             const newNode = createNode(newId, "New Node", 300, 300);
             jsPlumb.repaintEverything();
         });
+
+        function loadCanvasState(canvasState) {
+            // Clear the canvas
+            const canvas = document.getElementById("canvas");
+            canvas.innerHTML = ""; // Remove all nodes from the DOM
+            jsPlumb.reset(); // Reset jsPlumb (removes all connections)
+
+            // Create nodes
+            const nodes = canvasState.topology.nodes;
+            nodes.forEach((node) => {
+                const newNode = createNode(node.id, node.name, node.position.x, node.position.y);
+                enableConnectionPoints(newNode); // Add connection points to the node
+            });
+
+            // Create connections
+            const connections = canvasState.topology.connections;
+            connections.forEach((connection) => {
+                jsPlumb.connect({
+                    source: connection.source,
+                    target: connection.target,
+                    anchors: ["Continuous", "Continuous"], // Ensure connections work dynamically
+                    connector: "Straight",
+                    paintStyle: {stroke: "blue", strokeWidth: 2},
+                    endpoint: ["Dot", {radius: 5}],
+                    endpointStyle: {fill: "blue"},
+                });
+            });
+
+            console.log("Canvas state loaded successfully!");
+        }
+
+        document.getElementById("load").addEventListener("click", function () {
+            const exampleJson = {
+                name: "unnamed_scenario",
+                environmentConfiguration: {field: "value"},
+                assets: {asset1: 1, asset2: 3},
+                topology: {
+                    nodes: [
+                        {id: "node1", name: "Wind Turbine", position: {x: 50, y: 50}},
+                        {id: "node2", name: "Air Condition", position: {x: 200, y: 50}},
+                        {id: "node3", name: "Generic Consumer", position: {x: 350, y: 50}},
+                        {id: "node1733057724804", name: "New Node", position: {x: 300, y: 300}},
+                        {id: "node1733057726148", name: "New Node", position: {x: 72, y: 308}},
+                    ],
+                    connections: [
+                        {source: "node1", target: "node2"},
+                        {source: "node2", target: "node3"},
+                        {source: "jsPlumb_1_30", target: "node1733057724804"},
+                    ],
+                },
+                description: "None",
+            };
+
+            // Load the example JSON
+            loadCanvasState(exampleJson);
+        });
     });
 });
+
+function saveCanvasState() {
+    const nodes = document.querySelectorAll(".node");
+    const nodeData = [];
+    const connectionData = [];
+
+    // Gather node information
+    nodes.forEach((node) => {
+        const id = node.id;
+        const name = node.querySelector("span").innerText;
+        const {left, top} = node.style;
+        nodeData.push({
+            id,
+            name,
+            position: {
+                x: parseInt(left, 10),
+                y: parseInt(top, 10),
+            },
+        });
+    });
+
+    // Gather connection information
+    const connections = jsPlumb.getAllConnections();
+    connections.forEach((connection) => {
+        connectionData.push({
+            source: connection.source.id,
+            target: connection.target.id,
+        });
+    });
+
+    // Combine into a single JSON object
+    const canvasState = {
+        nodes: nodeData,
+        connections: connectionData,
+    };
+
+    return canvasState;
+}
 
 
 function handleScrollAnimation() {
@@ -199,6 +288,45 @@ function handleScrollAnimation() {
         }
     });
 }
+
+document.getElementById("save").addEventListener("click", function () {
+    const canvasState = saveCanvasState();
+
+    scenario = {
+        "name": "unnamed_scenario",
+        "environmentConfiguration":
+            {"field": "value"},
+        "assets":
+            {"asset1": 1, "asset2": 3},
+        topology: canvasState,
+        "description": "None"
+    }
+
+    console.log(scenario)
+
+    fetch("/api/v1/scenario", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(scenario),
+    })
+        .then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then((data) => {
+            console.log("Successfully saved canvas state:", data);
+            alert("Canvas state saved successfully!");
+        })
+        .catch((error) => {
+            console.error("Error saving canvas state:", error);
+            alert("Failed to save canvas state.");
+        });
+});
+
 
 window.addEventListener('scroll', handleScrollAnimation);
 window.addEventListener('load', handleScrollAnimation);
