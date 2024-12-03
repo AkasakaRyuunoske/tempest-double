@@ -19,7 +19,7 @@ import java.util.Map;
 public class Scenario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @JsonIgnore
+//    @JsonIgnore
     private int id;
 
     @Column(columnDefinition = "JSON", nullable = false)
