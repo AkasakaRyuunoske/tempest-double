@@ -1,5 +1,32 @@
-.footer-buttons{
+footer {
     display: flex;
     justify-content: space-evenly;
     background: #64749A;
+
+        button {
+            display: flex;
+            justify-content: center;
+            font-family: Verdana, monospace;
+            font-size: 1.1rem;
+            padding: 0.4rem;
+            border: none;
+            border-bottom-style: solid;
+            border-bottom-color: transparent;
+            background-color: transparent;
+            transition: all 0.6s ease;
+        }
+
+        button:hover {
+            background-color: #7A8BB3;
+            border-bottom-color: #455271;
+            transition: all 0.6s ease;
+        }
+}
+
+@media (max-width: 420px) {
+    footer {
+        button {
+            font-size: 1.2rem;
+        }
+    }
 }

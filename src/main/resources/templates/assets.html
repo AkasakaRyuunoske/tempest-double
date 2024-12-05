@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${@environment.getProperty('spring.application.name')}">Project Name</title>
     <link rel="stylesheet" href="AssetsPage/css/assets.css">
     <link rel="stylesheet" href="AssetsPage/css/footer.css">
@@ -18,11 +18,10 @@
     </div>
 </main>
 
-<footer class="footer-buttons">
+<footer>
     <button id="add">Add</button>
     <button>Delete</button>
     <button id="load">Load</button>
-    <textarea placeholder="unnamed scenario.png" id="scenario_name" required></textarea>
     <button id="save">Save</button>
 </footer>
 
