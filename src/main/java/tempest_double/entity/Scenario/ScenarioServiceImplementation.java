@@ -1,12 +1,12 @@
 package tempest_double.entity.Scenario;
 
+import jakarta.transaction.Transactional;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
-
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +24,15 @@ public class ScenarioServiceImplementation implements ScenarioService{
     @Override
     public Scenario getScenario(int id) {
         return scenarioRepository.findById(id).orElse(null);
+    }
+
+    @Override
+    public ResponseEntity<Object> getScenarioByNameResponse(String name) {
+        Scenario scenario = scenarioRepository.findByName(name).orElse(null);
+        if (scenario == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Scenario not found");
+        }
+        return ResponseEntity.ok(scenario);
     }
 
     @Override
@@ -61,6 +70,20 @@ public class ScenarioServiceImplementation implements ScenarioService{
 
         response.put("message", "Success");
 
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @Override
+    @Transactional
+    public ResponseEntity<Map<String, String>> deleteScenarioByName(String name) {
+        Map<String, String> response = new HashMap<>();
+        Scenario scenario = scenarioRepository.findByName(name).orElse(null);
+        if (scenario == null) {
+            response.put("message", "Scenario not found");
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+        scenarioRepository.deleteByName(name);
+        response.put("message", "Scenario deleted successfully");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }
