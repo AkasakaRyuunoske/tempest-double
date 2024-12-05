@@ -10,6 +10,5 @@ public class AssetServiceImplementation implements AssetService{
 
     @Override
     public void printAsset() {
-        System.out.println("Not implemented");
     }
 }

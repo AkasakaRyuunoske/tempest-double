@@ -29,6 +29,25 @@
 	<properties>
 		<java.version>17</java.version>
 		<sentry.version>7.14.0</sentry.version>
+		<pmd.version>3.21.2</pmd.version>
+		<sonar.version>3.9.1.2184</sonar.version>
+
+		<sonar.sources>src/main/java</sonar.sources>
+		<sonar.tests>src/test/java</sonar.tests>
+
+		<!-- Comprehensive exclusion configuration -->
+		<sonar.exclusions>
+			**/*.css,
+			**/*.js,
+			**/*.html,
+			**/*.yml,
+			**/*.yaml,
+			**/*.json,
+			**/static/**,
+			**/public/**,
+			**/resources/**,
+			**/templates/**
+		</sonar.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -107,6 +126,35 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<!-- PMD Code Analysis Plugin -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-pmd-plugin</artifactId>
+				<version>${pmd.version}</version>
+				<configuration>
+					<failOnViolation>true</failOnViolation>
+					<printFailingErrors>true</printFailingErrors>
+					<linkXRef>false</linkXRef>
+					<rulesets>
+						<ruleset>category/java/errorprone.xml</ruleset>
+						<ruleset>category/java/bestpractices.xml</ruleset>
+					</rulesets>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>check</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+
+			<!-- SonarQube Plugin -->
+			<plugin>
+				<groupId>org.sonarsource.scanner.maven</groupId>
+				<artifactId>sonar-maven-plugin</artifactId>
+				<version>3.9.1.2184</version>
 			</plugin>
 		</plugins>
 	</build>
