@@ -26,7 +26,7 @@ public class ScenarioAPI {
 
     @GetMapping("/scenario/name/{name}")
     public ResponseEntity<Object> getScenarioByName(@PathVariable String name) {
-        return scenarioService.getScenarioByNameResponse(name);
+        return scenarioService.getScenarioByName(name);
     }
 
     @PostMapping("/scenario")

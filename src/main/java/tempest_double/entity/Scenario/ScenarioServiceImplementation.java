@@ -27,8 +27,8 @@ public class ScenarioServiceImplementation implements ScenarioService{
     }
 
     @Override
-    public ResponseEntity<Object> getScenarioByNameResponse(String name) {
-        Scenario scenario = scenarioRepository.findByName(name).orElse(null);
+    public ResponseEntity<Object> getScenarioByName(String name) {
+        Scenario scenario = scenarioRepository.findByName(name);
         if (scenario == null) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Scenario not found");
         }
@@ -76,13 +76,14 @@ public class ScenarioServiceImplementation implements ScenarioService{
     @Override
     @Transactional
     public ResponseEntity<Map<String, String>> deleteScenarioByName(String name) {
+        int deletedCount = scenarioRepository.deleteByName(name);
         Map<String, String> response = new HashMap<>();
-        Scenario scenario = scenarioRepository.findByName(name).orElse(null);
-        if (scenario == null) {
+
+        if (deletedCount == 0) {
             response.put("message", "Scenario not found");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
-        scenarioRepository.deleteByName(name);
+
         response.put("message", "Scenario deleted successfully");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
