@@ -5,9 +5,6 @@
     <title th:text="${@environment.getProperty('spring.application.name')}">Project Name</title>
     <link rel="stylesheet" href="AssetsPage/css/assets.css">
     <link rel="stylesheet" href="AssetsPage/css/footer.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jsPlumb/2.15.6/js/jsplumb.min.js"></script>
 
 </head>
@@ -16,22 +13,19 @@
 <th:block th:replace="~{Components/header :: header}"></th:block>
 
 <main>
-    <div class="content">
-        <h1 class="animate-slide-in-left">Assets</h1>
-    </div>
-
     <div class="topology-container">
         <div id="canvas"></div>
     </div>
-
-    <footer class="footer-buttons">
-        <button id="add">Add</button>
-        <button>Delete</button>
-        <button id="load">Load</button>
-        <textarea placeholder="unnamed scenario.png" id="scenario_name" required></textarea>
-        <button id="save">Save</button>
-    </footer>
 </main>
+
+<footer class="footer-buttons">
+    <button id="add">Add</button>
+    <button>Delete</button>
+    <button id="load">Load</button>
+    <textarea placeholder="unnamed scenario.png" id="scenario_name" required></textarea>
+    <button id="save">Save</button>
+</footer>
+
 </body>
 
 <script src="AssetsPage/js/assets.js"></script>
