@@ -6,4 +6,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ScenarioRepository extends JpaRepository<Scenario, Integer> {
 
+    Scenario findByName(String name);
+
+    int deleteByName(String name);
 }
