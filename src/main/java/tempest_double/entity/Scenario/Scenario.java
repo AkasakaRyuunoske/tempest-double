@@ -30,6 +30,10 @@ public class Scenario {
     @Convert(converter = JsonConverter.class)
     private Map<String, Object> assets;
 
+    @Column(columnDefinition = "JSON", nullable = false)
+    @Convert(converter = JsonConverter.class)
+    private Map<String, Object> topology;
+
     @Column(nullable = false, unique = true)
     private String name;
 

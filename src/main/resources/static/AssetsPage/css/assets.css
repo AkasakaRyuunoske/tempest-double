@@ -1,0 +1,51 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Verdana, monospace;
+    display: flex;
+    flex-direction: column;
+}
+
+main{
+    flex: 1;
+    padding: 1.1rem;
+}
+
+@media (max-width: 360px) {
+    body {
+        width: min-content;
+    }
+}
+
+.topology-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 70vh;
+    background-color: #f4f4f4;
+    position: relative;
+    border: 1px solid #ddd;
+}
+
+#canvas {
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    position: relative;
+}
+
+.node {
+    position: absolute;
+    width: 120px;
+    height: 40px;
+    background-color: white;
+    border: 2px solid black;
+    text-align: center;
+    line-height: 40px;
+    font-size: 14px;
+    cursor: move;
+    border-radius: 5px;
+}
