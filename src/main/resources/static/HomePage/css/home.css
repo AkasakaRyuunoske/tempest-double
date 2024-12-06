@@ -39,6 +39,7 @@ body {
     font-size: 1.2rem;
     padding-top: 1.2rem;
     padding-bottom: 1.5rem;
+    text-align: justify;
 }
 
 /* Controls the size of the images on different screen sizes */
@@ -162,16 +163,4 @@ body {
     .popup-content p {
         font-size: 0.8rem;
     }
-}
-
-.image-placeholder {
-    height: 150px;
-    background-color: #e0e0e0;
-    color: #888;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-top: 10px;
-    border-radius: 8px;
-    font-style: italic;
 }
