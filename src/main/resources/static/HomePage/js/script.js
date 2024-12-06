@@ -103,29 +103,10 @@ window.addEventListener('load', handleScrollAnimation);
 
 // Activates elements when they become visible
 function handleScrollAnimation() {
-    document.querySelectorAll('.animate-slide-in-left, .animate-zoom-in, .animate-fade-in').forEach(element => {
+    document.querySelectorAll('.animate-slide-in-left').forEach(element => {
         const position = element.getBoundingClientRect();
         if (position.top < window.innerHeight && position.bottom >= 0) {
             element.classList.add('show');
         }
     });
 }
-
-document.addEventListener('DOMContentLoaded', () => {
-    const heroSection = document.querySelector('.hero-section');
-    const content = document.querySelector('.content');
-
-    let heroVisible = true;
-
-    window.addEventListener('scroll', () => {
-        if (window.scrollY > 50 && heroVisible) {
-            // Nasconde la hero section
-            heroSection.classList.add('hidden');
-            content.classList.add('visible');
-            heroVisible = false;
-
-            // Torna all'inizio della pagina
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    });
-});
