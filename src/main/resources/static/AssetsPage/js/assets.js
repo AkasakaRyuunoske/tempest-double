@@ -281,16 +281,6 @@ function saveCanvasState() {
     return canvasState;
 }
 
-
-function handleScrollAnimation() {
-    document.querySelectorAll('.animate-slide-in-left').forEach(element => {
-        const position = element.getBoundingClientRect();
-        if (position.top < window.innerHeight && position.bottom >= 0) {
-            element.classList.add('show');
-        }
-    });
-}
-
 document.getElementById("save").addEventListener("click", function () {
     const canvasState = saveCanvasState();
     let name = document.getElementById("scenario_name")
@@ -330,6 +320,61 @@ document.getElementById("save").addEventListener("click", function () {
         });
 });
 
+function centerNodesOnResize() {
+    // Get the canvas and its bounding rectangle for position calculations
+    const canvas = document.getElementById("canvas");
+    const canvasRect = canvas.getBoundingClientRect();
 
-window.addEventListener('scroll', handleScrollAnimation);
-window.addEventListener('load', handleScrollAnimation);
+    // Select all nodes on the canvas
+    const nodes = document.querySelectorAll(".node");
+
+    // Define the approximate width and height of a node
+    const nodeWidth = 120;
+    const nodeHeight = 70;
+
+    // Calculate the center of the canvas
+    const canvasCenterX = canvasRect.width / 2;
+    const canvasCenterY = canvasRect.height / 2;
+
+    // Calculate grid size (based on number of nodes) for arranging them
+    const gridSize = Math.ceil(Math.sqrt(nodes.length));
+    const nodeSpacing = 150;  // Space between each node
+
+    // Calculate the starting position for the first node to keep it centered
+    const startX = Math.max(0, canvasCenterX - (gridSize * nodeSpacing) / 2);
+    const startY = Math.max(0, canvasCenterY - (gridSize * nodeSpacing) / 2);
+
+    let row = 0, col = 0;  // Row and column counters for grid layout
+
+    // Loop through each node to position them on the canvas
+    nodes.forEach((node) => {
+        // Calculate X and Y position for each node based on grid layout
+        let x = startX + col * nodeSpacing;
+        let y = startY + row * nodeSpacing;
+
+        // Ensure node stays within the canvas bounds
+        x = Math.min(Math.max(x, 0), canvasRect.width - nodeWidth);
+        y = Math.min(Math.max(y, 0), canvasRect.height - nodeHeight);
+
+        // Set the position of the node on the canvas
+        node.style.left = `${x}px`;
+        node.style.top = `${y}px`;
+
+        // Move to the next column, or reset to the next row when reaching the grid size
+        col++;
+        if (col >= gridSize) {
+            col = 0;
+            row++;
+        }
+
+        // Reinitialize draggable behavior for each node after repositioning
+        jsPlumb.draggable(node, {containment: "parent"});
+    });
+
+    // Repaint all jsPlumb connections to match the new node positions
+    jsPlumb.repaintEverything();
+}
+
+// Trigger the centering function on window resize and initial load
+window.addEventListener('load', centerNodesOnResize);
+window.addEventListener("resize", centerNodesOnResize);
