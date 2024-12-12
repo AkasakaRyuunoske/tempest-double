@@ -20,17 +20,6 @@ jobs:
             echo "MYSQL_PASSWORD=123" >> .env
             echo "SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306" >> .env
       - run:
-          name: Wait for MySQL
-          command: |
-            for i in {1..30}; do
-              if mysqladmin ping -h127.0.0.1 --user=root --password=12345 --silent; then
-                echo "MySQL is up and running!"
-                break
-              fi
-              echo "Waiting for MySQL to be ready..."
-              sleep 2
-            done
-      - run:
           name: Calculate cache key
           command: |-
             find . -name 'pom.xml' -o -name 'gradlew*' -o -name '*.gradle*' | \
