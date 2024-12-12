@@ -1,12 +1,35 @@
-# This config was automatically generated from your source code
-# Stacks detected: cicd:github-actions:.github/workflows,deps:java:.
 version: 2.1
 jobs:
   test-java:
     docker:
-      - image: cimg/openjdk:17.0
+      - image: cimg/openjdk:17.0  # Primary container
+      - image: mysql:8.0         # MySQL service container
+        environment:
+          MYSQL_ROOT_PASSWORD: 12345
+          MYSQL_DATABASE: test
+          MYSQL_USER: ghostmountain
+          MYSQL_PASSWORD: 123
     steps:
       - checkout
+      - run:
+          name: Create .env file
+          command: |
+            echo "MYSQL_ROOT_PASSWORD=12345" > .env
+            echo "MYSQL_DATABASE=test" >> .env
+            echo "MYSQL_USER=ghostmountain" >> .env
+            echo "MYSQL_PASSWORD=123" >> .env
+            echo "SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306" >> .env
+      - run:
+          name: Wait for MySQL
+          command: |
+            for i in {1..30}; do
+              if mysqladmin ping -h127.0.0.1 --user=root --password=12345 --silent; then
+                echo "MySQL is up and running!"
+                break
+              fi
+              echo "Waiting for MySQL to be ready..."
+              sleep 2
+            done
       - run:
           name: Calculate cache key
           command: |-
@@ -15,6 +38,7 @@ jobs:
       - restore_cache:
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
       - run:
+          name: Run Maven tests
           command: mvn verify
       - store_test_results:
           path: target/surefire-reports
@@ -22,22 +46,8 @@ jobs:
           key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
           paths:
             - ~/.m2/repository
-  deploy:
-    # This is an example deploy job, not actually used by the workflow
-    docker:
-      - image: cimg/base:stable
-    steps:
-      # Replace this with steps to deploy to users
-      - run:
-          name: deploy
-          command: '#e.g. ./deploy.sh'
-      - run:
-          name: found github actions config
-          command: ':'
+
 workflows:
   build-and-test:
     jobs:
       - test-java
-    # - deploy:
-    #     requires:
-    #       - test-java
