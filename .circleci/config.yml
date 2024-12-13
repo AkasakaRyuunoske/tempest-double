@@ -1,0 +1,42 @@
+version: 2.1
+jobs:
+  test-java:
+    docker:
+      - image: cimg/openjdk:17.0  # Primary container
+      - image: mysql:8.0         # MySQL service container
+        environment:
+          MYSQL_ROOT_PASSWORD: 12345
+          MYSQL_DATABASE: test
+          MYSQL_USER: ghostmountain
+          MYSQL_PASSWORD: 123
+    steps:
+      - checkout
+      - run:
+          name: Create .env file
+          command: |
+            echo "MYSQL_ROOT_PASSWORD=12345" > .env
+            echo "MYSQL_DATABASE=test" >> .env
+            echo "MYSQL_USER=ghostmountain" >> .env
+            echo "MYSQL_PASSWORD=123" >> .env
+            echo "SPRING_DATASOURCE_URL=jdbc:mysql://localhost:3306" >> .env
+      - run:
+          name: Calculate cache key
+          command: |-
+            find . -name 'pom.xml' -o -name 'gradlew*' -o -name '*.gradle*' | \
+                    sort | xargs cat > /tmp/CIRCLECI_CACHE_KEY
+      - restore_cache:
+          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
+      - run:
+          name: Run Maven tests
+          command: mvn verify
+      - store_test_results:
+          path: target/surefire-reports
+      - save_cache:
+          key: cache-{{ checksum "/tmp/CIRCLECI_CACHE_KEY" }}
+          paths:
+            - ~/.m2/repository
+
+workflows:
+  build-and-test:
+    jobs:
+      - test-java
