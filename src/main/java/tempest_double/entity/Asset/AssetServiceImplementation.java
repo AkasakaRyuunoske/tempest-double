@@ -9,6 +9,7 @@ public class AssetServiceImplementation implements AssetService{
     private AssetRepository assetRepository;
 
     @Override
-    public void printAsset() {
+    public String printAsset() {
+        return "implemented for test";
     }
 }
