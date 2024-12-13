@@ -26,6 +26,9 @@ public class ScenarioServiceImplementation implements ScenarioService{
         return scenarioRepository.findById(id).orElse(null);
     }
 
+    private String message = "message";
+    private String status = "status";
+
     @Override
     public ResponseEntity<Object> getScenarioByName(String name) {
         Scenario scenario = scenarioRepository.findByName(name);
@@ -40,8 +43,8 @@ public class ScenarioServiceImplementation implements ScenarioService{
         scenarioRepository.save(scenario);
 
         Map<String, String> response = new HashMap<>();
-        response.put("message", "Success");
-        response.put("status", "200");
+        response.put(message, "Success");
+        response.put(status, "200");
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -51,8 +54,8 @@ public class ScenarioServiceImplementation implements ScenarioService{
         scenarioRepository.deleteById(id);
 
         Map<String, String> response = new HashMap<>();
-        response.put("message", "Success");
-        response.put("status", "200");
+        response.put(message, "Success");
+        response.put(status, "200");
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -61,14 +64,14 @@ public class ScenarioServiceImplementation implements ScenarioService{
     public ResponseEntity<Map<String, String>> updateScenario(int id, @RequestBody Scenario scenario) {
         Map<String, String> response = new HashMap<>();
         if (!scenarioRepository.existsById(id)){
-            response.put("message", "Error: Scenario with provided ID not found.");
+            response.put(message, "Error: Scenario with provided ID not found.");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
 
         scenario.setId(id);
         scenarioRepository.save(scenario);
 
-        response.put("message", "Success");
+        response.put(message, "Success");
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
@@ -80,11 +83,11 @@ public class ScenarioServiceImplementation implements ScenarioService{
         Map<String, String> response = new HashMap<>();
 
         if (deletedCount == 0) {
-            response.put("message", "Scenario not found");
+            response.put(message, "Scenario not found");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
 
-        response.put("message", "Scenario deleted successfully");
+        response.put(message, "Scenario deleted successfully");
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 }

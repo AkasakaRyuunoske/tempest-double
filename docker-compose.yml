@@ -14,6 +14,11 @@ services:
       - mysql_data:/var/lib/mysql
     networks:
       - backend-network
+  sonar-qube:
+    image: sonarqube:community
+    container_name: tempest-double-sonarqube
+    ports:
+      - "9000:9000"
 
 volumes:
   mysql_data:
