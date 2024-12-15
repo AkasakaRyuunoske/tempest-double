@@ -22,16 +22,16 @@ function isClickInCircle(clickX, clickY, center, radius) {
 
 // Data of the zones of the image
 const zonesData = [
-    { id: 1, points: [ { x: 10.55, y: 3.95 }, { x: 10.55, y: 16.98 }, { x: 15.03, y: 10.15 }, { x: 6.34, y: 10.15 } ] },
-    { id: 2, points: [ { x: 5.73, y: 33.45 }, { x: 5.73, y: 44.37 }, { x: 9.52, y: 38.69 }, { x: 2.24, y: 38.69 } ] },
-    { id: 3, points: [ { x: 31.71, y: 10.59 }, { x: 31.71, y: 22.16 }, { x: 35.43, y: 16.59 }, { x: 27.71, y: 16.59 } ] },
-    { id: 4, points: [ { x: 27.3, y: 43.66 }, { x: 27.3, y: 57.72 }, { x: 32.12, y: 50.88 }, { x: 22.74, y: 50.88 } ] },
-    { id: 5, points: [ { x: 48.31, y: 15.27 }, { x: 48.31, y: 25.27 }, { x: 51.76, y: 20.08 }, { x: 45.10, y: 20.08 } ] },
-    { id: 6, points: [ { x: 60.10, y: 34.16 }, { x: 60.10, y: 44.17 }, { x: 63.37, y: 38.98 }, { x: 56.70, y: 38.98 } ] },
-    { id: 7, points: [ { x: 72.51, y: 46.39 }, { x: 72.51, y: 58.99 }, { x: 76.96, y: 52.69 }, { x: 68.31, y: 52.69 } ] },
-    { id: 8, points: [ { x: 78.44, y: 17.86 }, { x: 78.44, y: 29.35 }, { x: 82.39, y: 23.79 }, { x: 74.49, y: 23.79 } ] },
-    { id: 9, points: [ { x: 91.28, y: 64.54 }, { x: 91.28, y: 80.11 }, { x: 96.47, y: 72.32 }, { x: 86.10, y: 72.32 } ] },
-    { id: 10, points: [ { x: 75.48, y: 87.14 }, { x: 75.48, y: 97.15 }, { x: 78.69, y: 92.33 }, { x: 72.02, y: 92.33 } ] }
+    { id: 1, points: [ { x: 10.55, y: 3.95 }, { x: 10.55, y: 17 }, { x: 15.05, y: 10.15 }, { x: 6.35, y: 10.15 } ] },
+    { id: 2, points: [ { x: 5.75, y: 33.45 }, { x: 5.75, y: 44.35 }, { x: 9.5, y: 38.7 }, { x: 2.25, y: 38.7 } ] },
+    { id: 3, points: [ { x: 31.7, y: 10.6 }, { x: 31.7, y: 22.15 }, { x: 35.45, y: 16.6 }, { x: 27.7, y: 16.6 } ] },
+    { id: 4, points: [ { x: 27.3, y: 43.65 }, { x: 27.3, y: 57.7 }, { x: 32, y: 50.9 }, { x: 22.75, y: 50.9 } ] },
+    { id: 5, points: [ { x: 48.3, y: 15.25 }, { x: 48.3, y: 25.25 }, { x: 51.75, y: 20.1 }, { x: 45.1, y: 20.1 } ] },
+    { id: 6, points: [ { x: 60.1, y: 34.15 }, { x: 60.1, y: 44.15 }, { x: 63.35, y: 39 }, { x: 56.7, y: 39 } ] },
+    { id: 7, points: [ { x: 72.5, y: 46.4 }, { x: 72.5, y: 59 }, { x: 76.95, y: 52.7 }, { x: 68.3, y: 52.7 } ] },
+    { id: 8, points: [ { x: 78.45, y: 17.85 }, { x: 78.45, y: 29.35 }, { x: 82.4, y: 23.8 }, { x: 74.5, y: 23.8 } ] },
+    { id: 9, points: [ { x: 91.3, y: 64.55 }, { x: 91.3, y: 80.1 }, { x: 96.45, y: 72.3 }, { x: 86.1, y: 72.3 } ] },
+    { id: 10, points: [ { x: 75.5, y: 87.15 }, { x: 75.5, y: 97.15 }, { x: 78.7, y: 92.35 }, { x: 72, y: 92.35 } ] }
 ];
 
 // Function that makes the zones responsive
@@ -91,16 +91,19 @@ img.addEventListener("click", function (event) {
     }
 });
 
-// Closes popup if clicked on the background
+// Closes popup if click on the background
 popup.addEventListener('click', (event) => {
     if (event.target === popup) {
         hidePopup();
     }
 });
 
+window.addEventListener('scroll', handleScrollAnimation);
+window.addEventListener('load', handleScrollAnimation);
+
 // Activates elements when they become visible
 function handleScrollAnimation() {
-    document.querySelectorAll('.animate-slide-in-left').forEach(element => {
+    document.querySelectorAll('.animate-slide-in-left, .animate-zoom-in, .animate-fade-in').forEach(element => {
         const position = element.getBoundingClientRect();
         if (position.top < window.innerHeight && position.bottom >= 0) {
             element.classList.add('show');
@@ -108,5 +111,21 @@ function handleScrollAnimation() {
     });
 }
 
-window.addEventListener('scroll', handleScrollAnimation);
-window.addEventListener('load', handleScrollAnimation);
+document.addEventListener('DOMContentLoaded', () => {
+    const heroSection = document.querySelector('.hero-section');
+    const content = document.querySelector('.content');
+
+    let heroVisible = true;
+
+    window.addEventListener('scroll', () => {
+        if (window.scrollY > 50 && heroVisible) {
+            // Nasconde la hero section
+            heroSection.classList.add('hidden');
+            content.classList.add('visible');
+            heroVisible = false;
+
+            // Torna all'inizio della pagina
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    });
+});
