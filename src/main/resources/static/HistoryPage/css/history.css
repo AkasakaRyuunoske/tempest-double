@@ -5,7 +5,6 @@ body {
 
 /* internal section */
 .content {
-    background-color: #efeffd;
     padding-left: 5%; /* internal space */
     padding-right: 5%;
     transition: padding-left 0.5s ease; /* transition for padding */
