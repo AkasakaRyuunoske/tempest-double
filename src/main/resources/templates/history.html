@@ -1,84 +1,98 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title th:text="${@environment.getProperty('spring.application.name')}">Project Name</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${@environment.getProperty('spring.application.name')}"></title>
     <link rel="stylesheet" href="HistoryPage/css/history.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
 <body>
 
 <th:block th:replace="~{Components/header :: header}"></th:block>
 
-<div class="content">
+<main>
 
-    <div class="session-card animate-slide-in-left">
-        <div class="card-header">
-            <h3>Nome dello scenario</h3>
+    <div class="content">
+
+        <div class="select-delete-container animate-slide-in-left">
+            <div class="checkbox-label">
+                <input type="checkbox" id="select-all" />
+                <label for="select-all"><strong>Seleziona tutte le card</strong></label>
+            </div>
+            <button id="delete-selected" class="delete-button">Delete selected</button>
         </div>
-        <div class="card-content">
-            <div class="data-ora">
-                <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
-                <p><strong>Fine: </strong>14/11/2024, 14:37</p>
+
+        <div class="session-card animate-slide-in-left">
+            <div class="card-header">
+                <input type="checkbox" class="card-checkbox">
+                <h3>Nome dello scenario</h3>
             </div>
-            <div class="durata">
-                <p><strong>Durata: </strong>0h 1min 0s</p>
-            </div>
-            <div class="asset">
-                <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
-            </div>
-            <div class="esito">
-                <p><strong>Terminato con successo</strong></p>
+            <div class="card-content">
+                <div class="date-time">
+                    <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
+                    <p><strong>Fine: </strong>14/11/2024, 14:37</p>
+                </div>
+                <div class="duration">
+                    <p><strong>Durata: </strong>0h 1min 0s</p>
+                </div>
+                <div class="asset">
+                    <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
+                </div>
+                <div class="outcome">
+                    <p><strong>Terminato con successo</strong></p>
+                </div>
             </div>
         </div>
+
+        <div class="session-card animate-slide-in-left">
+            <div class="card-header">
+                <input type="checkbox" class="card-checkbox">
+                <h3>Nome dello scenario</h3>
+            </div>
+            <div class="card-content">
+                <div class="date-time">
+                    <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
+                    <p><strong>Fine: </strong>14/11/2024, 14:37</p>
+                </div>
+                <div class="duration">
+                    <p><strong>Durata: </strong>0h 1min 0s</p>
+                </div>
+                <div class="asset">
+                    <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
+                </div>
+                <div class="outcome">
+                    <p><strong>Terminato con successo</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="session-card animate-slide-in-left">
+            <div class="card-header">
+                <input type="checkbox" class="card-checkbox">
+                <h3>Nome dello scenario</h3>
+            </div>
+            <div class="card-content">
+                <div class="date-time">
+                    <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
+                    <p><strong>Fine: </strong>14/11/2024, 14:37</p>
+                </div>
+                <div class="duration">
+                    <p><strong>Durata: </strong>0h 1min 0s</p>
+                </div>
+                <div class="asset">
+                    <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
+                </div>
+                <div class="outcome">
+                    <p><strong>Terminato con successo</strong></p>
+                </div>
+            </div>
+        </div>
+
     </div>
 
-    <div class="session-card animate-slide-in-left">
-        <div class="card-header">
-            <h3>Nome dello scenario</h3>
-        </div>
-        <div class="card-content">
-            <div class="data-ora">
-                <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
-                <p><strong>Fine: </strong>14/11/2024, 14:37</p>
-            </div>
-            <div class="durata">
-                <p><strong>Durata: </strong>0h 1min 0s</p>
-            </div>
-            <div class="asset">
-                <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
-            </div>
-            <div class="esito">
-                <p><strong>Terminato con successo</strong></p>
-            </div>
-        </div>
-    </div>
-
-    <div class="session-card animate-slide-in-left">
-        <div class="card-header">
-            <h3>Nome dello scenario</h3>
-        </div>
-        <div class="card-content">
-            <div class="data-ora">
-                <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
-                <p><strong>Fine: </strong>14/11/2024, 14:37</p>
-            </div>
-            <div class="durata">
-                <p><strong>Durata: </strong>0h 1min 0s</p>
-            </div>
-            <div class="asset">
-                <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
-            </div>
-            <div class="esito">
-                <p><strong>Terminato con successo</strong></p>
-            </div>
-        </div>
-    </div>
-</div>
+</main>
 
 </body>
+
 <script src="HistoryPage/js/history.js"></script>
 
 </html>
