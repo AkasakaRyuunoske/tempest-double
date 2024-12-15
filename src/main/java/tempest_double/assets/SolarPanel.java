@@ -102,6 +102,6 @@ public class SolarPanel extends Asset {
         double powerOutput = totalRadiation * panelArea * efficiency * (1 + temperatureCoefficient * (cellTemperature - 25));
 
         // Ensure non-negative power output
-        return Math.max(0, powerOutput);
+        return Math.min(nominalPower, Math.max(0, powerOutput));
     }
 }
