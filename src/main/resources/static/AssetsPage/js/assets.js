@@ -375,6 +375,108 @@ function centerNodesOnResize() {
     jsPlumb.repaintEverything();
 }
 
+document.addEventListener('DOMContentLoaded', () => {
+    const popupOverlay = document.getElementById('popup-overlay');
+    const popup = document.getElementById('popup');
+    const popupTitle = document.getElementById('popup-title');
+    const popupContent = document.getElementById('popup-content');
+    const confirmBtn = document.getElementById('confirm-btn');
+    const cancelBtn = document.getElementById('cancel-btn');
+
+    const popupData = {
+        add: {
+            title: "Add New Asset",
+            content: `
+                <div class="popup-body" id="popup-content">
+                    <div class="popup-container">
+                    
+                        <div class="popup-section">
+                            <h4>Generic Data</h4>
+                            <label>Name<br>
+                                <input type="text" id="name-input" placeholder="Enter name" oninput="updatePreview()">
+                            </label><br>
+                            <label>Type<br>
+                                <input type="text" placeholder="Enter type">
+                            </label><br>
+                            <label>Role<br>
+                                <div class="radio-group">
+                                    <label>
+                                        <input type="radio" name="role" value="Consumer"> 
+                                        <span class="radio-label">Consumer</span>
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="role" value="Producer"> 
+                                        <span class="radio-label">Producer</span>
+                                    </label>
+                                </div>
+                            </label>
+                        </div>
+
+                        <div class="popup-preview">
+                            <span id="preview-text">Your Preview</span>
+                        </div>
+
+                        <div class="popup-section">
+                            <h4>Generic Data</h4>
+                            <label>Area m²<br>
+                                <input type="number">
+                            </label><br>
+                            <label>Temperature °C<br>
+                                <input type="number">
+                            </label><br>
+                            <label>Efficiency %<br>
+                                <input type="number">
+                            </label>
+                        </div>
+                    </div>
+                </div>`
+        },
+        delete: {
+            title: "Delete Asset",
+            content: `
+                <p>Choose a file:</p><input type="file">
+                <p>Are you sure you want to delete this asset?</p>`
+        },
+        load: {
+            title: "Load Assets",
+            content: `<p>Load your saved assets. Choose a file:</p><input type="file">`
+        },
+        save: {
+            title: "Save Assets",
+            content: `<p>Save your current assets. Enter file name:</p><input type="text" placeholder="File name">`
+        }
+    };
+
+    function showPopup(type) {
+        const data = popupData[type];
+        popupTitle.innerText = data.title;
+        popupContent.innerHTML = data.content;
+
+        popupOverlay.style.display = 'block';
+        popup.style.display = 'block';
+    }
+
+    function closePopup() {
+        popupOverlay.style.display = 'none';
+        popup.style.display = 'none';
+    }
+
+    document.getElementById('add').addEventListener('click', () => showPopup('add'));
+    document.getElementById('delete').addEventListener('click', () => showPopup('delete'));
+    document.getElementById('load').addEventListener('click', () => showPopup('load'));
+    document.getElementById('save').addEventListener('click', () => showPopup('save'));
+
+    cancelBtn.addEventListener('click', closePopup);
+    popupOverlay.addEventListener('click', closePopup);
+});
+
+// Used to show the chosed name in the preview at the center of the save popup
+function updatePreview() {
+    const nameInput = document.getElementById("name-input");
+    const previewText = document.getElementById("preview-text");
+    previewText.textContent = nameInput.value || "Your Preview";
+}
+
 // Trigger the centering function on window resize and initial load
 window.addEventListener('load', centerNodesOnResize);
 window.addEventListener("resize", centerNodesOnResize);
