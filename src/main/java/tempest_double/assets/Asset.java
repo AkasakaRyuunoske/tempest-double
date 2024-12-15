@@ -1,7 +1,6 @@
 package tempest_double.assets;
 
 import java.time.LocalDateTime;
-import java.util.Map;
 
 abstract public class Asset {
     protected final String name;
