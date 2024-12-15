@@ -9,7 +9,7 @@ import tempest_double.entity.Scenario.ScenarioRepository;
 import java.util.List;
 
 @Service
-public class SimulationServiceImplementation implements SimulationService{
+public class SimulationServiceImplementation implements SimulationService {
     @Autowired
     SimulationRepository simulationRepository;
     @Autowired
