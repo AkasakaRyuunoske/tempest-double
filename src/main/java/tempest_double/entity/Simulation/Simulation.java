@@ -24,6 +24,7 @@ public class Simulation {
     private int id;
 
     @CreationTimestamp
+    @JsonIgnore
     private LocalDateTime date;
 
     @ManyToOne
