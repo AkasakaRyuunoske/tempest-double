@@ -35,4 +35,20 @@ public class SimulationServiceImplementation implements SimulationService{
 
         return ResponseEntity.ok("Saved without errors");
     }
+
+    @Override
+    public ResponseEntity<String> deleteSimulations(int[] simulation_ids) {
+        for (int simulationId : simulation_ids) {
+            simulationRepository.deleteById(simulationId);
+        }
+
+        return ResponseEntity.ok("Deleted all without errors");
+    }
+
+    @Override
+    public ResponseEntity<String> deleteSimulation(int simulation_id) {
+        simulationRepository.deleteById(simulation_id);
+
+        return ResponseEntity.ok("Deleted without errors");
+    }
 }

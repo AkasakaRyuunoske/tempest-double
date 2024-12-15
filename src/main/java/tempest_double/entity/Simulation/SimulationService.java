@@ -10,4 +10,8 @@ public interface SimulationService {
     List<Simulation> getSimulations();
 
     ResponseEntity<String> postSimulation(int scenario_id);
+
+    ResponseEntity<String> deleteSimulations(int[] simulationIds);
+
+    ResponseEntity<String> deleteSimulation(int scenarioId);
 }

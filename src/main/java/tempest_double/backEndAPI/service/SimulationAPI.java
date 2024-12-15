@@ -38,4 +38,14 @@ public class SimulationAPI {
     ResponseEntity<String> postSimulation(@RequestBody int scenario_id){
         return simulationService.postSimulation(scenario_id);
     }
+
+    @DeleteMapping("/simulations")
+    ResponseEntity<String> deleteSimulations(@RequestBody int[] simulation_ids){
+        return simulationService.deleteSimulations(simulation_ids);
+    }
+
+    @DeleteMapping("/simulation/{id}")
+    ResponseEntity<String> deleteSimulation(@PathVariable int id){
+        return simulationService.deleteSimulation(id);
+    }
 }
