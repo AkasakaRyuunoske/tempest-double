@@ -8,6 +8,8 @@ import tempest_double.entity.Scenario.ScenarioService;
 import tempest_double.entity.Simulation.Simulation;
 import tempest_double.entity.Simulation.SimulationService;
 
+import java.util.List;
+
 @RestController
 @RequestMapping("/api/v1/")
 public class SimulationAPI {
@@ -21,5 +23,19 @@ public class SimulationAPI {
         if (simulation == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 
         return ResponseEntity.ok(simulation);
+    }
+
+    @GetMapping("/simulations")
+    ResponseEntity<List<Simulation>> getSimulations(){
+        List<Simulation> simulations = simulationService.getSimulations();
+
+        if (simulations == null) return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+
+        return ResponseEntity.ok(simulations);
+    }
+
+    @PostMapping("/simulation")
+    ResponseEntity<String> postSimulation(@RequestBody int scenario_id){
+        return simulationService.postSimulation(scenario_id);
     }
 }
