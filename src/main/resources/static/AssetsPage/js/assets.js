@@ -392,12 +392,16 @@ document.addEventListener('DOMContentLoaded', () => {
                     
                         <div class="popup-section">
                             <h4>Generic Data</h4>
+                            
                             <label>Name<br>
                                 <input type="text" id="name-input" placeholder="Enter name" oninput="updatePreview()">
                             </label><br>
+                            
                             <label>Type<br>
-                                <input type="text" placeholder="Enter type">
+                                <select id="asset-type-select">
+                                </select>
                             </label><br>
+                            
                             <label>Role<br>
                                 <div class="radio-group">
                                     <label>
@@ -410,6 +414,7 @@ document.addEventListener('DOMContentLoaded', () => {
                                     </label>
                                 </div>
                             </label>
+                            
                         </div>
 
                         <div class="popup-preview">
@@ -451,10 +456,53 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Define the options for Producer and Consumer
+    const producerOptions = [
+        { value: "solar", text: "Solar Panel" },
+        { value: "fuel", text: "Fuel Cell" },
+        { value: "wind", text: "Wind Turbine" }
+    ];
+
+    const consumerOptions = [
+        { value: "accumulator", text: "Accumulator" },
+        { value: "generic", text: "Generic Consumer" }
+    ];
+
+    function updateSelectOptions(selectedType) {
+        const selectElement = document.getElementById("asset-type-select");
+        if (!selectElement) return;
+
+        // Clear existing options
+        selectElement.innerHTML = "";
+
+        // Determine which options to display
+        const optionsToShow =
+            selectedType === "Producer" ? producerOptions : consumerOptions;
+
+        // Populate the select element
+        optionsToShow.forEach(option => {
+            const opt = document.createElement("option");
+            opt.value = option.value;
+            opt.textContent = option.text;
+            selectElement.appendChild(opt);
+        });
+    }
+
     function showPopup(type) {
         const data = popupData[type];
         popupTitle.innerText = data.title;
         popupContent.innerHTML = data.content;
+
+        if (type === "add") {
+            const radioButtons = document.getElementsByName("role");
+            updateSelectOptions("Producer"); // Initialize with default options
+
+            radioButtons.forEach(radio => {
+                radio.addEventListener("change", () => {
+                    updateSelectOptions(radio.value);
+                });
+            });
+        }
 
         popupOverlay.style.display = 'block';
         popup.style.display = 'block';
