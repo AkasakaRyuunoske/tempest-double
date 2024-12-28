@@ -418,9 +418,9 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
 
                         <div class="popup-preview">
-                            <span id="preview-text">Your Preview</span>
+                            <span id="preview-node" class="node">Solar Panel</span>
                         </div>
-                        
+
                         <div class="popup-section">
                             <h4>Generic Data</h4>
                             <label>Area m²<br>
@@ -472,12 +472,20 @@ document.addEventListener('DOMContentLoaded', () => {
         const selectElement = document.getElementById("asset-type-select");
         if (!selectElement) return;
 
+        const preview = document.getElementById("preview-node")
+
         // Clear existing options
         selectElement.innerHTML = "";
 
         // Determine which options to display
         const optionsToShow =
             selectedType === "Producer" ? producerOptions : consumerOptions;
+
+        if (selectedType === "Producer")
+            preview.style = "border-left: 1rem solid #F98491"
+        else
+            preview.style = "border-left: 1rem solid #597445"
+
 
         // Populate the select element
         optionsToShow.forEach(option => {
@@ -525,7 +533,7 @@ document.addEventListener('DOMContentLoaded', () => {
 // Used to show the chosen name in the preview at the center of the save popup
 function updatePreview() {
     const nameInput = document.getElementById("name-input");
-    const previewText = document.getElementById("preview-text");
+    const previewText = document.getElementById("preview-node");
     previewText.textContent = nameInput.value || "Your Preview";
 }
 
