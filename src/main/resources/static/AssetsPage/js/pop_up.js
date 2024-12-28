@@ -54,13 +54,13 @@ document.addEventListener('DOMContentLoaded', () => {
             title: "Delete Scenario",
             content: `
                 <p>Name</p>
-                <input type="text">
+                <input type="text" placeholder="Scenario Name">
                 <button>&#x1F50E;</button>` // Search symbol
         },
         load: {
             title: "Load Scenario",
             content: `<p>Name</p>
-                      <input type="file">
+                      <input type="text" placeholder="Scenario Name">
                       <button>&#x1F50E;</button>` // Search symbol
         },
         save: {
@@ -72,60 +72,68 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const optionsConfig = {
         solar_panel: `
+            <label>Nominal Power (W)<br>
+                <input type="number" id="nominal-power-input" placeholder="Enter nominal power">
+            </label><br>
+            
             <label>Area (m²)<br>
                 <input type="number" id="area-input" placeholder="Enter area">
             </label><br>
+            
             <label>Temperature (°C)<br>
                 <input type="number" id="temperature-input" placeholder="Enter temperature">
             </label><br>
+            
             <label>Efficiency (%)<br>
                 <input type="number" id="efficiency-input" placeholder="Enter efficiency">
             </label><br>
         `,
         accumulator: `
-            <label>Capacity (kWh)<br>
+            <label>Capacity (A/h)<br>
                 <input type="number" id="capacity-input" placeholder="Enter capacity">
             </label><br>
             
-            <label>Nominal Voltage (kWh)<br>
-                <input type="number" id="nominalVoltage-input" placeholder="Enter nominal voltage">
+            <label>Nominal Voltage (Wh)<br>
+                <input type="number" id="nominal-voltage-input" placeholder="Enter nominal voltage">
             </label><br>
             
-            <label>Current Charge (kWh)<br>
-                <input type="number" id="currentCharge-input" placeholder="Enter current charge">
+            <label>Current Charge (A/h)<br>
+                <input type="number" id="current-charge-input" placeholder="Enter current charge">
             </label><br>
         `,
         wind_turbine: `
+            <label>Nominal Power (W)<br>
+                <input type="number" id="nominal-power-input" placeholder="Enter nominal power">
+            </label><br>
+            
             <label>Blade Length (m)<br>
                 <input type="number" id="blade-length-input" placeholder="Enter blade length">
             </label><br>
-            <label>Nominal Power (kW)<br>
-                <input type="number" id="nominal-power-input" placeholder="Enter nominal power">
-            </label><br>
+            
             <label>Dissipation Factor<br>
                 <input type="number" id="dissipation-factor-input" placeholder="Enter dissipation factor">
             </label><br>
         `,
         fuel_cell: `
-            <label>Nominal Power<br>
-                <input type="number" id="dissipation-factor-input" placeholder="Enter nominal power">
+            <label>Nominal Power (W)<br>
+                <input type="number" id="nominal-power-input" placeholder="Enter nominal power">
             </label><br>
             
-            <label>Fuel Capacity (m)<br>
-                <input type="number" id="blade-length-input" placeholder="Enter fuel capacity">
+            <label>Fuel Capacity (l)<br>
+                <input type="number" id="fuel-capacity-input" placeholder="Enter fuel capacity">
             </label><br>
             
-            <label>Current Fuel (kW)<br>
-                <input type="number" id="nominal-power-input" placeholder="Enter current fuel">
+            <label>Current Fuel (l)<br>
+                <input type="number" id="current-fuel-input" placeholder="Enter current fuel">
             </label><br>
         `,
         generic_consumer: `
-            <label>Nominal Power<br>
-                <input type="number" id="dissipation-factor-input" placeholder="Enter nominal power">
+            <label>Nominal Power (W)<br>
+                <input type="number" id="nominal-power-input" placeholder="Enter nominal power">
             </label><br>
             
-            <label>Min Consumption<br>
-                <input type="number" id="blade-length-input" placeholder="Enter min consumption">
+            <label>Min Consumption (W)<br>
+                <input type="number" id="min-consumption-input" placeholder="Enter min consumption">
             </label><br>
         `
     };
