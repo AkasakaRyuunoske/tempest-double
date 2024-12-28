@@ -401,11 +401,11 @@ document.addEventListener('DOMContentLoaded', () => {
                             <label>Role<br>
                                 <div class="radio-group">
                                     <label>
-                                        <input type="radio" name="role" value="Consumer"> 
+                                        <input type="radio" name="role" value="Consumer" id="type-consumer"> 
                                         <span class="radio-label">Consumer</span>
                                     </label>
                                     <label>
-                                        <input type="radio" name="role" value="Producer"> 
+                                        <input type="radio" name="role" value="Producer" id="type-producer"> 
                                         <span class="radio-label">Producer</span>
                                     </label>
                                 </div>
@@ -415,7 +415,7 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="popup-preview">
                             <span id="preview-text">Your Preview</span>
                         </div>
-
+                        
                         <div class="popup-section">
                             <h4>Generic Data</h4>
                             <label>Area m²<br>
@@ -432,18 +432,22 @@ document.addEventListener('DOMContentLoaded', () => {
                 </div>`
         },
         delete: {
-            title: "Delete Asset",
+            title: "Delete Scenario",
             content: `
-                <p>Choose a file:</p><input type="file">
-                <p>Are you sure you want to delete this asset?</p>`
+                <p>Name</p>
+                <input type="text">
+                <button>&#x1F50E;</button>` // Search symbol
         },
         load: {
-            title: "Load Assets",
-            content: `<p>Load your saved assets. Choose a file:</p><input type="file">`
+            title: "Load Scenario",
+            content: `<p>Name</p>
+                      <input type="file">
+                      <button>&#x1F50E;</button>` // Search symbol
         },
         save: {
-            title: "Save Assets",
-            content: `<p>Save your current assets. Enter file name:</p><input type="text" placeholder="File name">`
+            title: "Save Scenario",
+            content: `<p>Name</p>
+                      <input type="text" placeholder="Scenario Name">`
         }
     };
 
@@ -470,7 +474,7 @@ document.addEventListener('DOMContentLoaded', () => {
     popupOverlay.addEventListener('click', closePopup);
 });
 
-// Used to show the chosed name in the preview at the center of the save popup
+// Used to show the chosen name in the preview at the center of the save popup
 function updatePreview() {
     const nameInput = document.getElementById("name-input");
     const previewText = document.getElementById("preview-text");

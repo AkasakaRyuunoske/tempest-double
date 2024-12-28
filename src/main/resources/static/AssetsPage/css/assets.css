@@ -192,9 +192,18 @@ main{
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-.radio-group input[type="radio"]:hover {
-    background-color: #455271;
-    border-color: #455271;
+/*.radio-group input[type="radio"]:hover {*/
+/*    background-color: #455271;*/
+/*    border-color: #455271;*/
+/*}*/
+#type-producer:checked{
+    background-color: #F98491;
+    border-color: #F98491;
+}
+
+#type-consumer:checked{
+    background-color: #597445;
+    border-color: #597445;
 }
 
 .radio-group input[type="radio"]:checked {
