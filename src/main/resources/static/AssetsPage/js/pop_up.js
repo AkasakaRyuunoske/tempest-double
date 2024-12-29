@@ -2,7 +2,7 @@ import {createNode, saveTopology} from './assets.js';
 
 // Used to show the chosen name in the preview at the center of the save popup
 function updatePreview() {
-    const nameInput = document.getElementById("name-input");
+    const nameInput = document.getElementById("name");
     const previewText = document.getElementById("preview-node");
     previewText.textContent = nameInput.value || "Your Preview";
 }
@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
                             <h4>Generic Data</h4>
                             
                             <label>Name<br>
-                                <input type="text" id="name-input" placeholder="Enter name" oninput="updatePreview()">
+                                <input type="text" id="name" placeholder="Enter name" oninput="updatePreview()">
                             </label><br>
                             
                             <label>Type<br>
@@ -84,67 +84,67 @@ document.addEventListener('DOMContentLoaded', () => {
     const optionsConfig = {
         solar_panel: `
             <label>Nominal Power (W)<br>
-                <input type="number" id="nominal-power-input" placeholder="Enter nominal power">
+                <input type="number" id="nominal-power" placeholder="Enter nominal power" name="asset-info">
             </label><br>
             
             <label>Area (m²)<br>
-                <input type="number" id="area-input" placeholder="Enter area">
+                <input type="number" id="area" placeholder="Enter area" name="asset-info">
             </label><br>
             
             <label>Temperature (°C)<br>
-                <input type="number" id="temperature-input" placeholder="Enter temperature">
+                <input type="number" id="temperature" placeholder="Enter temperature" name="asset-info">
             </label><br>
             
             <label>Efficiency (%)<br>
-                <input type="number" id="efficiency-input" placeholder="Enter efficiency">
+                <input type="number" id="efficiency" placeholder="Enter efficiency" name="asset-info">
             </label><br>
         `,
         accumulator: `
             <label>Capacity (A/h)<br>
-                <input type="number" id="capacity-input" placeholder="Enter capacity">
+                <input type="number" id="capacity" placeholder="Enter capacity" name="asset-info">
             </label><br>
             
             <label>Nominal Voltage (Wh)<br>
-                <input type="number" id="nominal-voltage-input" placeholder="Enter nominal voltage">
+                <input type="number" id="nominal-voltage" placeholder="Enter nominal voltage" name="asset-info">
             </label><br>
             
             <label>Current Charge (A/h)<br>
-                <input type="number" id="current-charge-input" placeholder="Enter current charge">
+                <input type="number" id="current-charge" placeholder="Enter current charge" name="asset-info">
             </label><br>
         `,
         wind_turbine: `
             <label>Nominal Power (W)<br>
-                <input type="number" id="nominal-power-input" placeholder="Enter nominal power">
+                <input type="number" id="nominal-power" placeholder="Enter nominal power" name="asset-info">
             </label><br>
             
             <label>Blade Length (m)<br>
-                <input type="number" id="blade-length-input" placeholder="Enter blade length">
+                <input type="number" id="blade-length" placeholder="Enter blade length" name="asset-info">
             </label><br>
             
             <label>Dissipation Factor<br>
-                <input type="number" id="dissipation-factor-input" placeholder="Enter dissipation factor">
+                <input type="number" id="dissipation-factor" placeholder="Enter dissipation factor" name="asset-info">
             </label><br>
         `,
         fuel_cell: `
             <label>Nominal Power (W)<br>
-                <input type="number" id="nominal-power-input" placeholder="Enter nominal power">
+                <input type="number" id="nominal-power" placeholder="Enter nominal power" name="asset-info">
             </label><br>
             
             <label>Fuel Capacity (l)<br>
-                <input type="number" id="fuel-capacity-input" placeholder="Enter fuel capacity">
+                <input type="number" id="fuel-capacity" placeholder="Enter fuel capacity" name="asset-info">
             </label><br>
             
             <label>Current Fuel (l)<br>
-                <input type="number" id="current-fuel-input" placeholder="Enter current fuel">
+                <input type="number" id="current-fuel" placeholder="Enter current fuel" name="asset-info">
             </label><br>
         `,
         generic_consumer: `
             <label>Nominal Power (W)<br>
-                <input type="number" id="nominal-power-input" placeholder="Enter nominal power">
+                <input type="number" id="nominal-power" placeholder="Enter nominal power" name="asset-info">
             </label><br>
             
             <label>Min Consumption (W)<br>
-                <input type="number" id="min-consumption-input" placeholder="Enter min consumption">
+                <input type="number" id="min-consumption" placeholder="Enter min consumption" name="asset-info">
             </label><br>
         `
     };
@@ -224,7 +224,7 @@ document.addEventListener('DOMContentLoaded', () => {
             confirmBtn.addEventListener("click", add_listener);
         }
 
-        if (type === "save"){
+        if (type === "save") {
             confirmBtn.addEventListener("click", saveTopology);
         }
 
@@ -246,10 +246,49 @@ document.addEventListener('DOMContentLoaded', () => {
     popupOverlay.addEventListener('click', closePopup);
 
     // Add new node functionality
-    function add_listener(){
-        let name = document.getElementById("name-input").value;
+    function add_listener() {
+        const name = document.getElementById("name").value;
+        const inputs = document.getElementsByName("asset-info");
+        const role = document.querySelector('input[name="role"]:checked').value;
+
+        const type = document.getElementById("asset-type-select").value
+        let asset_info = {}
+
+        inputs.forEach(input => {
+            asset_info[input.id] = input.value;
+        });
+
+        const asset = {
+            configuration: asset_info,
+            type: type,
+            name: name,
+            role: role
+        };
+
+        fetch("/api/v1/asset", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(asset),
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then((data) => {
+                console.log("Successfully saved asset:", data);
+                alert("Asset saved successfully!");
+            })
+            .catch((error) => {
+                console.error("Error saving asset:", error);
+                alert("Failed to save asset.");
+            });
+
         const newId = `node${Date.now()}`;
-        const newNode = createNode(newId, name, 300, 300);
+        const newNode = createNode(newId, name, 300, 300, "custom created node");
         jsPlumb.repaintEverything();
         closePopup();
     }

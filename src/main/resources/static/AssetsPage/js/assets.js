@@ -1,4 +1,4 @@
-export function createNode(id, label, x, y) {
+export function createNode(id, label, x, y, node_info) {
     const node = document.createElement("div");
     node.id = id;
     node.className = "node";
@@ -12,6 +12,8 @@ export function createNode(id, label, x, y) {
     node.style.top = `${y}px`;
     canvas.appendChild(node);
 
+    node.info = node_info
+
     // Make the node draggable
     jsPlumb.draggable(node, {containment: "parent"});
 
@@ -24,6 +26,8 @@ export function createNode(id, label, x, y) {
     // allow a node to be deleted
     const deleteBtn = node.querySelector(".delete-btn");
     deleteBtn.addEventListener("click", (event) => {
+        console.log(node.info)
+        console.log("node.info")
         const nodeId = event.target.dataset.id;
         deleteNode(nodeId);
     });
@@ -181,16 +185,12 @@ document.addEventListener("DOMContentLoaded", function () {
     jsPlumb.ready(function () {
         jsPlumb.setContainer("canvas");
 
-
-
-
-
         // Get canvas and add initial nodes
         const canvas = document.getElementById("canvas");
 
-        const node1 = createNode("node1", "Wind Turbine", 50, 50);
-        const node2 = createNode("node2", "Air Condition", 200, 50);
-        const node3 = createNode("node3", "Generic Consumer", 350, 50);
+        const node1 = createNode("node1", "Wind Turbine", 50, 50, "example node");
+        const node2 = createNode("node2", "Air Condition", 200, 50, "example node");
+        const node3 = createNode("node3", "Generic Consumer", 350, 50, "example node");
 
         // Connect initial nodes
         jsPlumb.connect({
@@ -212,8 +212,6 @@ document.addEventListener("DOMContentLoaded", function () {
             endpoint: ["Dot", {radius: 5}],
             endpointStyle: {fill: "red"},
         });
-
-
 
         function loadCanvasState(canvasState) {
             // Clear the canvas
