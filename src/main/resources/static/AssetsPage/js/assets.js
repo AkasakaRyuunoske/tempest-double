@@ -5,6 +5,8 @@ export function createNode(id, label, x, y) {
     node.innerHTML = `
                 <span>${label}</span>
                 <div class="connection-handle"></div>
+                <br>
+                <button class="delete-btn" data-id="${id}">✖</button>
             `;
     node.style.left = `${x}px`;
     node.style.top = `${y}px`;
@@ -19,7 +21,28 @@ export function createNode(id, label, x, y) {
     // Add connection points
     enableConnectionPoints(node);
 
+    // allow a node to be deleted
+    const deleteBtn = node.querySelector(".delete-btn");
+    deleteBtn.addEventListener("click", (event) => {
+        const nodeId = event.target.dataset.id;
+        deleteNode(nodeId);
+    });
+
     return node;
+}
+
+function deleteNode(nodeId) {
+    // Remove all connections related to the node
+    jsPlumb.deleteConnectionsForElement(nodeId);
+
+    // Remove the node from the DOM
+    const nodeElement = document.getElementById(nodeId);
+    if (nodeElement) {
+        nodeElement.remove();
+    }
+
+    // Optionally clean up endpoints
+    jsPlumb.remove(nodeId);
 }
 
 export function enableTextEditing(node) {
@@ -34,6 +57,7 @@ export function enableTextEditing(node) {
         input.style.textAlign = "center";
         input.style.fontSize = "14px";
 
+        let id = node.id
         // Replace the text with an input field
         node.innerHTML = `<div class="connection-handle"></div>`;
         node.querySelector(".connection-handle").after(input);
@@ -42,7 +66,16 @@ export function enableTextEditing(node) {
         // Restore the text when editing is done
         input.addEventListener("blur", function () {
             const updatedText = input.value.trim();
-            node.innerHTML = `<span>${updatedText || currentText}</span><div class="connection-handle"></div>`;
+            node.innerHTML = `<span>${updatedText || currentText}</span>
+                              <div class="connection-handle"></div>
+                              <button class="delete-btn" data-id="${id}">✖</button>`;
+            // Add connection points
+            enableConnectionPoints(node);
+            const deleteBtn = node.querySelector(".delete-btn");
+            deleteBtn.addEventListener("click", (event) => {
+                const nodeId = event.target.dataset.id;
+                deleteNode(nodeId);
+            });
         });
 
         // Handle Enter key
@@ -280,12 +313,14 @@ function saveCanvasState() {
     return canvasState;
 }
 
-document.getElementById("save").addEventListener("click", function () {
+export function saveTopology(){
+    const name = document.getElementById("scenario-name").value;
+    console.log("Saving topology... " + name)
+
     const canvasState = saveCanvasState();
-    let name = document.getElementById("scenario_name")
 
     let scenario = {
-        "name": name.value,
+        "name": name,
         "environmentConfiguration":
             {"field": "value"},
         "assets":
@@ -293,8 +328,6 @@ document.getElementById("save").addEventListener("click", function () {
         topology: canvasState,
         "description": "None"
     }
-
-    console.log(scenario)
 
     fetch("/api/v1/scenario", {
         method: "POST",
@@ -317,7 +350,7 @@ document.getElementById("save").addEventListener("click", function () {
             console.error("Error saving canvas state:", error);
             alert("Failed to save canvas state.");
         });
-});
+}
 
 function centerNodesOnResize() {
     // Get the canvas and its bounding rectangle for position calculations

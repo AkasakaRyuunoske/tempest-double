@@ -212,3 +212,7 @@ main{
     color: #333;
     font-weight: normal;
 }
+
+.delete-btn{
+    background: red;
+}

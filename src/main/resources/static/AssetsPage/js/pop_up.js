@@ -1,4 +1,4 @@
-import {createNode} from './assets.js';
+import {createNode, saveTopology} from './assets.js';
 
 // Used to show the chosen name in the preview at the center of the save popup
 function updatePreview() {
@@ -77,7 +77,7 @@ document.addEventListener('DOMContentLoaded', () => {
         save: {
             title: "Save Scenario",
             content: `<p>Name</p>
-                      <input type="text" placeholder="Scenario Name">`
+                      <input type="text" placeholder="Scenario Name" id="scenario-name">`
         }
     };
 
@@ -222,6 +222,10 @@ document.addEventListener('DOMContentLoaded', () => {
             });
 
             confirmBtn.addEventListener("click", add_listener);
+        }
+
+        if (type === "save"){
+            confirmBtn.addEventListener("click", saveTopology);
         }
 
         popupOverlay.style.display = 'block';
