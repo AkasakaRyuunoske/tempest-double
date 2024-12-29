@@ -1,3 +1,14 @@
+import {createNode} from './assets.js';
+
+// Used to show the chosen name in the preview at the center of the save popup
+function updatePreview() {
+    const nameInput = document.getElementById("name-input");
+    const previewText = document.getElementById("preview-node");
+    previewText.textContent = nameInput.value || "Your Preview";
+}
+
+window.updatePreview = updatePreview;
+
 document.addEventListener('DOMContentLoaded', () => {
     const popupOverlay = document.getElementById('popup-overlay');
     const popup = document.getElementById('popup');
@@ -172,11 +183,11 @@ document.addEventListener('DOMContentLoaded', () => {
             selectedType === "Producer" ? producerOptions : consumerOptions;
 
         if (selectedType === "Producer") {
-            preview.style = "border-left: 1rem solid #F98491"
+            preview.style = "border-left: 1rem solid #F98491; position:static"
             selectElement.value = "solar_panel";
             updateDynamicInputs("solar_panel");
         } else {
-            preview.style = "border-left: 1rem solid #597445"
+            preview.style = "border-left: 1rem solid #597445; position:static"
             selectElement.value = "accumulator";
             updateDynamicInputs("accumulator");
         }
@@ -209,6 +220,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     updateSelectOptions(radio.value);
                 });
             });
+
+            confirmBtn.addEventListener("click", add_listener);
         }
 
         popupOverlay.style.display = 'block';
@@ -227,11 +240,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cancelBtn.addEventListener('click', closePopup);
     popupOverlay.addEventListener('click', closePopup);
-});
 
-// Used to show the chosen name in the preview at the center of the save popup
-function updatePreview() {
-    const nameInput = document.getElementById("name-input");
-    const previewText = document.getElementById("preview-node");
-    previewText.textContent = nameInput.value || "Your Preview";
-}
+    // Add new node functionality
+    function add_listener(){
+        let name = document.getElementById("name-input").value;
+        const newId = `node${Date.now()}`;
+        const newNode = createNode(newId, name, 300, 300);
+        jsPlumb.repaintEverything();
+        closePopup();
+    }
+});
