@@ -146,6 +146,10 @@ document.addEventListener('DOMContentLoaded', () => {
             <label>Min Consumption (W)<br>
                 <input type="number" id="min-consumption" placeholder="Enter min consumption" name="asset-info">
             </label><br>
+            
+            <label>Tau (s)<br>
+                <input type="number" id="tau" placeholder="Enter tau" name="asset-info" value="6">
+            </label><br>
         `
     };
 
