@@ -1,4 +1,4 @@
-import {createNode, saveTopology} from './assets.js';
+import {createNode, saveTopology, loadCanvasState} from './assets.js';
 
 // Used to show the chosen name in the preview at the center of the save popup
 function updatePreview() {
@@ -71,8 +71,8 @@ document.addEventListener('DOMContentLoaded', () => {
         load: {
             title: "Load Scenario",
             content: `<p>Name</p>
-                      <input type="text" placeholder="Scenario Name">
-                      <button>&#x1F50E;</button>` // Search symbol
+                      <input type="text" placeholder="Scenario Name" id="scenario-name">
+                      <button id="search-button-load">&#x1F50E;</button>` // Search symbol
         },
         save: {
             title: "Save Scenario",
@@ -228,6 +228,11 @@ document.addEventListener('DOMContentLoaded', () => {
             confirmBtn.addEventListener("click", save_listener);
         }
 
+        if(type === "load"){
+            document.getElementById("search-button-load").addEventListener("click", check_if_scenario_exists)
+            confirmBtn.addEventListener("click", load_listener);
+        }
+
         popupOverlay.style.display = 'block';
         popup.style.display = 'block';
     }
@@ -302,6 +307,58 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .finally(() => {
                 console.log("Save topology process completed");
+            });
+    }
+
+    function load_listener(){
+        let name = document.getElementById("scenario-name")
+
+        fetch("/api/v1/scenario/name/" + name.value, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                return response.json();
+            })
+            .then((data) => {
+                loadCanvasState(data);
+                closePopup();
+                console.log("Successfully load canvas state:", data);
+                alert("Canvas state load successfully!");
+            })
+            .catch((error) => {
+                console.error("Error loading canvas state:", error);
+                alert("Failed to load canvas state.");
+            });
+    }
+
+    function check_if_scenario_exists(){
+        let name = document.getElementById("scenario-name")
+
+        fetch("/api/v1/scenario/name/" + name.value, {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                return response.json();
+            })
+            .then((data) => {
+                console.log("Successfully saved canvas state:", data);
+            })
+            .catch((error) => {
+                console.error("Error saving canvas state:", error);
             });
     }
 });

@@ -213,66 +213,38 @@ document.addEventListener("DOMContentLoaded", function () {
             endpointStyle: {fill: "red"},
         });
 
-        function loadCanvasState(canvasState) {
-            // Clear the canvas
-            const canvas = document.getElementById("canvas");
-            canvas.innerHTML = ""; // Remove all nodes from the DOM
-            jsPlumb.reset(); // Reset jsPlumb (removes all connections)
-
-            // Create nodes
-            const nodes = canvasState.topology.nodes;
-            nodes.forEach((node) => {
-                const newNode = createNode(node.id, node.name, node.position.x, node.position.y);
-                enableConnectionPoints(newNode); // Add connection points to the node
-            });
-
-            // Create connections
-            const connections = canvasState.topology.connections;
-            connections.forEach((connection) => {
-                jsPlumb.connect({
-                    source: connection.source,
-                    target: connection.target,
-                    anchors: ["Continuous", "Continuous"], // Ensure connections work dynamically
-                    connector: "Straight",
-                    paintStyle: {stroke: "blue", strokeWidth: 2},
-                    endpoint: ["Dot", {radius: 5}],
-                    endpointStyle: {fill: "blue"},
-                });
-            });
-
-            console.log("Canvas state loaded successfully!");
-        }
-
-        document.getElementById("load").addEventListener("click", function () {
-            let name = document.getElementById("scenario_name")
-
-            fetch("/api/v1/scenario/" + name.value, {
-                method: "GET",
-                headers: {
-                    "Content-Type": "application/json",
-                }
-            })
-                .then((response) => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-
-                    return response.json();
-                })
-                .then((data) => {
-                    loadCanvasState(data);
-                    console.log("Successfully saved canvas state:", data);
-                    alert("Canvas state saved successfully!");
-                })
-                .catch((error) => {
-                    console.error("Error saving canvas state:", error);
-                    alert("Failed to save canvas state.");
-                });
-
-        });
     });
 });
 
+export function loadCanvasState(canvasState) {
+    // Clear the canvas
+    const canvas = document.getElementById("canvas");
+    canvas.innerHTML = ""; // Remove all nodes from the DOM
+    jsPlumb.reset(); // Reset jsPlumb (removes all connections)
+
+    // Create nodes
+    const nodes = canvasState.topology.nodes;
+    nodes.forEach((node) => {
+        const newNode = createNode(node.id, node.name, node.position.x, node.position.y);
+        enableConnectionPoints(newNode); // Add connection points to the node
+    });
+
+    // Create connections
+    const connections = canvasState.topology.connections;
+    connections.forEach((connection) => {
+        jsPlumb.connect({
+            source: connection.source,
+            target: connection.target,
+            anchors: ["Continuous", "Continuous"], // Ensure connections work dynamically
+            connector: "Straight",
+            paintStyle: {stroke: "blue", strokeWidth: 2},
+            endpoint: ["Dot", {radius: 5}],
+            endpointStyle: {fill: "blue"},
+        });
+    });
+
+    console.log("Canvas state loaded successfully!");
+}
 function saveCanvasState() {
     const nodes = document.querySelectorAll(".node");
     const nodeData = [];
