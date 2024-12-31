@@ -225,7 +225,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
 
         if (type === "save") {
-            confirmBtn.addEventListener("click", saveTopology);
+            confirmBtn.addEventListener("click", save_listener);
         }
 
         popupOverlay.style.display = 'block';
@@ -280,16 +280,28 @@ document.addEventListener('DOMContentLoaded', () => {
             })
             .then((data) => {
                 console.log("Successfully saved asset:", data);
-                alert("Asset saved successfully!");
+                const newId = `node${Date.now()}`;
+                const newNode = createNode(newId, name, 300, 300, "custom created node");
+                jsPlumb.repaintEverything();
+                closePopup();
             })
             .catch((error) => {
                 console.error("Error saving asset:", error);
-                alert("Failed to save asset.");
+                alert("Failed to save asset. Try to use another name");
             });
+    }
 
-        const newId = `node${Date.now()}`;
-        const newNode = createNode(newId, name, 300, 300, "custom created node");
-        jsPlumb.repaintEverything();
-        closePopup();
+    function save_listener(){
+        saveTopology()
+            .then((data) => {
+            console.log("Topology saved successfully!", data);
+                closePopup();
+            })
+            .catch((error) => {
+                console.log("Error occurred while saving topology:", error.message);
+            })
+            .finally(() => {
+                console.log("Save topology process completed");
+            });
     }
 });

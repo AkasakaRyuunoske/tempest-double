@@ -311,23 +311,19 @@ function saveCanvasState() {
     return canvasState;
 }
 
-export function saveTopology(){
+export function saveTopology() {
     const name = document.getElementById("scenario-name").value;
-    console.log("Saving topology... " + name)
-
     const canvasState = saveCanvasState();
 
     let scenario = {
         "name": name,
-        "environmentConfiguration":
-            {"field": "value"},
-        "assets":
-            {"asset1": 1, "asset2": 3},
+        "environmentConfiguration": { "field": "value" },
+        "assets": { "asset1": 1, "asset2": 3 },
         topology: canvasState,
         "description": "None"
-    }
+    };
 
-    fetch("/api/v1/scenario", {
+    return fetch("/api/v1/scenario", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
@@ -343,10 +339,12 @@ export function saveTopology(){
         .then((data) => {
             console.log("Successfully saved canvas state:", data);
             alert("Canvas state saved successfully!");
+            return data; // Return data for chaining
         })
         .catch((error) => {
             console.error("Error saving canvas state:", error);
             alert("Failed to save canvas state.");
+            throw error; // Re-throw the error to propagate it
         });
 }
 
