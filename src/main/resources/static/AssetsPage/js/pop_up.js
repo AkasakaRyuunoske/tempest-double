@@ -65,8 +65,8 @@ document.addEventListener('DOMContentLoaded', () => {
             title: "Delete Scenario",
             content: `
                 <p>Name</p>
-                <input type="text" placeholder="Scenario Name">
-                <button>&#x1F50E;</button>` // Search symbol
+                <input type="text" placeholder="Scenario Name" id="scenario-name">
+                <button id="search-button-load">&#x1F50E;</button>` // Search symbol
         },
         load: {
             title: "Load Scenario",
@@ -233,6 +233,11 @@ document.addEventListener('DOMContentLoaded', () => {
             confirmBtn.addEventListener("click", load_listener);
         }
 
+        if(type === "delete"){
+            document.getElementById("search-button-load").addEventListener("click", check_if_scenario_exists)
+            confirmBtn.addEventListener("click", delete_listener);
+        }
+
         popupOverlay.style.display = 'block';
         popup.style.display = 'block';
     }
@@ -338,6 +343,31 @@ document.addEventListener('DOMContentLoaded', () => {
             });
     }
 
+    function delete_listener(){
+        let name = document.getElementById("scenario-name")
+
+        fetch("/api/v1/scenario/name/" + name.value, {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            }
+        })
+            .then((response) => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                return response.json();
+            })
+            .then((data) => {
+                console.log("Successfully deleted scenario:", data);
+                closePopup();
+            })
+            .catch((error) => {
+                console.error("Error deleting scenario:", error);
+            });
+    }
+
     function check_if_scenario_exists(){
         let name = document.getElementById("scenario-name")
 
@@ -355,10 +385,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 return response.json();
             })
             .then((data) => {
-                console.log("Successfully saved canvas state:", data);
+                console.log("Successfully found scenario:", data);
             })
             .catch((error) => {
-                console.error("Error saving canvas state:", error);
+                console.error("Error finding scenario:", error);
             });
     }
 });
