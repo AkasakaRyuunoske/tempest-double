@@ -76,7 +76,7 @@ const consumptionGraph = new CanvasJS.Chart("consumptionGraph", {
 const productionGraph = new CanvasJS.Chart("productionGraph", {
     title: { text: "Production", fontSize: 25, fontFamily: "Verdana" },
     axisX: { gridThickness: 1, gridDashType: "solid" },
-    axisY: { title: "MW", includeZero: false, gridThickness: 1, gridDashType: "solid" },
+    axisY: { title: "W", includeZero: false, gridThickness: 1, gridDashType: "solid" },
     data: [
         {
             type: "line",
@@ -103,7 +103,7 @@ function updateProgressBar(id, value, maxCapacity, valueDisplayId) {
     bar.textContent = "";
 
     if (valueDisplay) {
-        valueDisplay.textContent = value.toFixed(2) + " MW";
+        valueDisplay.textContent = value.toFixed(2) + " W";
     }
 }
 
@@ -157,22 +157,45 @@ function updateDashboard() {
     xValue++;
 }
 
+function startSimulation(){
+    return fetch("/api/v1/simulation/start", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+        },
+    body: JSON.stringify({name: "Flu"})
+    })
+}
 function toggleStartStop() {
     const startButton = document.querySelector(".start-button button");
 
     if (startButton.textContent === "Start") {
-        startButton.textContent = "Stop";
-        startButton.classList.add("stop");
-        if (!updateInterval) {
-            updateInterval = setInterval(updateDashboard, 1000);
-        }
+        startSimulation().then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+            })
+            .then((data) => {
+                startButton.textContent = "Stop";
+                startButton.classList.add("stop");
+                console.log("Got some data too")
+                console.log(data)
+                // if (!updateInterval) {
+                //     updateInterval = setInterval(updateDashboard, 1000);
+                // }
+            })
+            .catch((error) => {
+                console.error("Error starting simulation:", error);
+                alert("Failed to start simulation.");
+            });
     } else {
         startButton.textContent = "Start";
         startButton.classList.remove("stop");
-        if (updateInterval) {
-            clearInterval(updateInterval);
-            updateInterval = null;
-        }
+        // if (updateInterval) {
+        //     clearInterval(updateInterval);
+        //     updateInterval = null;
+        // }
     }
 }
 

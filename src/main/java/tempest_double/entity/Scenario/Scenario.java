@@ -2,10 +2,7 @@ package tempest_double.entity.Scenario;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import tempest_double.entity.JsonConverter;
 
 import java.util.Map;
@@ -16,6 +13,7 @@ import java.util.Map;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Scenario {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

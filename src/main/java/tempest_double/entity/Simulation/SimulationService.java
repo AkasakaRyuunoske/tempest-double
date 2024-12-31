@@ -3,13 +3,14 @@ package tempest_double.entity.Simulation;
 import org.springframework.http.ResponseEntity;
 
 import java.util.List;
+import java.util.Map;
 
 public interface SimulationService {
     Simulation getSimulationById(int id);
 
     List<Simulation> getSimulations();
 
-    ResponseEntity<String> postSimulation(int scenario_id);
+    ResponseEntity<Map<String, Object>> postSimulation(String scenario_name);
 
     ResponseEntity<String> deleteSimulations(int... simulationIds);
 
