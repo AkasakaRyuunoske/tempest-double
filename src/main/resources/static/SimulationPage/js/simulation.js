@@ -201,6 +201,8 @@ function toggleStartStop() {
     }
 }
 
+let total_satisfaction = 0;
+let total_production = 0;
 function generateConsumers(data){
     const assets = [];
     const role = "Consumer"
@@ -208,6 +210,7 @@ function generateConsumers(data){
     Object.entries(data).forEach(([key, value]) => {
         if (value.role === role) {
             assets.push({ id: key, ...value }); // Add key as 'id' along with asset properties
+            total_satisfaction += value.nominal_power
         }
     });
 
@@ -228,6 +231,9 @@ function generateConsumers(data){
         </div>`
             consumersContainer.innerHTML += assetHtml;
         });
+
+    let max_satisfaction_container = document.getElementById("max-satisfaction")
+    max_satisfaction_container.innerText = total_satisfaction;
 }
 
 function generateProducers(data){
@@ -237,6 +243,7 @@ function generateProducers(data){
     Object.entries(data).forEach(([key, value]) => {
         if (value.role === role) {
             assets.push({ id: key, ...value }); // Add key as 'id' along with asset properties
+            total_production += value.nominal_power
         }
     });
 
@@ -248,7 +255,7 @@ function generateProducers(data){
                 <div class="production-unit">
                     <div class="production-unit-info">
                         <img src="/SimulationPage/img/accumulator.svg" alt="Accumulator">
-                        <h3>Accumulator</h3>
+                        <h3>${asset.name}</h3>
                     </div>
                     <div class="progress-bar-container">
                         <div class="progress-bar" style="background-color: ${color}">0 W</div>
@@ -257,6 +264,9 @@ function generateProducers(data){
                 </div>`
         consumersContainer.innerHTML += assetHtml;
     });
+
+    let max_production_container = document.getElementById("max-production")
+    max_production_container.innerText = total_production;
 }
 
 document.querySelector(".start-button button").addEventListener("click", toggleStartStop);
