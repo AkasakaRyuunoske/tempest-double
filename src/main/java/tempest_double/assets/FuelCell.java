@@ -29,7 +29,7 @@ public class FuelCell extends Asset {
     }
 
     @Override
-    public double simulate(LocalDateTime timestamp) {
+    public double simulate(Object input) {
         if (currentFuel <= 0) {
             return 0;
         }

@@ -43,7 +43,9 @@ public class SolarPanel extends Asset {
     }
 
     @Override
-    public double simulate(LocalDateTime timestamp) {
+    public double simulate(Object input) {
+        LocalDateTime timestamp = (LocalDateTime) input;
+
         // Calculate solar radiation more comprehensively
         double dayOfYear = timestamp.getDayOfYear();
         double hourOfDay = timestamp.getHour() + timestamp.getMinute() / 60.0;

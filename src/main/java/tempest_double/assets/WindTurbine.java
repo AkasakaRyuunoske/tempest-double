@@ -27,8 +27,8 @@ public class WindTurbine extends Asset {
     }
 
     @Override
-    public double simulate(LocalDateTime timestamp) {
-        double windSpeed = calculateWindSpeed(timestamp);
+    public double simulate(Object input) {
+        double windSpeed = calculateWindSpeed((LocalDateTime) input);
 
         // Power curve calculation
         if (windSpeed < cutInWindSpeed || windSpeed > cutOutWindSpeed) return 0;

@@ -101,7 +101,7 @@ public class Accumulator extends Asset {
     }
 
     @Override
-    public double simulate(LocalDateTime timestamp) {
+    public double simulate(Object input) {
         // Accumulator doesn't generate power, it stores and provides power
         // This method could be used for self-discharge or internal losses simulation
         double selfDischargeRate = 0.001; // 0.1% per hour

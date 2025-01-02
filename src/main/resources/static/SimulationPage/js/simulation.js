@@ -163,7 +163,7 @@ function startSimulation(){
     headers: {
         "Content-Type": "application/json"
         },
-    body: JSON.stringify({name: "Flu"})
+    body: JSON.stringify({name: "Test"})
     })
 }
 function toggleStartStop() {
@@ -181,6 +181,8 @@ function toggleStartStop() {
                 startButton.classList.add("stop");
                 console.log("Got some data too")
                 console.log(data)
+                generateConsumers(data);
+                generateProducers(data);
                 // if (!updateInterval) {
                 //     updateInterval = setInterval(updateDashboard, 1000);
                 // }
@@ -199,7 +201,65 @@ function toggleStartStop() {
     }
 }
 
+function generateConsumers(data){
+    const assets = [];
+    const role = "Consumer"
+    // Iterate over the key-value pairs of the JSON object
+    Object.entries(data).forEach(([key, value]) => {
+        if (value.role === role) {
+            assets.push({ id: key, ...value }); // Add key as 'id' along with asset properties
+        }
+    });
+
+    const consumersContainer = document.getElementById("consumers");
+
+    assets.forEach(asset => {
+        let color = generateColorNearBase("#FF8A8A");
+        const assetHtml = `
+        <div class="consumption-unit">
+            <div class="consumption-unit-info">
+                <img src="/SimulationPage/img/washingMachine.svg" alt="Washing Machine">
+                    <h3>${asset.name}</h3>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="background-color: ${color}">0 MW</div>
+            </div>
+            <div class="value-display">0 MW / ${asset.nominal_power} W</div>
+        </div>`
+            consumersContainer.innerHTML += assetHtml;
+        });
+}
+
+function generateProducers(data){
+    const assets = [];
+    const role = "Producer"
+    // Iterate over the key-value pairs of the JSON object
+    Object.entries(data).forEach(([key, value]) => {
+        if (value.role === role) {
+            assets.push({ id: key, ...value }); // Add key as 'id' along with asset properties
+        }
+    });
+
+    const consumersContainer = document.getElementById("producers");
+
+    assets.forEach(asset => {
+        let color = generateColorNearBase("#FF8A8A");
+        const assetHtml = `
+                <div class="production-unit">
+                    <div class="production-unit-info">
+                        <img src="/SimulationPage/img/accumulator.svg" alt="Accumulator">
+                        <h3>Accumulator</h3>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div class="progress-bar" style="background-color: ${color}">0 W</div>
+                    </div>
+                    <div class="value-display">0 W / ${asset.nominal_power} W</div>
+                </div>`
+        consumersContainer.innerHTML += assetHtml;
+    });
+}
+
 document.querySelector(".start-button button").addEventListener("click", toggleStartStop);
 
-setProgressBarColors();
+// setProgressBarColors();
 
