@@ -25,7 +25,10 @@ public class Simulation {
 
     @CreationTimestamp
     @JsonIgnore
-    private LocalDateTime date;
+    private LocalDateTime date_start;
+
+    @JsonIgnore
+    private LocalDateTime date_end;
 
     @ManyToOne
     @JoinColumn(name = "scenario_id", nullable = false)

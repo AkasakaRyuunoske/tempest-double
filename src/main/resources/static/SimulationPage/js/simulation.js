@@ -107,49 +107,49 @@ function updateProgressBar(id, value, maxCapacity, valueDisplayId) {
     }
 }
 
-function updateMWValues(currentId, maxId, currentValue, maxValue) {
+function updateWValues(currentId, maxId, currentValue, maxValue) {
     document.getElementById(currentId).textContent = currentValue.toFixed(2);
     document.getElementById(maxId).textContent = maxValue.toFixed(2);
 }
 
-function updateDashboard() {
-    const washingMachineValue = Math.random() * maxCapacities.washingMachine;
-    const refrigeratorValue = Math.random() * maxCapacities.refrigerator;
-    const airConditionerValue = Math.random() * maxCapacities.airConditioner;
-
-    const solarPanelValue = Math.random() * maxCapacities.solarPanel;
-    const windTurbineValue = Math.random() * maxCapacities.windTurbine;
-    const accumulatorValue = Math.random() * maxCapacities.accumulatorBar;
-
-    const satisfactionValue = Math.random() * maxCapacities.satisfaction;
-    const totalProduction = solarPanelValue + windTurbineValue;
-    const totalAccumulatorCharge = Math.random() * maxCapacities.accumulator;
+function updateDashboard(data) {
+    // const washingMachineValue = Math.random() * maxCapacities.washingMachine;
+    // const refrigeratorValue = Math.random() * maxCapacities.refrigerator;
+    // const airConditionerValue = Math.random() * maxCapacities.airConditioner;
+    //
+    // const solarPanelValue = Math.random() * maxCapacities.solarPanel;
+    // const windTurbineValue = Math.random() * maxCapacities.windTurbine;
+    // const accumulatorValue = Math.random() * maxCapacities.accumulatorBar;
+    //
+    // const satisfactionValue = Math.random() * maxCapacities.satisfaction;
+    // const totalProduction = solarPanelValue + windTurbineValue;
+    // const totalAccumulatorCharge = Math.random() * maxCapacities.accumulator;
 
     updateProgressBar("washingMachineBar", washingMachineValue, maxCapacities.washingMachine, "washing-machine-value");
-    updateProgressBar("refrigeratorBar", refrigeratorValue, maxCapacities.refrigerator, "refrigerator-value");
-    updateProgressBar("airConditionerBar", airConditionerValue, maxCapacities.airConditioner, "air-conditioner-value");
-    updateProgressBar("solarPanelBar", solarPanelValue, maxCapacities.solarPanel, "solar-panel-value");
-    updateProgressBar("windTurbineBar", windTurbineValue, maxCapacities.windTurbine, "wind-turbine-value");
-    updateProgressBar("accumulatorBar", accumulatorValue, maxCapacities.accumulatorBar, "accumulator-value");
+    // updateProgressBar("refrigeratorBar", refrigeratorValue, maxCapacities.refrigerator, "refrigerator-value");
+    // updateProgressBar("airConditionerBar", airConditionerValue, maxCapacities.airConditioner, "air-conditioner-value");
+    // updateProgressBar("solarPanelBar", solarPanelValue, maxCapacities.solarPanel, "solar-panel-value");
+    // updateProgressBar("windTurbineBar", windTurbineValue, maxCapacities.windTurbine, "wind-turbine-value");
+    // updateProgressBar("accumulatorBar", accumulatorValue, maxCapacities.accumulatorBar, "accumulator-value");
+    //
+    // updateProgressBar("satisfactionBar", satisfactionValue, maxCapacities.satisfaction, "satisfaction-value");
+    // updateProgressBar("productionBar", totalProduction, maxCapacities.production, "production-value");
+    // updateProgressBar("accumulatorChargeBar", totalAccumulatorCharge, maxCapacities.accumulator, "accumulator-charge-value");
 
-    updateProgressBar("satisfactionBar", satisfactionValue, maxCapacities.satisfaction, "satisfaction-value");
-    updateProgressBar("productionBar", totalProduction, maxCapacities.production, "production-value");
-    updateProgressBar("accumulatorChargeBar", totalAccumulatorCharge, maxCapacities.accumulator, "accumulator-charge-value");
+    // updateWValues("current-satisfaction", "max-satisfaction", satisfactionValue, maxCapacities.satisfaction);
+    // updateWValues("current-production", "max-production", totalProduction, maxCapacities.production);
+    // updateWValues("current-charge", "max-charge", totalAccumulatorCharge, maxCapacities.accumulator);
 
-    updateMWValues("current-satisfaction", "max-satisfaction", satisfactionValue, maxCapacities.satisfaction);
-    updateMWValues("current-production", "max-production", totalProduction, maxCapacities.production);
-    updateMWValues("current-charge", "max-charge", totalAccumulatorCharge, maxCapacities.accumulator);
-
-    washingMachineData.push({ x: xValue, y: washingMachineValue });
-    refrigeratorData.push({ x: xValue, y: refrigeratorValue });
-    airConditionerData.push({ x: xValue, y: airConditionerValue });
-
-    productionData.push({ x: xValue, y: totalProduction });
-
-    if (washingMachineData.length > 20) washingMachineData.shift();
-    if (refrigeratorData.length > 20) refrigeratorData.shift();
-    if (airConditionerData.length > 20) airConditionerData.shift();
-    if (productionData.length > 20) productionData.shift();
+    // washingMachineData.push({ x: xValue, y: washingMachineValue });
+    // refrigeratorData.push({ x: xValue, y: refrigeratorValue });
+    // airConditionerData.push({ x: xValue, y: airConditionerValue });
+    //
+    // productionData.push({ x: xValue, y: totalProduction });
+    //
+    // if (washingMachineData.length > 20) washingMachineData.shift();
+    // if (refrigeratorData.length > 20) refrigeratorData.shift();
+    // if (airConditionerData.length > 20) airConditionerData.shift();
+    // if (productionData.length > 20) productionData.shift();
 
     consumptionGraph.render();
     productionGraph.render();
@@ -163,7 +163,7 @@ function startSimulation(){
     headers: {
         "Content-Type": "application/json"
         },
-    body: JSON.stringify({name: "Test"})
+    body: JSON.stringify({name: "Scenario 1"})
     })
 }
 function toggleStartStop() {
@@ -183,9 +183,9 @@ function toggleStartStop() {
                 console.log(data)
                 generateConsumers(data);
                 generateProducers(data);
-                // if (!updateInterval) {
-                //     updateInterval = setInterval(updateDashboard, 1000);
-                // }
+                if (!updateInterval) {
+                    updateInterval = setInterval(updateDashboard, 1000);
+                }
             })
             .catch((error) => {
                 console.error("Error starting simulation:", error);
@@ -203,16 +203,25 @@ function toggleStartStop() {
 
 let total_satisfaction = 0;
 let total_production = 0;
-function generateConsumers(data){
+
+function getAssetsByRole(data, role){
     const assets = [];
-    const role = "Consumer"
     // Iterate over the key-value pairs of the JSON object
     Object.entries(data).forEach(([key, value]) => {
         if (value.role === role) {
             assets.push({ id: key, ...value }); // Add key as 'id' along with asset properties
-            total_satisfaction += value.nominal_power
+            if(role === "Consumer") total_satisfaction += value.nominal_power
+            else total_production += value.nominal_power
         }
     });
+
+    return assets;
+}
+
+function generateConsumers(data){
+    const role = "Consumer";
+
+    const assets = getAssetsByRole(data, role);
 
     const consumersContainer = document.getElementById("consumers");
 
@@ -237,17 +246,10 @@ function generateConsumers(data){
 }
 
 function generateProducers(data){
-    const assets = [];
     const role = "Producer"
-    // Iterate over the key-value pairs of the JSON object
-    Object.entries(data).forEach(([key, value]) => {
-        if (value.role === role) {
-            assets.push({ id: key, ...value }); // Add key as 'id' along with asset properties
-            total_production += value.nominal_power
-        }
-    });
+    const assets = getAssetsByRole(data, role);
 
-    const consumersContainer = document.getElementById("producers");
+    const producersContainer = document.getElementById("producers");
 
     assets.forEach(asset => {
         let color = generateColorNearBase("#FF8A8A");
@@ -258,11 +260,11 @@ function generateProducers(data){
                         <h3>${asset.name}</h3>
                     </div>
                     <div class="progress-bar-container">
-                        <div class="progress-bar" style="background-color: ${color}">0 W</div>
+                        <div id="${asset.name}-progress-bar" class="progress-bar" style="background-color: ${color}">0 W</div>
                     </div>
-                    <div class="value-display">0 W / ${asset.nominal_power} W</div>
+                    <div id="${asset.name}-value-display" class="value-display">0 W / ${asset.nominal_power} W</div>
                 </div>`
-        consumersContainer.innerHTML += assetHtml;
+        producersContainer.innerHTML += assetHtml;
     });
 
     let max_production_container = document.getElementById("max-production")
