@@ -3,6 +3,7 @@ import {showPopup} from "./pop_up.js";
 let updateInterval = null;
 let scenario_name = null;
 let assetsProducers = [];
+const startButton = document.querySelector(".start-button button");
 
 const maxCapacities = {
     satisfaction: 100,
@@ -265,13 +266,12 @@ export function startSimulation(scenario_name){
 }
 
 export function toggleStartStop(scenario_name) {
-    const startButton = document.querySelector(".start-button button");
 
     if (startButton.textContent === "Start") {
         startButton.textContent = "Stop";
         startButton.classList.add("stop");
 
-        startButton.addEventListener('click', showPopup);
+        showPopup();
 
     } else {
         startButton.textContent = "Start";
@@ -359,3 +359,4 @@ function generateProducers(data){
 
 // setProgressBarColors();
 
+startButton.addEventListener("click", toggleStartStop)

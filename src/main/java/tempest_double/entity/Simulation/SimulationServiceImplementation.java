@@ -216,7 +216,6 @@ public class SimulationServiceImplementation implements SimulationService {
 
         result.put("total_energy_consumed", totalEnergyConsumed);
 
-        System.out.println("Simulation status results: " + result);
         return ResponseEntity.ok().body(result);
     }
 

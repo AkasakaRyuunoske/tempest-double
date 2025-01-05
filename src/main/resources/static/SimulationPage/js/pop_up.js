@@ -4,8 +4,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const popupOverlay = document.getElementById('popup-overlay');
     const cancelBtn = document.getElementById('cancel-btn');
 
-    document.getElementById('start-button').addEventListener('click', showPopup);
-
     cancelBtn.addEventListener('click', closePopup);
     popupOverlay.addEventListener('click', closePopup);
 });
@@ -42,9 +40,7 @@ function updateSearchDisplay(){
 
             confirmBtn.disabled = false
             confirmBtn.addEventListener("click", () => startSimulation(scenario_name))
-            confirmBtn.addEventListener("click", toggleStartStop)
             confirmBtn.addEventListener("click", closePopup)
-
         })
         .catch((error) => {
             console.error("Error finding scenario:", error);
