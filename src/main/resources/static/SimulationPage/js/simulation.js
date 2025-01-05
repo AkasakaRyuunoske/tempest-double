@@ -1,3 +1,5 @@
+import {showPopup} from "./pop_up.js";
+
 let updateInterval = null;
 let scenario_name = null;
 let assetsProducers = [];
@@ -224,44 +226,57 @@ function updateDashboard(data) {
     xValue++;
 }
 
-function startSimulation(){
+export function startSimulation(scenario_name){
     return fetch("/api/v1/simulation/start", {
     method: "POST",
     headers: {
         "Content-Type": "application/json"
         },
-    body: JSON.stringify({name: "Scenario 3"})
+    body: JSON.stringify({name: scenario_name})
+    }).then((response) => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
     })
+        .then((data) => {
+            console.log("Got some data too")
+            console.log(data)
+            generateConsumers(data);
+            generateProducers(data);
+            if (!updateInterval) {
+                updateInterval = setInterval(updateDashboard, 1000);
+            }
+
+            // let start_button = document.getElementById('start-button');
+            // // Clone the element
+            // const newElement = start_button.cloneNode(true);
+            //
+            // // Replace the old element with the new one
+            // start_button.parentNode.replaceChild(newElement, start_button);
+            //
+            // start_button.addEventListener('click', toggleStartStop);
+
+        })
+        .catch((error) => {
+            console.error("Error starting simulation:", error);
+            alert("Failed to start simulation.");
+        });
 }
-function toggleStartStop() {
+
+export function toggleStartStop(scenario_name) {
     const startButton = document.querySelector(".start-button button");
 
     if (startButton.textContent === "Start") {
-        scenario_name = "Scenario 1";
-        startSimulation().then((response) => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! status: ${response.status}`);
-            }
-            return response.json();
-            })
-            .then((data) => {
-                startButton.textContent = "Stop";
-                startButton.classList.add("stop");
-                console.log("Got some data too")
-                console.log(data)
-                generateConsumers(data);
-                generateProducers(data);
-                if (!updateInterval) {
-                    updateInterval = setInterval(updateDashboard, 1000);
-                }
-            })
-            .catch((error) => {
-                console.error("Error starting simulation:", error);
-                alert("Failed to start simulation.");
-            });
+        startButton.textContent = "Stop";
+        startButton.classList.add("stop");
+
+        startButton.addEventListener('click', showPopup);
+
     } else {
         startButton.textContent = "Start";
         startButton.classList.remove("stop");
+
         if (updateInterval) {
             clearInterval(updateInterval);
             updateInterval = null;
@@ -341,8 +356,6 @@ function generateProducers(data){
     max_production_container.innerText = total_production;
 
 }
-
-document.querySelector(".start-button button").addEventListener("click", toggleStartStop);
 
 // setProgressBarColors();
 

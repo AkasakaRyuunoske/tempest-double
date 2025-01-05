@@ -42,6 +42,8 @@ public class SimulationServiceImplementation implements SimulationService {
     public ResponseEntity<Map<String, Object>> postSimulation(String scenario_name) {
         Map<String, Object> response = new HashMap<>();
 
+        assets = new ArrayList<>(); // clean from any previous data
+
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             // Parse the JSON into a JsonNode
@@ -70,9 +72,6 @@ public class SimulationServiceImplementation implements SimulationService {
                 response.put("error", "One of the assets is of incorrect type or doesn't exist.");
                 return ResponseEntity.badRequest().body(response);
             }
-
-            System.out.println("Name is: " + name);
-            System.out.println("Asset from db: " + assetFromDb);
 
 
             tempest_double.assets.Asset assetToSimulate;
@@ -217,6 +216,7 @@ public class SimulationServiceImplementation implements SimulationService {
 
         result.put("total_energy_consumed", totalEnergyConsumed);
 
+        System.out.println("Simulation status results: " + result);
         return ResponseEntity.ok().body(result);
     }
 

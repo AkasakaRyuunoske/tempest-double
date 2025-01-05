@@ -4,13 +4,29 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Simulation</title>
     <link rel="stylesheet" href="/SimulationPage/css/simulation.css">
-    <link rel="stylesheet" href="/AssetsPage/css/styles.css">
+    <link rel="stylesheet" href="AssetsPage/css/assets.css">
     <script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </head>
 <body>
 <th:block th:replace="~{Components/header.html :: header}"></th:block>
+
+<div id="popup-overlay" class="popup-overlay"></div>
+<div id="popup" class="popup">
+    <div class="popup-header">
+        <h3 id="popup-title">Popup Title</h3>
+    </div>
+
+    <!-- Dynamic content of the popup -->
+    <div class="popup-body" id="popup-content"></div>
+
+    <div class="popup-footer">
+        <button id="confirm-btn">Confirm</button>
+        <button id="cancel-btn">Cancel</button>
+    </div>
+</div>
+
 <main>
-    <div class="start-button"><button>Start</button></div>
+    <div class="start-button"><button id="start-button">Start</button></div>
     <br>
     <hr>
     <br>
@@ -66,79 +82,13 @@
         <br>
 
         <div class="progress-container">
+            <div class="progress-bars consumption-progress-bars" id="consumers"></div>
 
-            <div class="progress-bars consumption-progress-bars" id="consumers">
-<!--                <div class="consumption-unit">-->
-<!--                    <div class="consumption-unit-info">-->
-<!--                        <img src="/SimulationPage/img/washingMachine.svg" alt="Washing Machine">-->
-<!--                        <h3>Washing Machine</h3>-->
-<!--                    </div>-->
-<!--                    <div class="progress-bar-container">-->
-<!--                        <div class="progress-bar" id="washingMachineBar">0 MW</div>-->
-<!--                    </div>-->
-<!--                    <div id="washing-machine-value" class="value-display">0 MW</div>-->
-<!--                </div>-->
-
-<!--                <div class="consumption-unit">-->
-<!--                    <div class="consumption-unit-info">-->
-<!--                        <img src="/SimulationPage/img/refrigerator.svg" alt="Refrigerator">-->
-<!--                        <h3>Refrigerator</h3>-->
-<!--                    </div>-->
-<!--                    <div class="progress-bar-container">-->
-<!--                        <div class="progress-bar" id="refrigeratorBar"></div>-->
-<!--                    </div>-->
-<!--                    <div id="refrigerator-value" class="value-display">0 MW</div>-->
-<!--                </div>-->
-
-<!--                <div class="consumption-unit">-->
-<!--                    <div class="consumption-unit-info">-->
-<!--                        <img src="/SimulationPage/img/airConditioner.svg" alt="Air Conditioner">-->
-<!--                        <h3>Air Conditioner</h3>-->
-<!--                    </div>-->
-<!--                    <div class="progress-bar-container">-->
-<!--                        <div class="progress-bar" id="airConditionerBar">0 MW</div>-->
-<!--                    </div>-->
-<!--                    <div id="air-conditioner-value" class="value-display">0 MW</div>-->
-<!--                </div>-->
-            </div>
-
-            <div class="progress-bars production-progress-bars" id="producers">
-<!--                <div class="production-unit">-->
-<!--                    <div class="production-unit-info">-->
-<!--                        <img src="/SimulationPage/img/solarPanel.svg" alt="Solar Panel">-->
-<!--                        <h3>Solar Panel</h3>-->
-<!--                    </div>-->
-<!--                    <div class="progress-bar-container">-->
-<!--                        <div class="progress-bar" id="solarPanelBar">0 MW</div>-->
-<!--                    </div>-->
-<!--                    <div id="solar-panel-value" class="value-display">0 MW</div>-->
-<!--                </div>-->
-
-<!--                <div class="production-unit">-->
-<!--                    <div class="production-unit-info">-->
-<!--                        <img src="/SimulationPage/img/windTurbine.svg" alt="Wind Turbine">-->
-<!--                        <h3>Wind Turbine</h3>-->
-<!--                    </div>-->
-<!--                    <div class="progress-bar-container">-->
-<!--                        <div class="progress-bar" id="windTurbineBar">0 MW</div>-->
-<!--                    </div>-->
-<!--                    <div id="wind-turbine-value" class="value-display">0 MW</div>-->
-<!--                </div>-->
-
-<!--                <div class="production-unit">-->
-<!--                    <div class="production-unit-info">-->
-<!--                        <img src="/SimulationPage/img/accumulator.svg" alt="Accumulator">-->
-<!--                        <h3>Accumulator</h3>-->
-<!--                    </div>-->
-<!--                    <div class="progress-bar-container">-->
-<!--                        <div class="progress-bar" id="accumulatorBar">0 MW</div>-->
-<!--                    </div>-->
-<!--                    <div id="accumulator-value" class="value-display">0 MW</div>-->
-<!--                </div>-->
-            </div>
+            <div class="progress-bars production-progress-bars" id="producers"> </div>
         </div>
     </div>
 </main>
 </body>
-<script src="/SimulationPage/js/simulation.js"></script>
+<script type="module" src="/SimulationPage/js/simulation.js"></script>
+<script type="module" src="/SimulationPage/js/pop_up.js"></script>
 </html>
