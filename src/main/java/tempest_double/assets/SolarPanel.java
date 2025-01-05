@@ -1,7 +1,14 @@
 package tempest_double.assets;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.time.LocalDateTime;
 
+@ToString
+@Getter
+@Setter
 public class SolarPanel extends Asset {
     private final double panelArea;      // in square meters
     private final double latitude;       // geographic latitude

@@ -1,11 +1,18 @@
 package tempest_double.assets;
 
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
+
 import java.time.LocalDateTime;
 
+@ToString
+@Getter
+@Setter
 public class GenericConsumer extends Asset{
     private final double maxConsumption;  // Maximum power consumption in W
     private final double minConsumption;  // Minimum power consumption in W
-    private final double timeConstant;    // Time constant in seconds
+    private final double timeConstant;    // Time constant or TAU in seconds
     private double currentConsumption;    // Current power consumption in W
     private double targetConsumption;     // Target consumption based on available power
 
@@ -38,7 +45,7 @@ public class GenericConsumer extends Asset{
         // newValue = currentValue + (targetValue - currentValue) * (1 - e^(-dt/τ))
         // For 1-second steps, dt = 1
         double stepResponse = 1 - Math.exp(-1.0 / timeConstant);
-        currentConsumption += (targetConsumption - currentConsumption) * stepResponse;
+        currentConsumption += (Math.max(targetConsumption, maxConsumption) - currentConsumption) * stepResponse;
 
         return currentConsumption;
     }

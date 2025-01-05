@@ -1,7 +1,12 @@
 package tempest_double.assets;
 
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@ToString
+@Getter
+@Setter
 abstract public class Asset {
     protected final String name;
     protected final String type;

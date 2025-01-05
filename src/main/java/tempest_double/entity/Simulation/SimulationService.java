@@ -12,6 +12,8 @@ public interface SimulationService {
 
     ResponseEntity<Map<String, Object>> postSimulation(String scenario_name);
 
+    ResponseEntity<Map<String, Object>> simulate(String scenario_name);
+
     ResponseEntity<String> deleteSimulations(int... simulationIds);
 
     ResponseEntity<String> deleteSimulation(int scenarioId);
