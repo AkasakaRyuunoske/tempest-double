@@ -17,9 +17,6 @@ const maxCapacities = {
     accumulatorBar: 20
 };
 
-let washingMachineData = [];
-let refrigeratorData = [];
-let airConditionerData = [];
 let productionData = [];
 let xValue = 0;
 
@@ -108,26 +105,22 @@ function updateDashboard(data) {
         return response.json();
     })
         .then((data) => {
-            console.log("Got some data from simulate")
             console.log(data)
 
             Object.entries(data).forEach(([name, value]) => {
-                console.log("Values we are dealing with: ")
-                console.log(`${name}-progress-bar`)
-                console.log(`${name}-value-display`)
-                console.log(`${value} --> value`)
-
                 // Handle specific cases for total energy consumed and produced
                 if (name === "total_energy_consumed") {
                     document.getElementById("current-satisfaction").innerText = value.toFixed(2);
-
-                    return;
+                    let max_value = document.getElementById("max-satisfaction").innerText
+                    updateProgressBar(`satisfactionBar`, value, Number(max_value), `${name}-value-display`);
+                    return; // skip
                 }
 
                 if (name === "total_energy_produced") {
                     document.getElementById("current-production").innerText = value.toFixed(2);
-
-                    return;
+                    let max_value = document.getElementById("max-production").innerText
+                    updateProgressBar(`productionBar`, value, Number(max_value), `${name}-value-display`);
+                    return; // skip
                 }
 
                 if (assetsProducers.includes(name)){
@@ -176,7 +169,9 @@ function updateDashboard(data) {
                     }
                 }
 
-                updateProgressBar(`${name}-progress-bar`, value, 3000, `${name}-value-display`);
+                let max_value = document.getElementById(`${name}-max-value`).innerText
+                console.log("Max value for " + name + " is => " + max_value)
+                updateProgressBar(`${name}-progress-bar`, value, Number(max_value), `${name}-value-display`);
             });
         })
 
@@ -196,30 +191,6 @@ function updateDashboard(data) {
     function getRandomColor() {
         return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
     }
-    // updateProgressBar("refrigeratorBar", refrigeratorValue, maxCapacities.refrigerator, "refrigerator-value");
-    // updateProgressBar("airConditionerBar", airConditionerValue, maxCapacities.airConditioner, "air-conditioner-value");
-    // updateProgressBar("solarPanelBar", solarPanelValue, maxCapacities.solarPanel, "solar-panel-value");
-    // updateProgressBar("windTurbineBar", windTurbineValue, maxCapacities.windTurbine, "wind-turbine-value");
-    // updateProgressBar("accumulatorBar", accumulatorValue, maxCapacities.accumulatorBar, "accumulator-value");
-    //
-    // updateProgressBar("satisfactionBar", satisfactionValue, maxCapacities.satisfaction, "satisfaction-value");
-    // updateProgressBar("productionBar", totalProduction, maxCapacities.production, "production-value");
-    // updateProgressBar("accumulatorChargeBar", totalAccumulatorCharge, maxCapacities.accumulator, "accumulator-charge-value");
-
-    // updateWValues("current-satisfaction", "max-satisfaction", satisfactionValue, maxCapacities.satisfaction);
-    // updateWValues("current-production", "max-production", totalProduction, maxCapacities.production);
-    // updateWValues("current-charge", "max-charge", totalAccumulatorCharge, maxCapacities.accumulator);
-
-    // washingMachineData.push({ x: xValue, y: washingMachineValue });
-    // refrigeratorData.push({ x: xValue, y: refrigeratorValue });
-    // airConditionerData.push({ x: xValue, y: airConditionerValue });
-    //
-    // productionData.push({ x: xValue, y: totalProduction });
-    //
-    // if (washingMachineData.length > 20) washingMachineData.shift();
-    // if (refrigeratorData.length > 20) refrigeratorData.shift();
-    // if (airConditionerData.length > 20) airConditionerData.shift();
-    // if (productionData.length > 20) productionData.shift();
 
     consumptionGraph.render();
     productionGraph.render();
@@ -248,15 +219,6 @@ export function startSimulation(scenario_name){
             if (!updateInterval) {
                 updateInterval = setInterval(updateDashboard, 1000);
             }
-
-            // let start_button = document.getElementById('start-button');
-            // // Clone the element
-            // const newElement = start_button.cloneNode(true);
-            //
-            // // Replace the old element with the new one
-            // start_button.parentNode.replaceChild(newElement, start_button);
-            //
-            // start_button.addEventListener('click', toggleStartStop);
 
         })
         .catch((error) => {
@@ -307,6 +269,7 @@ function generateConsumers(data){
     const assets = getAssetsByRole(data, role);
 
     const consumersContainer = document.getElementById("consumers");
+    consumersContainer.innerHTML = "";
 
     assets.forEach(asset => {
         let color = generateColorNearBase("#FF8A8A");
@@ -319,7 +282,10 @@ function generateConsumers(data){
             <div class="progress-bar-container">
                 <div class="progress-bar" style="background-color: ${color}" id="${asset.name}-progress-bar">0 MW</div>
             </div>
-            <div class="value-display" id="${asset.name}-value-display">0 MW / ${asset.nominal_power} W</div>
+            <div>
+                <span id="${asset.name}-value-display" class="value-display">0 W / </span>
+                <span id="${asset.name}-max-value">${asset.nominal_power}</span> W
+            </div>
         </div>`
             consumersContainer.innerHTML += assetHtml;
         });
@@ -333,19 +299,31 @@ function generateProducers(data){
     const assets = getAssetsByRole(data, role);
 
     const producersContainer = document.getElementById("producers");
+    producersContainer.innerHTML = "";
 
     assets.forEach(asset => {
         let color = generateColorNearBase("#FF8A8A");
+
+        let imageSrc = "/SimulationPage/img/accumulator.svg"; // Default image
+        if (asset.type === "solar_panel") {
+            imageSrc = "/SimulationPage/img/solarPanel.svg";
+        } else if (asset.type === "wind_turbine") {
+            imageSrc = "/SimulationPage/img/windTurbine.svg";
+        }
+
         const assetHtml = `
                 <div class="production-unit">
                     <div class="production-unit-info">
-                        <img src="/SimulationPage/img/accumulator.svg" alt="Accumulator">
+                        <img src="${imageSrc}" alt="${asset.type}">
                         <h3>${asset.name}</h3>
                     </div>
                     <div class="progress-bar-container">
                         <div id="${asset.name}-progress-bar" class="progress-bar" style="background-color: ${color}">0 W</div>
                     </div>
-                    <div id="${asset.name}-value-display" class="value-display">0 W / ${asset.nominal_power} W</div>
+                    <div>
+                        <span id="${asset.name}-value-display" class="value-display">0 W / </span>
+                        <span id="${asset.name}-max-value">${asset.nominal_power}</span> W
+                    </div>
                 </div>`
         producersContainer.innerHTML += assetHtml;
 
@@ -356,7 +334,5 @@ function generateProducers(data){
     max_production_container.innerText = total_production;
 
 }
-
-// setProgressBarColors();
 
 startButton.addEventListener("click", toggleStartStop)
