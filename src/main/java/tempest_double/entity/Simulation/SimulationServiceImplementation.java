@@ -2,6 +2,7 @@ package tempest_double.entity.Simulation;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -18,6 +19,8 @@ import java.util.List;
 import java.util.Map;
 
 @Service
+@Log4j2
+@SuppressWarnings("PMD.AvoidDuplicateLiterals") // in this class it is acceptable to use literals
 public class SimulationServiceImplementation implements SimulationService {
     @Autowired
     SimulationRepository simulationRepository;
@@ -53,9 +56,7 @@ public class SimulationServiceImplementation implements SimulationService {
             response.put("error", "Error parsing JSON");
             return ResponseEntity.badRequest().body(response);
         }
-        System.out.println("Name is: " + scenario_name);
         Scenario scenario = scenarioRepository.findByName(scenario_name);
-        System.out.println("scenario is: " + scenario);
 
         Simulation simulation = new Simulation();
         simulation.setScenario(scenario);
@@ -80,79 +81,61 @@ public class SimulationServiceImplementation implements SimulationService {
             Map<String, Object> assetInfo;
             String type = assetFromDb.getType();
             switch (type) {
-                case "solar_panel":
-                    System.out.println("It's a solar panel!");
+                case "solar_panel" -> {
                     double panelArea = Double.parseDouble(assetFromDb.getConfiguration().get("area").toString());
                     efficiency = Double.parseDouble(assetFromDb.getConfiguration().get("efficiency").toString());
                     nominalPower = Double.parseDouble(assetFromDb.getConfiguration().get("nominal-power").toString());
                     assetToSimulate = new SolarPanel(name, type, "Producer", efficiency, panelArea, 45.0, nominalPower, 0.0);
                     assets.add(assetToSimulate);
-
                     assetInfo = new HashMap<>();
                     assetInfo.put("name", name);
                     assetInfo.put("type", type);
                     assetInfo.put("role", "Producer");
                     assetInfo.put("nominal_power", nominalPower);
-
                     response.put("Asset_" + i, assetInfo);
-                    break;
-                case "wind_turbine":
-                    System.out.println("It's a Wind Turbine!");
-
+                }
+                case "wind_turbine" -> {
                     efficiency = Double.parseDouble(assetFromDb.getConfiguration().get("dissipation-factor").toString());
                     nominalPower = Double.parseDouble(assetFromDb.getConfiguration().get("nominal-power").toString());
                     double bladeLength = Double.parseDouble(assetFromDb.getConfiguration().get("blade-length").toString());
                     assetToSimulate = new WindTurbine(name, type, "Producer", efficiency, bladeLength, 45.0, 45.0, nominalPower);
                     assets.add(assetToSimulate);
-
                     assetInfo = new HashMap<>();
                     assetInfo.put("name", name);
                     assetInfo.put("type", type);
                     assetInfo.put("role", "Producer");
                     assetInfo.put("nominal_power", nominalPower);
-
                     response.put("Asset_" + i, assetInfo);
-                    break;
-                case "fuel_cell":
-                    System.out.println("It's a Fuel Cell!");
-
+                }
+                case "fuel_cell" -> {
                     nominalPower = Double.parseDouble(assetFromDb.getConfiguration().get("nominal-power").toString());
                     double fuelCapacity = Double.parseDouble(assetFromDb.getConfiguration().get("fuel-capacity").toString());
                     double currentFuel = Double.parseDouble(assetFromDb.getConfiguration().get("current-fuel").toString());
                     assetToSimulate = new FuelCell(name, type, "Producer", 0.9, fuelCapacity, nominalPower, currentFuel);
                     assets.add(assetToSimulate);
-
                     assetInfo = new HashMap<>();
                     assetInfo.put("name", name);
                     assetInfo.put("type", type);
                     assetInfo.put("role", "Producer");
                     assetInfo.put("nominal_power", nominalPower);
-
                     response.put("Asset_" + i, assetInfo);
-                    break;
-                case "accumulator":
-                    System.out.println("It's a Accumulator!");
-                    break;
-                case "generic_consumer":
-                    System.out.println("It's a Generic Consumer!");
+                }
+//                case "accumulator" -> System.out.println("It's a Accumulator!");
+                case "generic_consumer" -> {
                     nominalPower = Double.parseDouble(assetFromDb.getConfiguration().get("nominal-power").toString());
                     double tau = Double.parseDouble(assetFromDb.getConfiguration().get("tau").toString());
                     double minConsumption = Double.parseDouble(assetFromDb.getConfiguration().get("min-consumption").toString());
                     efficiency = 100;
-
                     assetToSimulate = new GenericConsumer(name, type, "Consumer", efficiency, minConsumption, nominalPower, tau);
                     assets.add(assetToSimulate);
-
                     assetInfo = new HashMap<>();
                     assetInfo.put("name", name);
                     assetInfo.put("type", type);
                     assetInfo.put("role", "Consumer");
                     assetInfo.put("nominal_power", nominalPower);
-
                     response.put("Asset_" + i, assetInfo);
-                    break;
-                default:
-                    System.out.println("Non supported type?");
+                }
+                default -> log.info("Non supported type?");
             }
             i++;
         }
@@ -170,17 +153,14 @@ public class SimulationServiceImplementation implements SimulationService {
         for (tempest_double.assets.Asset asset : assets) {
             simulationResult = 0;
             switch (asset.getType()) {
-                case "solar_panel" -> {
+                case "solar_panel", "wind_turbine" -> {
                     simulationResult = asset.simulate(LocalDateTime.now());
-                }
-                case "wind_turbine" -> {
-                    simulationResult = asset.simulate(LocalDateTime.now());
-                    System.out.println("Wind turbine produced: " + simulationResult);
                 }
                 case "fuel_cell" -> {
                     simulationResult = asset.simulate(null); // doesn't require a input
-                    System.out.println("Fuel cell produced: " + simulationResult);
                 }
+
+                default -> log.info("Not supported");
             }
             totalEnergyProduced += simulationResult;
             result.put(asset.getName(), simulationResult);
@@ -211,6 +191,8 @@ public class SimulationServiceImplementation implements SimulationService {
 
                     result.put(asset.getName(), simulationResult);
                 }
+
+                default -> log.info("Not supported");
             }
         }
 

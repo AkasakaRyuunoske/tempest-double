@@ -1,7 +1,10 @@
 package tempest_double.assets;
 
+import lombok.extern.log4j.Log4j2;
+
 import java.time.LocalDateTime;
 
+@Log4j2
 public class WindTurbine extends Asset {
     private final double nominalPower;
     private final double bladeLength; // in meters
@@ -32,7 +35,7 @@ public class WindTurbine extends Asset {
         double sweepArea = Math.PI * bladeLength * bladeLength;
 
         // Power curve calculation
-        if (windSpeed < cutInWindSpeed || windSpeed > cutOutWindSpeed) System.out.println("Operating not safely");;
+        if (windSpeed < cutInWindSpeed || windSpeed > cutOutWindSpeed) log.warn("Operating not safely");
 
         // kg/m³
         double airDensity = 1.225;
