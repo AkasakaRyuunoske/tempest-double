@@ -4,12 +4,10 @@ import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-import java.time.LocalDateTime;
-
 @ToString
 @Getter
 @Setter
-public class GenericConsumer extends Asset{
+public class GenericConsumer extends Asset {
     private final double maxConsumption;  // Maximum power consumption in W
     private final double minConsumption;  // Minimum power consumption in W
     private final double timeConstant;    // Time constant or TAU in seconds

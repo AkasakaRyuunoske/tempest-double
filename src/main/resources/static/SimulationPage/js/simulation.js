@@ -277,7 +277,7 @@ function generateConsumers(data){
 
         // Save the color for reuse
         assetColors[asset.name] = color;
-        
+
         const assetHtml = `
         <div class="consumption-unit">
             <div class="consumption-unit-info">
