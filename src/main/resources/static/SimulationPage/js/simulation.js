@@ -4,6 +4,7 @@ let updateInterval = null;
 let scenario_name = null;
 let assetsProducers = [];
 const startButton = document.querySelector(".start-button button");
+let assetColors = {};
 
 const maxCapacities = {
     satisfaction: 100,
@@ -139,7 +140,7 @@ function updateDashboard(data) {
                         // If the device is new, dynamically add it to the graph
                         productionGraph.options.data.push({
                             type: "line",
-                            color: getRandomColor(),
+                            color: assetColors[name],
                             name: name,
                             showInLegend: true,
                             dataPoints: [{ x: xValue, y: value }],
@@ -161,7 +162,7 @@ function updateDashboard(data) {
                         // If the device is new, dynamically add it to the graph
                         consumptionGraph.options.data.push({
                             type: "line",
-                            color: getRandomColor(),
+                            color: assetColors[name],
                             name: name,
                             showInLegend: true,
                             dataPoints: [{ x: xValue, y: value }],
@@ -273,6 +274,10 @@ function generateConsumers(data){
 
     assets.forEach(asset => {
         let color = generateColorNearBase("#FF8A8A");
+
+        // Save the color for reuse
+        assetColors[asset.name] = color;
+        
         const assetHtml = `
         <div class="consumption-unit">
             <div class="consumption-unit-info">
@@ -303,6 +308,9 @@ function generateProducers(data){
 
     assets.forEach(asset => {
         let color = generateColorNearBase("#FF8A8A");
+
+        // Save the color for reuse
+        assetColors[asset.name] = color;
 
         let imageSrc = "/SimulationPage/img/accumulator.svg"; // Default image
         if (asset.type === "solar_panel") {
