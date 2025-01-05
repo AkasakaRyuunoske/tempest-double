@@ -29,7 +29,7 @@ public class SimulationServiceImplementation implements SimulationService {
     @Autowired
     AssetRepository assetRepository;
 
-    ArrayList<tempest_double.assets.Asset> assets = new ArrayList<>();
+    List<tempest_double.assets.Asset> assets = new ArrayList<>();
 
     @Override
     public Simulation getSimulationById(int id) {
