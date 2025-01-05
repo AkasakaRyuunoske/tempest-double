@@ -20,7 +20,7 @@ import java.util.Map;
 
 @Service
 @Log4j2
-@SuppressWarnings("PMD.AvoidDuplicateLiterals") // in this class it is acceptable to use literals
+@SuppressWarnings({"PMD.AvoidDuplicateLiterals", "PMD.DataflowAnomalyAnalysis"})// in this class it is acceptable to use literals
 public class SimulationServiceImplementation implements SimulationService {
     @Autowired
     SimulationRepository simulationRepository;
@@ -42,15 +42,15 @@ public class SimulationServiceImplementation implements SimulationService {
     }
 
     @Override
-    public ResponseEntity<Map<String, Object>> postSimulation(String scenario_name) {
+    public ResponseEntity<Map<String, Object>> postSimulation(String scenario_json) {
         Map<String, Object> response = new HashMap<>();
-
+        String scenario_name;
         assets = new ArrayList<>(); // clean from any previous data
 
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             // Parse the JSON into a JsonNode
-            JsonNode jsonNode = objectMapper.readTree(scenario_name);
+            JsonNode jsonNode = objectMapper.readTree(scenario_json);
             scenario_name = jsonNode.get("name").asText();
         } catch (Exception e) {
             response.put("error", "Error parsing JSON");
@@ -143,6 +143,7 @@ public class SimulationServiceImplementation implements SimulationService {
         return ResponseEntity.ok().body(response);
     }
 
+    @Override
     public ResponseEntity<Map<String, Object>> simulate(String scenario_name) {
         Map<String, Object> result = new HashMap<>();
         double simulationResult;

@@ -10,7 +10,7 @@ public interface SimulationService {
 
     List<Simulation> getSimulations();
 
-    ResponseEntity<Map<String, Object>> postSimulation(String scenario_name);
+    ResponseEntity<Map<String, Object>> postSimulation(String scenario_json);
 
     ResponseEntity<Map<String, Object>> simulate(String scenario_name);
 

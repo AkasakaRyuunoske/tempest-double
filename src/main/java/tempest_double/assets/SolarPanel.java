@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 @ToString
 @Getter
 @Setter
+@SuppressWarnings("PMD.DataflowAnomalyAnalysis")
 public class SolarPanel extends Asset {
     private final double panelArea;      // in square meters
     private final double latitude;       // geographic latitude
