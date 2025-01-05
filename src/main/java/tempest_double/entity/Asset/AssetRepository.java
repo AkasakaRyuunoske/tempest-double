@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface AssetRepository extends JpaRepository<Asset, Integer> {
     Asset findById(int id);
+
+    Asset findByName(String name);
 }

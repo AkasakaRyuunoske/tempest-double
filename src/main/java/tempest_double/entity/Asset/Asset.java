@@ -13,6 +13,7 @@ import java.util.Map;
 @AllArgsConstructor
 @Getter
 @Setter
+@ToString
 public class Asset {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

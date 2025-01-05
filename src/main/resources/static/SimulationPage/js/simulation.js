@@ -1,4 +1,10 @@
+import {showPopup} from "./pop_up.js";
+
 let updateInterval = null;
+let scenario_name = null;
+let assetsProducers = [];
+const startButton = document.querySelector(".start-button button");
+let assetColors = {};
 
 const maxCapacities = {
     satisfaction: 100,
@@ -12,9 +18,6 @@ const maxCapacities = {
     accumulatorBar: 20
 };
 
-let washingMachineData = [];
-let refrigeratorData = [];
-let airConditionerData = [];
 let productionData = [];
 let xValue = 0;
 
@@ -47,36 +50,14 @@ const airConditionerColor = generateColorNearBase("#FF8A8A");
 const consumptionGraph = new CanvasJS.Chart("consumptionGraph", {
     title: { text: "Consumption", fontSize: 25, fontFamily: "Verdana" },
     axisX: { gridThickness: 1, gridDashType: "solid" },
-    axisY: { title: "MW", includeZero: false, gridThickness: 1, gridDashType: "solid" },
-    data: [
-        {
-            type: "line",
-            color: washingMachineColor,
-            name: "Washing Machine",
-            showInLegend: true,
-            dataPoints: washingMachineData,
-        },
-        {
-            type: "line",
-            color: refrigeratorColor,
-            name: "Refrigerator",
-            showInLegend: true,
-            dataPoints: refrigeratorData,
-        },
-        {
-            type: "line",
-            color: airConditionerColor,
-            name: "Air Conditioner",
-            showInLegend: true,
-            dataPoints: airConditionerData,
-        }
-    ]
+    axisY: { title: "W", includeZero: false, gridThickness: 1, gridDashType: "solid" },
+    data: []
 });
 
 const productionGraph = new CanvasJS.Chart("productionGraph", {
     title: { text: "Production", fontSize: 25, fontFamily: "Verdana" },
     axisX: { gridThickness: 1, gridDashType: "solid" },
-    axisY: { title: "MW", includeZero: false, gridThickness: 1, gridDashType: "solid" },
+    axisY: { title: "W", includeZero: false, gridThickness: 1, gridDashType: "solid" },
     data: [
         {
             type: "line",
@@ -103,53 +84,114 @@ function updateProgressBar(id, value, maxCapacity, valueDisplayId) {
     bar.textContent = "";
 
     if (valueDisplay) {
-        valueDisplay.textContent = value.toFixed(2) + " MW";
+        valueDisplay.textContent = value.toFixed(2) + " W";
     }
 }
 
-function updateMWValues(currentId, maxId, currentValue, maxValue) {
+function updateWValues(currentId, maxId, currentValue, maxValue) {
     document.getElementById(currentId).textContent = currentValue.toFixed(2);
     document.getElementById(maxId).textContent = maxValue.toFixed(2);
 }
 
-function updateDashboard() {
-    const washingMachineValue = Math.random() * maxCapacities.washingMachine;
-    const refrigeratorValue = Math.random() * maxCapacities.refrigerator;
-    const airConditionerValue = Math.random() * maxCapacities.airConditioner;
+function updateDashboard(data) {
+    fetch("/api/v1/simulation", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        }
+    }).then((response) => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+        .then((data) => {
+            console.log(data)
 
-    const solarPanelValue = Math.random() * maxCapacities.solarPanel;
-    const windTurbineValue = Math.random() * maxCapacities.windTurbine;
-    const accumulatorValue = Math.random() * maxCapacities.accumulatorBar;
+            Object.entries(data).forEach(([name, value]) => {
+                // Handle specific cases for total energy consumed and produced
+                if (name === "total_energy_consumed") {
+                    document.getElementById("current-satisfaction").innerText = value.toFixed(2);
+                    let max_value = document.getElementById("max-satisfaction").innerText
+                    updateProgressBar(`satisfactionBar`, value, Number(max_value), `${name}-value-display`);
+                    return; // skip
+                }
 
-    const satisfactionValue = Math.random() * maxCapacities.satisfaction;
-    const totalProduction = solarPanelValue + windTurbineValue;
-    const totalAccumulatorCharge = Math.random() * maxCapacities.accumulator;
+                if (name === "total_energy_produced") {
+                    document.getElementById("current-production").innerText = value.toFixed(2);
+                    let max_value = document.getElementById("max-production").innerText
+                    updateProgressBar(`productionBar`, value, Number(max_value), `${name}-value-display`);
+                    return; // skip
+                }
 
-    updateProgressBar("washingMachineBar", washingMachineValue, maxCapacities.washingMachine, "washing-machine-value");
-    updateProgressBar("refrigeratorBar", refrigeratorValue, maxCapacities.refrigerator, "refrigerator-value");
-    updateProgressBar("airConditionerBar", airConditionerValue, maxCapacities.airConditioner, "air-conditioner-value");
-    updateProgressBar("solarPanelBar", solarPanelValue, maxCapacities.solarPanel, "solar-panel-value");
-    updateProgressBar("windTurbineBar", windTurbineValue, maxCapacities.windTurbine, "wind-turbine-value");
-    updateProgressBar("accumulatorBar", accumulatorValue, maxCapacities.accumulatorBar, "accumulator-value");
+                if (assetsProducers.includes(name)){
+                    // Handle dynamic devices
+                    let deviceIndex = productionGraph.options.data.findIndex(
+                        (line) => line.name === name
+                    );
 
-    updateProgressBar("satisfactionBar", satisfactionValue, maxCapacities.satisfaction, "satisfaction-value");
-    updateProgressBar("productionBar", totalProduction, maxCapacities.production, "production-value");
-    updateProgressBar("accumulatorChargeBar", totalAccumulatorCharge, maxCapacities.accumulator, "accumulator-charge-value");
+                    if (deviceIndex !== -1) {
+                        // If the device already exists in the graph, update its dataPoints
+                        productionGraph.options.data[deviceIndex].dataPoints.push({
+                            x: xValue,
+                            y: value,
+                        });
+                    } else {
+                        // If the device is new, dynamically add it to the graph
+                        productionGraph.options.data.push({
+                            type: "line",
+                            color: assetColors[name],
+                            name: name,
+                            showInLegend: true,
+                            dataPoints: [{ x: xValue, y: value }],
+                        });
+                    }
+                } else {
+                    // Handle dynamic devices
+                    let deviceIndex = consumptionGraph.options.data.findIndex(
+                        (line) => line.name === name
+                    );
 
-    updateMWValues("current-satisfaction", "max-satisfaction", satisfactionValue, maxCapacities.satisfaction);
-    updateMWValues("current-production", "max-production", totalProduction, maxCapacities.production);
-    updateMWValues("current-charge", "max-charge", totalAccumulatorCharge, maxCapacities.accumulator);
+                    if (deviceIndex !== -1) {
+                        // If the device already exists in the graph, update its dataPoints
+                        consumptionGraph.options.data[deviceIndex].dataPoints.push({
+                            x: xValue,
+                            y: value,
+                        });
+                    } else {
+                        // If the device is new, dynamically add it to the graph
+                        consumptionGraph.options.data.push({
+                            type: "line",
+                            color: assetColors[name],
+                            name: name,
+                            showInLegend: true,
+                            dataPoints: [{ x: xValue, y: value }],
+                        });
+                    }
+                }
 
-    washingMachineData.push({ x: xValue, y: washingMachineValue });
-    refrigeratorData.push({ x: xValue, y: refrigeratorValue });
-    airConditionerData.push({ x: xValue, y: airConditionerValue });
+                let max_value = document.getElementById(`${name}-max-value`).innerText
+                console.log("Max value for " + name + " is => " + max_value)
+                updateProgressBar(`${name}-progress-bar`, value, Number(max_value), `${name}-value-display`);
+            });
+        })
 
-    productionData.push({ x: xValue, y: totalProduction });
+        .catch((error) => {
+            console.error("Error starting simulation:", error);
+            alert("Failed to start simulation.");
 
-    if (washingMachineData.length > 20) washingMachineData.shift();
-    if (refrigeratorData.length > 20) refrigeratorData.shift();
-    if (airConditionerData.length > 20) airConditionerData.shift();
-    if (productionData.length > 20) productionData.shift();
+            const startButton = document.querySelector(".start-button button");
+
+            startButton.textContent = "Start";
+            startButton.classList.remove("stop");
+            if (updateInterval) {
+                clearInterval(updateInterval);
+                updateInterval = null;
+            }
+        });
+    function getRandomColor() {
+        return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
+    }
 
     consumptionGraph.render();
     productionGraph.render();
@@ -157,18 +199,47 @@ function updateDashboard() {
     xValue++;
 }
 
-function toggleStartStop() {
-    const startButton = document.querySelector(".start-button button");
+export function startSimulation(scenario_name){
+    return fetch("/api/v1/simulation/start", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+        },
+    body: JSON.stringify({name: scenario_name})
+    }).then((response) => {
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        return response.json();
+    })
+        .then((data) => {
+            console.log("Got some data too")
+            console.log(data)
+            generateConsumers(data);
+            generateProducers(data);
+            if (!updateInterval) {
+                updateInterval = setInterval(updateDashboard, 1000);
+            }
+
+        })
+        .catch((error) => {
+            console.error("Error starting simulation:", error);
+            alert("Failed to start simulation.");
+        });
+}
+
+export function toggleStartStop(scenario_name) {
 
     if (startButton.textContent === "Start") {
         startButton.textContent = "Stop";
         startButton.classList.add("stop");
-        if (!updateInterval) {
-            updateInterval = setInterval(updateDashboard, 1000);
-        }
+
+        showPopup();
+
     } else {
         startButton.textContent = "Start";
         startButton.classList.remove("stop");
+
         if (updateInterval) {
             clearInterval(updateInterval);
             updateInterval = null;
@@ -176,7 +247,100 @@ function toggleStartStop() {
     }
 }
 
-document.querySelector(".start-button button").addEventListener("click", toggleStartStop);
+let total_satisfaction = 0;
+let total_production = 0;
 
-setProgressBarColors();
+function getAssetsByRole(data, role){
+    const assets = [];
+    // Iterate over the key-value pairs of the JSON object
+    Object.entries(data).forEach(([key, value]) => {
+        if (value.role === role) {
+            assets.push({ id: key, ...value }); // Add key as 'id' along with asset properties
+            if(role === "Consumer") total_satisfaction += value.nominal_power
+            else total_production += value.nominal_power
+        }
+    });
 
+    return assets;
+}
+
+function generateConsumers(data){
+    const role = "Consumer";
+
+    const assets = getAssetsByRole(data, role);
+
+    const consumersContainer = document.getElementById("consumers");
+    consumersContainer.innerHTML = "";
+
+    assets.forEach(asset => {
+        let color = generateColorNearBase("#FF8A8A");
+
+        // Save the color for reuse
+        assetColors[asset.name] = color;
+
+        const assetHtml = `
+        <div class="consumption-unit">
+            <div class="consumption-unit-info">
+                <img src="/SimulationPage/img/washingMachine.svg" alt="Washing Machine">
+                    <h3>${asset.name}</h3>
+            </div>
+            <div class="progress-bar-container">
+                <div class="progress-bar" style="background-color: ${color}" id="${asset.name}-progress-bar">0 MW</div>
+            </div>
+            <div>
+                <span id="${asset.name}-value-display" class="value-display">0 W / </span>
+                <span id="${asset.name}-max-value">${asset.nominal_power}</span> W
+            </div>
+        </div>`
+            consumersContainer.innerHTML += assetHtml;
+        });
+
+    let max_satisfaction_container = document.getElementById("max-satisfaction")
+    max_satisfaction_container.innerText = total_satisfaction;
+}
+
+function generateProducers(data){
+    const role = "Producer"
+    const assets = getAssetsByRole(data, role);
+
+    const producersContainer = document.getElementById("producers");
+    producersContainer.innerHTML = "";
+
+    assets.forEach(asset => {
+        let color = generateColorNearBase("#FF8A8A");
+
+        // Save the color for reuse
+        assetColors[asset.name] = color;
+
+        let imageSrc = "/SimulationPage/img/accumulator.svg"; // Default image
+        if (asset.type === "solar_panel") {
+            imageSrc = "/SimulationPage/img/solarPanel.svg";
+        } else if (asset.type === "wind_turbine") {
+            imageSrc = "/SimulationPage/img/windTurbine.svg";
+        }
+
+        const assetHtml = `
+                <div class="production-unit">
+                    <div class="production-unit-info">
+                        <img src="${imageSrc}" alt="${asset.type}">
+                        <h3>${asset.name}</h3>
+                    </div>
+                    <div class="progress-bar-container">
+                        <div id="${asset.name}-progress-bar" class="progress-bar" style="background-color: ${color}">0 W</div>
+                    </div>
+                    <div>
+                        <span id="${asset.name}-value-display" class="value-display">0 W / </span>
+                        <span id="${asset.name}-max-value">${asset.nominal_power}</span> W
+                    </div>
+                </div>`
+        producersContainer.innerHTML += assetHtml;
+
+        assetsProducers.push(asset.name);
+    });
+
+    let max_production_container = document.getElementById("max-production")
+    max_production_container.innerText = total_production;
+
+}
+
+startButton.addEventListener("click", toggleStartStop)

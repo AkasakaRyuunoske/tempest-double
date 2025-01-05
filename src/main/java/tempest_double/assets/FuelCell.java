@@ -1,18 +1,24 @@
 package tempest_double.assets;
 
-import java.time.LocalDateTime;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 
+@ToString
+@Getter
+@Setter
 public class FuelCell extends Asset {
     private final double fuelCapacity;   // in kg
     private double currentFuel;    // remaining fuel
-    private final int nominalPower;    // maximum power output
+    private final double nominalPower;    // maximum power output
 
     private final double specificConsumption = 0.3; // kg of fuel per kWh
 
-    public FuelCell(String name, String type, String role, double efficiency, double fuelCapacity, int nominalPower) {
+    public FuelCell(String name, String type, String role, double efficiency, double fuelCapacity, double nominalPower, double currentFuel) {
         super(name, type, role, efficiency);
         this.fuelCapacity = fuelCapacity;
         this.nominalPower = nominalPower;
+        this.currentFuel = currentFuel;
     }
 
 
@@ -29,7 +35,7 @@ public class FuelCell extends Asset {
     }
 
     @Override
-    public double simulate(LocalDateTime timestamp) {
+    public double simulate(Object input) {
         if (currentFuel <= 0) {
             return 0;
         }
@@ -39,7 +45,7 @@ public class FuelCell extends Asset {
 
         // Consume fuel
         double fuelConsumed = calculateFuelConsumption(potentialPower);
-        currentFuel -= fuelConsumed;
+        currentFuel -= fuelConsumed / 1000;
 
         return potentialPower;
     }

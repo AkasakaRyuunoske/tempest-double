@@ -8,6 +8,7 @@ import tempest_double.entity.Simulation.Simulation;
 import tempest_double.entity.Simulation.SimulationService;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/api/v1/")
@@ -33,9 +34,14 @@ public class SimulationAPI {
         return ResponseEntity.ok(simulations);
     }
 
+    @PostMapping("/simulation/start")
+    ResponseEntity<Map<String, Object>> startSimulation(@RequestBody String name) {
+        return simulationService.postSimulation(name);
+    }
+
     @PostMapping("/simulation")
-    ResponseEntity<String> postSimulation(@RequestBody int scenario_id) {
-        return simulationService.postSimulation(scenario_id);
+    ResponseEntity<Map<String, Object>> simulate() {
+        return simulationService.simulate("name");
     }
 
     @DeleteMapping("/simulations")
@@ -46,5 +52,11 @@ public class SimulationAPI {
     @DeleteMapping("/simulation/{id}")
     ResponseEntity<String> deleteSimulation(@PathVariable int id) {
         return simulationService.deleteSimulation(id);
+    }
+
+    @DeleteMapping("/simulation/stop/{name}")
+    ResponseEntity<String> stopSimulation(@RequestBody String name) {
+//        return simulationService.postSimulation(name);
+        return ResponseEntity.ok("Not implemented");
     }
 }
