@@ -4,14 +4,61 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title th:text="${@environment.getProperty('spring.application.name')}"></title>
     <link rel="stylesheet" href="HistoryPage/css/history.css">
+
+    <style>
+        /* Basic styling for the modal overlay */
+        #modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none; /* hidden by default */
+            justify-content: center;
+            align-items: center;
+        }
+        #modal-content {
+            background: #fff;
+            padding: 20px;
+            border-radius: 4px;
+            max-width: 600px;
+            width: 100%;
+        }
+
+        .session-card {
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            padding: 10px;
+            margin: 10px 0;
+            cursor: pointer;
+            /* example animation class */
+            animation: slideInLeft 0.3s ease-out;
+        }
+        /* Example animation (optional) */
+        @keyframes slideInLeft {
+            from { transform: translateX(-20px); opacity: 0; }
+            to   { transform: translateX(0);    opacity: 1; }
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+        }
+        .card-header h3 {
+            margin-left: 8px;
+        }
+        .card-checkbox {
+            margin-right: 8px;
+        }
+        .card-content p {
+            margin: 4px 0;
+        }
+    </style>
 </head>
 <body>
 
 <th:block th:replace="~{Components/header :: header}"></th:block>
 
-<main>
-
-    <div class="content">
+<main class="content">
 
         <div class="select-delete-container animate-slide-in-left">
             <div class="checkbox-label">
@@ -21,72 +68,10 @@
             <button id="delete-selected" class="delete-button">Delete selected</button>
         </div>
 
-        <div class="session-card animate-slide-in-left">
-            <div class="card-header">
-                <input type="checkbox" class="card-checkbox">
-                <h3>Nome dello scenario</h3>
-            </div>
-            <div class="card-content">
-                <div class="date-time">
-                    <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
-                    <p><strong>Fine: </strong>14/11/2024, 14:37</p>
-                </div>
-                <div class="duration">
-                    <p><strong>Durata: </strong>0h 1min 0s</p>
-                </div>
-                <div class="asset">
-                    <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
-                </div>
-                <div class="outcome">
-                    <p><strong>Terminato con successo</strong></p>
-                </div>
-            </div>
-        </div>
+    <div id="cards-container"></div>
 
-        <div class="session-card animate-slide-in-left">
-            <div class="card-header">
-                <input type="checkbox" class="card-checkbox">
-                <h3>Nome dello scenario</h3>
-            </div>
-            <div class="card-content">
-                <div class="date-time">
-                    <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
-                    <p><strong>Fine: </strong>14/11/2024, 14:37</p>
-                </div>
-                <div class="duration">
-                    <p><strong>Durata: </strong>0h 1min 0s</p>
-                </div>
-                <div class="asset">
-                    <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
-                </div>
-                <div class="outcome">
-                    <p><strong>Terminato con successo</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="session-card animate-slide-in-left">
-            <div class="card-header">
-                <input type="checkbox" class="card-checkbox">
-                <h3>Nome dello scenario</h3>
-            </div>
-            <div class="card-content">
-                <div class="date-time">
-                    <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
-                    <p><strong>Fine: </strong>14/11/2024, 14:37</p>
-                </div>
-                <div class="duration">
-                    <p><strong>Durata: </strong>0h 1min 0s</p>
-                </div>
-                <div class="asset">
-                    <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
-                </div>
-                <div class="outcome">
-                    <p><strong>Terminato con successo</strong></p>
-                </div>
-            </div>
-        </div>
-
+    <div id="modal-overlay">
+        <div id="modal-content"></div>
     </div>
 
 </main>

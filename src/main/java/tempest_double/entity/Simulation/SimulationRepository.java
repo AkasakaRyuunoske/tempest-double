@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface SimulationRepository extends JpaRepository<Simulation, Integer> {
     Simulation findById(int id);
+
+    Simulation findTopByOrderByIdDesc();
 }

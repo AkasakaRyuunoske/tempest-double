@@ -1,0 +1,36 @@
+package tempest_double.entity.SimulationStatus;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import jakarta.persistence.*;
+import lombok.*;
+import tempest_double.entity.JsonConverter;
+import tempest_double.entity.Scenario.Scenario;
+import tempest_double.entity.Simulation.Simulation;
+
+import java.util.Map;
+
+@Entity
+@Table(name = "simulation_status")
+@NoArgsConstructor
+@AllArgsConstructor
+@Getter
+@Setter
+@ToString
+public class SimulationStatus {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @JsonIgnore
+    private int id;
+
+    @Column(columnDefinition = "JSON", nullable = false)
+    @Convert(converter = JsonConverter.class)
+    private Map<String, Object> assets_results;
+
+    @Column(columnDefinition = "JSON", nullable = false)
+    @Convert(converter = JsonConverter.class)
+    private Map<String, Object> environmental_changes;
+
+    @ManyToOne
+    @JoinColumn(name = "simulation_id", nullable = false)
+    private Simulation simulation;
+}

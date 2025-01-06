@@ -11,6 +11,8 @@ import tempest_double.entity.Asset.Asset;
 import tempest_double.entity.Asset.AssetRepository;
 import tempest_double.entity.Scenario.Scenario;
 import tempest_double.entity.Scenario.ScenarioRepository;
+import tempest_double.entity.SimulationStatus.SimulationStatus;
+import tempest_double.entity.SimulationStatus.SimulationStatusRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -28,6 +30,9 @@ public class SimulationServiceImplementation implements SimulationService {
     ScenarioRepository scenarioRepository;
     @Autowired
     AssetRepository assetRepository;
+
+    @Autowired
+    SimulationStatusRepository simulationStatusRepository;
 
     List<tempest_double.assets.Asset> assets = new ArrayList<>();
 
@@ -63,7 +68,6 @@ public class SimulationServiceImplementation implements SimulationService {
         simulationRepository.save(simulation);
         List<Map<String, Object>> nodes = (List<Map<String, Object>>) scenario.getTopology().get("nodes");
 
-        // Simple loop
         int i = 0;
         for (Map<String, Object> node : nodes) {
             String name = (String) node.get("name");
@@ -146,9 +150,13 @@ public class SimulationServiceImplementation implements SimulationService {
     @Override
     public ResponseEntity<Map<String, Object>> simulate(String scenario_name) {
         Map<String, Object> result = new HashMap<>();
+        Map<String, Object> assetResults = new HashMap<>();
+        Map<String, Object> environmentChanges = new HashMap<>();
         double simulationResult;
         double totalEnergyProduced = 0.0;
         double totalEnergyConsumed = 0.0;
+
+        SimulationStatus simulationStatus = new SimulationStatus();
 
         // Loop Through Producers
         for (tempest_double.assets.Asset asset : assets) {
@@ -165,6 +173,7 @@ public class SimulationServiceImplementation implements SimulationService {
             }
             totalEnergyProduced += simulationResult;
             result.put(asset.getName(), simulationResult);
+            assetResults.put(asset.getName(), simulationResult);
         }
 
         result.put("total_energy_produced", totalEnergyProduced);
@@ -182,6 +191,7 @@ public class SimulationServiceImplementation implements SimulationService {
                     simulationResult = ((Accumulator) asset).getCurrentCharge();
 
                     result.put(asset.getName(), simulationResult);
+                    assetResults.put(asset.getName(), simulationResult);
                 }
                 case "generic_consumer" -> {
                     double energyConsumed = asset.simulate(totalEnergyProduced);
@@ -191,6 +201,7 @@ public class SimulationServiceImplementation implements SimulationService {
                     totalEnergyProduced -= energyConsumed;
 
                     result.put(asset.getName(), simulationResult);
+                    assetResults.put(asset.getName(), simulationResult);
                 }
 
                 default -> log.info("Not supported");
@@ -198,6 +209,13 @@ public class SimulationServiceImplementation implements SimulationService {
         }
 
         result.put("total_energy_consumed", totalEnergyConsumed);
+
+        environmentChanges.put("date", LocalDateTime.now().toString());
+
+        simulationStatus.setAssets_results(assetResults);
+        simulationStatus.setEnvironmental_changes(environmentChanges);
+        simulationStatus.setSimulation(simulationRepository.findTopByOrderByIdDesc());
+        simulationStatusRepository.save(simulationStatus);
 
         return ResponseEntity.ok().body(result);
     }
