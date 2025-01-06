@@ -77,6 +77,16 @@ public class SimulationAPITests {
     }
 
     @Test
+    void getSimulations_WhenEmpty_ShouldReturn404() throws Exception {
+        when(simulationService.getSimulations()).thenReturn(null);
+
+        mockMvc.perform(get("/api/v1/simulations"))
+                .andExpect(status().isNotFound());
+
+        verify(simulationService).getSimulations();
+    }
+
+    @Test
     public void getAllSimulations_shouldReturnAllSimulations() throws Exception {
 
         Scenario mockScenario = new Scenario();
