@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import tempest_double.entity.JsonConverter;
-import tempest_double.entity.Scenario.Scenario;
 import tempest_double.entity.Simulation.Simulation;
 
 import java.util.Map;
