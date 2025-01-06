@@ -32,9 +32,4 @@ public class Asset {
 
     @Column(nullable = false)
     private String role;
-
-    @Override
-    public String toString(){
-        return "{'id':" + id + ", 'type':'" + type + "', 'configuration':'" + configuration + "', 'name':'" + name + "', 'role': '" + role + "'}";
-    }
 }

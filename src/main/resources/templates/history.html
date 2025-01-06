@@ -9,9 +9,7 @@
 
 <th:block th:replace="~{Components/header :: header}"></th:block>
 
-<main>
-
-    <div class="content">
+<main class="content">
 
         <div class="select-delete-container animate-slide-in-left">
             <div class="checkbox-label">
@@ -21,72 +19,10 @@
             <button id="delete-selected" class="delete-button">Delete selected</button>
         </div>
 
-        <div class="session-card animate-slide-in-left">
-            <div class="card-header">
-                <input type="checkbox" class="card-checkbox">
-                <h3>Nome dello scenario</h3>
-            </div>
-            <div class="card-content">
-                <div class="date-time">
-                    <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
-                    <p><strong>Fine: </strong>14/11/2024, 14:37</p>
-                </div>
-                <div class="duration">
-                    <p><strong>Durata: </strong>0h 1min 0s</p>
-                </div>
-                <div class="asset">
-                    <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
-                </div>
-                <div class="outcome">
-                    <p><strong>Terminato con successo</strong></p>
-                </div>
-            </div>
-        </div>
+    <div id="cards-container"></div>
 
-        <div class="session-card animate-slide-in-left">
-            <div class="card-header">
-                <input type="checkbox" class="card-checkbox">
-                <h3>Nome dello scenario</h3>
-            </div>
-            <div class="card-content">
-                <div class="date-time">
-                    <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
-                    <p><strong>Fine: </strong>14/11/2024, 14:37</p>
-                </div>
-                <div class="duration">
-                    <p><strong>Durata: </strong>0h 1min 0s</p>
-                </div>
-                <div class="asset">
-                    <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
-                </div>
-                <div class="outcome">
-                    <p><strong>Terminato con successo</strong></p>
-                </div>
-            </div>
-        </div>
-
-        <div class="session-card animate-slide-in-left">
-            <div class="card-header">
-                <input type="checkbox" class="card-checkbox">
-                <h3>Nome dello scenario</h3>
-            </div>
-            <div class="card-content">
-                <div class="date-time">
-                    <p><strong>Inizio: </strong>14/11/2024, 14:36</p>
-                    <p><strong>Fine: </strong>14/11/2024, 14:37</p>
-                </div>
-                <div class="duration">
-                    <p><strong>Durata: </strong>0h 1min 0s</p>
-                </div>
-                <div class="asset">
-                    <p><strong>Asset utilizzati: </strong>Asset 1, asset 2, asset 3, asset 4, asset 5</p>
-                </div>
-                <div class="outcome">
-                    <p><strong>Terminato con successo</strong></p>
-                </div>
-            </div>
-        </div>
-
+    <div id="modal-overlay">
+        <div id="modal-content"></div>
     </div>
 
 </main>
