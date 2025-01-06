@@ -6,8 +6,10 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import tempest_double.backEndAPI.service.SimulationAPI;
 import tempest_double.entity.Scenario.Scenario;
 import tempest_double.entity.Simulation.Simulation;
@@ -15,6 +17,7 @@ import tempest_double.entity.Simulation.SimulationServiceImplementation;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 import static org.mockito.Mockito.times;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -50,6 +53,22 @@ public class SimulationAPITests {
         mockMvc.perform(get("/api/v1/simulations"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
+    }
+
+    @Test
+    void postSimulation_shouldCreateSimulation() throws Exception {
+        Map<String, Object> mockResponse = Map.of("status", "success");
+        String inputJson = "{ \"name\": \"Scenario1\" }";
+
+        Mockito.when(simulationService.postSimulation(Mockito.anyString())).thenReturn(ResponseEntity.ok(mockResponse));
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/simulation/start")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(inputJson))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.status").value("success"));
+
+        Mockito.verify(simulationService, times(1)).postSimulation(Mockito.anyString());
     }
 
     @Test
