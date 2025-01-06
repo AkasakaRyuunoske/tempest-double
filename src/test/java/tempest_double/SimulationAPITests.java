@@ -139,7 +139,22 @@ public class SimulationAPITests {
     }
 
     @Test
-    public void testDeleteSimulation_ShouldReturnOk() throws Exception {
+    void deleteSimulations_ShouldReturnSuccess() throws Exception {
+        int[] simulationIds = {1, 2, 3};
+        when(simulationService.deleteSimulations(any()))
+                .thenReturn(ResponseEntity.ok("Deleted all without errors"));
+
+        mockMvc.perform(delete("/api/v1/simulations")
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(objectMapper.writeValueAsString(simulationIds)))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Deleted all without errors"));
+
+        verify(simulationService).deleteSimulations(any());
+    }
+
+    @Test
+    public void deleteSimulation_ShouldReturnOk() throws Exception {
         when(simulationService.deleteSimulation(1))
                 .thenReturn(ResponseEntity.ok("Deleted without errors"));
 
