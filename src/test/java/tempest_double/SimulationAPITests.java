@@ -16,6 +16,7 @@ import tempest_double.entity.Simulation.Simulation;
 import tempest_double.entity.Simulation.SimulationServiceImplementation;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -104,6 +105,21 @@ public class SimulationAPITests {
         mockMvc.perform(get("/api/v1/simulations"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
+    }
+
+    @Test
+    void simulate_ShouldReturnSimulationResults() throws Exception {
+        Map<String, Object> results = new HashMap<>();
+        results.put("total_energy_produced", 1000.0);
+
+        when(simulationService.simulate("name"))
+                .thenReturn(ResponseEntity.ok(results));
+
+        mockMvc.perform(post("/api/v1/simulation"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.total_energy_produced").value(1000.0));
+
+        verify(simulationService).simulate("name");
     }
 
     @Test
