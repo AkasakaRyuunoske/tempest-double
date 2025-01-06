@@ -19,7 +19,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
-import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -36,6 +36,21 @@ public class SimulationAPITests {
     private SimulationServiceImplementation simulationService;
 
     @Test
+    void getSimulationById_WhenExists_ShouldReturnSimulation() throws Exception {
+        Simulation simulation = new Simulation();
+        simulation.setId(1);
+        simulation.setScenario(new Scenario());
+
+        when(simulationService.getSimulationById(1)).thenReturn(simulation);
+
+        mockMvc.perform(get("/api/v1/simulation/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON));
+
+        verify(simulationService).getSimulationById(1);
+    }
+
+    @Test
     public void getAllSimulations_shouldReturnAllSimulations() throws Exception {
 
         Scenario mockScenario = new Scenario();
@@ -48,7 +63,7 @@ public class SimulationAPITests {
         simulation2.setScenario(mockScenario);
 
         List<Simulation> mockSimulations = Arrays.asList(simulation1, simulation2);
-        Mockito.when(simulationService.getSimulations()).thenReturn(mockSimulations);
+        when(simulationService.getSimulations()).thenReturn(mockSimulations);
 
         mockMvc.perform(get("/api/v1/simulations"))
                 .andExpect(status().isOk())
@@ -60,7 +75,7 @@ public class SimulationAPITests {
         Map<String, Object> mockResponse = Map.of("status", "success");
         String inputJson = "{ \"name\": \"Scenario1\" }";
 
-        Mockito.when(simulationService.postSimulation(Mockito.anyString())).thenReturn(ResponseEntity.ok(mockResponse));
+        when(simulationService.postSimulation(Mockito.anyString())).thenReturn(ResponseEntity.ok(mockResponse));
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/simulation/start")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -68,21 +83,19 @@ public class SimulationAPITests {
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.status").value("success"));
 
-        Mockito.verify(simulationService, times(1)).postSimulation(Mockito.anyString());
+        verify(simulationService, times(1)).postSimulation(Mockito.anyString());
     }
 
     @Test
     public void testDeleteSimulation_ShouldReturnOk() throws Exception {
-        // Mock the service
-        Mockito.when(simulationService.deleteSimulation(1))
+        when(simulationService.deleteSimulation(1))
                 .thenReturn(ResponseEntity.ok("Deleted without errors"));
 
-        // When + Then
         mockMvc.perform(delete("/api/v1/simulation/1"))
                 .andExpect(status().isOk())
                 .andExpect(content().string("Deleted without errors"));
 
-        Mockito.verify(simulationService, times(1)).deleteSimulation(1);
+        verify(simulationService, times(1)).deleteSimulation(1);
     }
 
 }
