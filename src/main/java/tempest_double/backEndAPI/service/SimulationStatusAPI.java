@@ -1,9 +1,7 @@
 package tempest_double.backEndAPI.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import tempest_double.entity.SimulationStatus.SimulationStatus;
 import tempest_double.entity.SimulationStatus.SimulationStatusService;
 
@@ -18,5 +16,10 @@ public class SimulationStatusAPI {
     @GetMapping("/simulations_status")
     public List<SimulationStatus> getAll(){
         return simulationStatusService.getAllSimulationStatus();
+    }
+
+    @DeleteMapping("/simulations_status")
+    public String deleteAll(@RequestBody String ...names){
+        return simulationStatusService.deleteALlByName(names);
     }
 }

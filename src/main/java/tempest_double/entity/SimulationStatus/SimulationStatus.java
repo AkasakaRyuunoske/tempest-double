@@ -31,6 +31,13 @@ public class SimulationStatus {
     private Map<String, Object> environmental_changes;
 
     @ManyToOne
-    @JoinColumn(name = "simulation_id", nullable = false)
+    @JoinColumn(
+            name = "simulation_id",
+            nullable = false,
+            foreignKey = @ForeignKey(
+                    name = "fk_simulation_status_simulation_id",
+                    foreignKeyDefinition = "FOREIGN KEY (simulation_id) REFERENCES simulations(id) ON DELETE CASCADE"
+            )
+    )
     private Simulation simulation;
 }

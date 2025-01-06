@@ -86,6 +86,9 @@ function createScenarioCard(scenario) {
     const cardDiv = document.createElement('div');
     cardDiv.className = 'session-card animate-slide-in-left';
 
+    // Name which can be used by delete button.
+    cardDiv.setAttribute('data-scenario-name', scenario.name);
+
     // Header
     const headerDiv = document.createElement('div');
     headerDiv.className = 'card-header';
@@ -245,26 +248,74 @@ window.addEventListener('DOMContentLoaded', () => {
             const scenarios = groupScenarios(data);
             renderScenarios(scenarios);
 
-            const selectAllCheckbox = document.getElementById("select-all");
-            const cardCheckboxes = document.querySelectorAll('.card-header input[type="checkbox"]');
-
-            // Select/deselect all sessions
-            selectAllCheckbox.addEventListener('change', function () {
-                const isChecked = selectAllCheckbox.checked;
-                cardCheckboxes.forEach(checkbox => {
-                    checkbox.checked = isChecked;
-                });
-            });
-
-            // Synchronization of the "select all" state when single sessions are selected
-            cardCheckboxes.forEach(checkbox => {
-                checkbox.addEventListener("change", () => {
-                    const allChecked = [...cardCheckboxes].every(checkbox => checkbox.checked);
-                    selectAllCheckbox.checked = allChecked;
-                });
-            });
+            select_deselect_all_cards();
         })
         .catch((error) => {
             console.error("Error finding scenario:", error);
         });
+
+    function select_deselect_all_cards(){
+        let selectAllCheckbox = document.getElementById("select-all");
+        let cardCheckboxes = document.querySelectorAll('.card-header input[type="checkbox"]');
+
+        // Select/deselect all sessions
+        selectAllCheckbox.addEventListener('change', function () {
+            const isChecked = selectAllCheckbox.checked;
+            cardCheckboxes.forEach(checkbox => {
+                checkbox.checked = isChecked;
+            });
+        });
+
+        // Synchronization of the "select all" state when single sessions are selected
+        cardCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener("change", () => {
+                const allChecked = [...cardCheckboxes].every(checkbox => checkbox.checked);
+                selectAllCheckbox.checked = allChecked;
+            });
+        });
+    }
+
+    function getCheckedScenarioNames() {
+        const cards = document.querySelectorAll('.session-card');
+        const checkedScenarios = [];
+
+        cards.forEach(card => {
+            const checkbox = card.querySelector('.card-checkbox');
+            if (checkbox && checkbox.checked) {
+                const scenarioName = card.getAttribute('data-scenario-name');
+                checkedScenarios.push(scenarioName);
+            }
+        });
+
+        return checkedScenarios;
+    }
+
+    function deleteScenarios(){
+        let scenarios = getCheckedScenarioNames();
+
+        console.log("checkedNames")
+        console.log(scenarios)
+        fetch("/api/v1/simulations_status", {
+            method: "DELETE",
+            headers: {
+                "Content-Type": "application/json",
+            },
+            body: JSON.stringify(scenarios)
+        }).then((response) => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+
+        })
+            .then(() => {
+                console.log("Successfully deleted scenarios");
+                window.location.reload();
+            })
+            .catch((error) => {
+                console.error("Error deleting scenarios:", error);
+                window.location.reload();
+            });
+    }
+
+    document.getElementById("delete-selected").addEventListener("click", deleteScenarios);
 });
