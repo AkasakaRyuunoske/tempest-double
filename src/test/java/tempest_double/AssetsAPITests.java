@@ -11,13 +11,11 @@ import tempest_double.backEndAPI.service.AssetAPI;
 import tempest_double.entity.Asset.Asset;
 import tempest_double.entity.Asset.AssetRepository;
 import tempest_double.entity.Asset.AssetServiceImplementation;
-import tempest_double.frontEndAPI.AssetsController;
 
 import java.util.HashMap;
 import java.util.Map;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(AssetAPI.class)
