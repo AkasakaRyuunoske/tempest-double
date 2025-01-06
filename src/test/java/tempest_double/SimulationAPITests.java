@@ -51,6 +51,16 @@ public class SimulationAPITests {
     }
 
     @Test
+    void getSimulationById_WhenNotExists_ShouldReturn404() throws Exception {
+        when(simulationService.getSimulationById(999)).thenReturn(null);
+
+        mockMvc.perform(get("/api/v1/simulation/999"))
+                .andExpect(status().isNotFound());
+
+        verify(simulationService).getSimulationById(999);
+    }
+
+    @Test
     public void getAllSimulations_shouldReturnAllSimulations() throws Exception {
 
         Scenario mockScenario = new Scenario();
