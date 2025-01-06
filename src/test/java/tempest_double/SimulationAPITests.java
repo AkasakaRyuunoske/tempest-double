@@ -6,6 +6,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
 import tempest_double.backEndAPI.service.SimulationAPI;
 import tempest_double.entity.Scenario.Scenario;
@@ -15,9 +16,9 @@ import tempest_double.entity.Simulation.SimulationServiceImplementation;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.times;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(SimulationAPI.class)
 public class SimulationAPITests {
@@ -49,6 +50,20 @@ public class SimulationAPITests {
         mockMvc.perform(get("/api/v1/simulations"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.length()").value(2));
+    }
+
+    @Test
+    public void testDeleteSimulation_ShouldReturnOk() throws Exception {
+        // Mock the service
+        Mockito.when(simulationService.deleteSimulation(1))
+                .thenReturn(ResponseEntity.ok("Deleted without errors"));
+
+        // When + Then
+        mockMvc.perform(delete("/api/v1/simulation/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("Deleted without errors"));
+
+        Mockito.verify(simulationService, times(1)).deleteSimulation(1);
     }
 
 }
