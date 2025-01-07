@@ -87,4 +87,14 @@ public class SimulationServiceImplementationTests {
         verify(simulationRepository, times(1)).save(any(Simulation.class));
     }
 
+    @Test
+    void testPostSimulationJsonParsingError() {
+        String invalidJson = "{invalid}";
+
+        ResponseEntity<Map<String, Object>> response = simulationService.postSimulation(invalidJson);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertTrue(response.getBody().containsKey("error"));
+    }
+
 }
