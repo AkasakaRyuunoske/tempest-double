@@ -124,6 +124,15 @@ public class SimulationServiceImplementationTests {
         verify(simulationRepository, times(1)).deleteById(simulationId);
     }
 
+    @Test
+    void testDeleteSimulations() {
+        int[] simulationIds = {1, 2, 3};
 
+        ResponseEntity<String> response = simulationService.deleteSimulations(simulationIds);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Deleted all without errors", response.getBody());
+        verify(simulationRepository, times(simulationIds.length)).deleteById(anyInt());
+    }
 
 }
