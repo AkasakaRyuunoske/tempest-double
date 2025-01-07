@@ -17,6 +17,7 @@ import tempest_double.entity.Simulation.SimulationRepository;
 import tempest_double.entity.Simulation.SimulationServiceImplementation;
 import tempest_double.entity.SimulationStatus.SimulationStatusRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -96,5 +97,33 @@ public class SimulationServiceImplementationTests {
         assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
         assertTrue(response.getBody().containsKey("error"));
     }
+
+    @Test
+    void testPostSimulationAssetNotFound() {
+        String scenarioJson = "{\"name\":\"testScenario\"}";
+        Scenario mockScenario = new Scenario();
+        mockScenario.setTopology(Map.of("nodes", List.of(Map.of("name", "asset1"))));
+        when(scenarioRepository.findByName("testScenario")).thenReturn(mockScenario);
+
+        when(assetRepository.findByName("asset1")).thenReturn(null);
+
+        ResponseEntity<Map<String, Object>> response = simulationService.postSimulation(scenarioJson);
+
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        assertTrue(response.getBody().containsKey("error"));
+    }
+
+    @Test
+    void testDeleteSimulation() {
+        int simulationId = 1;
+
+        ResponseEntity<String> response = simulationService.deleteSimulation(simulationId);
+
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        assertEquals("Deleted without errors", response.getBody());
+        verify(simulationRepository, times(1)).deleteById(simulationId);
+    }
+
+
 
 }
