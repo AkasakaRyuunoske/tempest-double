@@ -102,7 +102,7 @@ public class SimulationServiceImplementation implements SimulationService {
                     efficiency = Double.parseDouble(assetFromDb.getConfiguration().get("dissipation-factor").toString());
                     nominalPower = Double.parseDouble(assetFromDb.getConfiguration().get("nominal-power").toString());
                     double bladeLength = Double.parseDouble(assetFromDb.getConfiguration().get("blade-length").toString());
-                    assetToSimulate = new WindTurbine(name, type, "Producer", efficiency, bladeLength, 45.0, 45.0, nominalPower);
+                    assetToSimulate = new WindTurbine(name, type, "Producer", efficiency, bladeLength, 3.0, 25.0, nominalPower);
                     assets.add(assetToSimulate);
                     assetInfo = new HashMap<>();
                     assetInfo.put("name", name);
