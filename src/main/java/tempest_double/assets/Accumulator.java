@@ -59,7 +59,7 @@ public class Accumulator extends Asset {
 
         // Reduce current charge
         currentCharge = Math.max(
-                currentCharge - (netDischargePower / nominalVoltage),
+                currentCharge - netDischargePower ,
                 0
         );
 
