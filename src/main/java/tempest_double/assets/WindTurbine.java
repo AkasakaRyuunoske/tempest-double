@@ -46,17 +46,15 @@ public class WindTurbine extends Asset {
     public double simulate(Object input) {
         double windSpeed = calculateWindSpeed((LocalDateTime) input);
 
-        // Power output variables
-        double responseFactor = 0.1; // First-order response factor (adjust for responsiveness)
-
         // Determine power output based on wind speed
         if (windSpeed < cutInWindSpeed) {
             // Below cut-in speed: no power
             generatedPower = 0.0;
+            return generatedPower;
         } else if (windSpeed >= cutInWindSpeed && windSpeed < cutOutWindSpeed) {
             // Between cut-in and cut-out speed: power grows smoothly
             double powerPotential = Math.min(nominalPower, calculatePowerFromWind(windSpeed));
-            generatedPower += (powerPotential - generatedPower) * responseFactor;
+            generatedPower += (powerPotential - generatedPower) * 0.1;
         } else {
             // Above cut-out speed: shut down for safety
             generatedPower = 0.0;
