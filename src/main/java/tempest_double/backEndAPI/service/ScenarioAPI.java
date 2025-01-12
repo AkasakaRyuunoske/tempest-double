@@ -19,10 +19,10 @@ public class ScenarioAPI {
         return scenarioService.getScenarios();
     }
 
-    @GetMapping("/scenario/{id}")
-    Scenario getScenario(@PathVariable int id){
-        return scenarioService.getScenario(id);
-    }
+//    @GetMapping("/scenario/{id}")
+//    ResponseEntity<Object> getScenario(@PathVariable int id){
+//        return scenarioService.getScenario(id);
+//    }
 
     @GetMapping("/scenario/name/{name}")
     public ResponseEntity<Object> getScenarioByName(@PathVariable String name) {

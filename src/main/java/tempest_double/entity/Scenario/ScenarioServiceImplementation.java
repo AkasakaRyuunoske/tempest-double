@@ -21,10 +21,14 @@ public class ScenarioServiceImplementation implements ScenarioService{
     public List<Scenario> getScenarios() {
         return scenarioRepository.findAll();
     }
-    @Override
-    public Scenario getScenario(int id) {
-        return scenarioRepository.findById(id).orElse(null);
-    }
+//    @Override
+//    public ResponseEntity<Object> getScenario(int id) {
+//        Scenario scenario = scenarioRepository.findById(id).orElse(null);
+//        if (scenario == null){
+//            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Scenario not found");
+//        }
+//        return ResponseEntity.ok(scenario);
+//    }
 
     private String message = "message";
     private String status = "status";
@@ -40,9 +44,14 @@ public class ScenarioServiceImplementation implements ScenarioService{
 
     @Override
     public ResponseEntity<Map<String, String>> postScenario(Scenario scenario) {
+        Map<String, String> response = new HashMap<>();
+        if (scenario.getId() == 0){
+            response.put("Error", "scenario appears to be empty.");
+            response.put(status, "400");
+            return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST);
+        }
         scenarioRepository.save(scenario);
 
-        Map<String, String> response = new HashMap<>();
         response.put(message, "Success");
         response.put(status, "200");
 

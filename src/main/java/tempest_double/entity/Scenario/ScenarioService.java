@@ -9,8 +9,6 @@ public interface ScenarioService {
 
     List<Scenario> getScenarios();
 
-    Scenario getScenario(int id);
-
     ResponseEntity<Object> getScenarioByName(String name);
 
     ResponseEntity<Map<String, String>> postScenario(Scenario scenario);
