@@ -1,6 +1,5 @@
 package tempest_double;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,7 +14,6 @@ import tempest_double.entity.Scenario.ScenarioRepository;
 import tempest_double.entity.Simulation.Simulation;
 import tempest_double.entity.Simulation.SimulationRepository;
 import tempest_double.entity.Simulation.SimulationServiceImplementation;
-import tempest_double.entity.SimulationStatus.SimulationStatusRepository;
 
 import java.util.List;
 import java.util.Map;
