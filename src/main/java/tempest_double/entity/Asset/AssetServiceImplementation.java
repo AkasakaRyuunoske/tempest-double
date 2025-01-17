@@ -29,8 +29,12 @@ public class AssetServiceImplementation implements AssetService{
 
     @Override
     public ResponseEntity<String> postAsset(Asset asset){
-        assetRepository.save(asset);
-        return new ResponseEntity<>("Asset saved without errors", HttpStatus.OK);
+        try{
+            assetRepository.save(asset);
+            return new ResponseEntity<>("Asset saved without errors", HttpStatus.OK);
+        } catch (Exception exception){
+            return new ResponseEntity<>("Unexpected Error Occurred", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
     }
 
     @Override
