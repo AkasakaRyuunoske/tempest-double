@@ -42,11 +42,6 @@ public class SimulationServiceImplementationTests {
     @Mock
     private AssetRepository assetRepository;
 
-    @Mock
-    private SimulationStatusRepository simulationStatusRepository;
-
-    private ObjectMapper objectMapper = new ObjectMapper();
-
     @Test
     void testGetSimulationById() {
         int id = 1;
