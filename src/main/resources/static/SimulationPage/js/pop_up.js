@@ -34,7 +34,7 @@ function updateSearchDisplay(){
             console.log("Successfully found scenario:", data);
 
             search_display.innerText = "Scenario found!"
-            search_display.style.color = "green"
+            search_display.style.color = "#597445"
 
             let scenario_name = document.getElementById("scenario-name").value
 
@@ -46,7 +46,7 @@ function updateSearchDisplay(){
             console.error("Error finding scenario:", error);
 
             search_display.innerText = "Scenario not found."
-            search_display.style.color = "red"
+            search_display.style.color = "#C3423F"
         });
 }
 
@@ -69,7 +69,7 @@ export function showPopup() {
 
                         <label>Name<br>
                             <input type="text" id="scenario-name" placeholder="Enter Name of Scenario">
-                            <button id="search-button">&#x1F50E;</button>
+                            <button id="search-button"><i class="material-icons">&#xe8b6;</i></button>
                         </label>
                         
                         <br>
