@@ -98,7 +98,8 @@ export function showPopup() {
                     <div class="popup-section">
 
                             <div class="popup-search-bar">
-                                <label>Name<br>
+                                <label>
+                                Name
                                 <input type="text" id="scenario-name" placeholder="Enter Name of Scenario">
                                 <button id="search-button"><i class="material-icons">&#xe8b6;</i></button>
                                 </label>
@@ -109,6 +110,7 @@ export function showPopup() {
 
                     <div class="popup-section" id="scenario-list-section">
                         <h4>Available Scenarios</h4>
+                        <hr>
                         <ul id="scenario-list"></ul>
                     </div>
                 </div>
