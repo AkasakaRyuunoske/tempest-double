@@ -30,7 +30,7 @@
 
     button.stop:hover {
         background-color: #B37A7A;
-        transition: all 0.7s ease;
+        transition: all 0.6s ease;
     }
 }
 

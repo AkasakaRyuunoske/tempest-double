@@ -175,16 +175,29 @@ main {
     color: #0B1215FF;
     font-family: Verdana, monospace;
     font-size: 1.1rem;
-    width: 7rem;
-    padding: 0.4rem;
+    padding: 0.3rem;
     border-radius: 0.3rem;
-    border: 0.1rem #455271 solid;
+    border: 0.1rem solid;
     background-color: transparent;
+}
+
+#confirm-btn {
+    border-color: #455271;
     transition: all 0.6s ease;
 }
 
-.popup-footer button:hover {
+#confirm-btn:hover {
     background-color: #7A8BB3;
+    transition: all 0.6s ease;
+}
+
+#cancel-btn {
+    border-color: #C3423F;
+    transition: all 0.6s ease;
+}
+
+#cancel-btn:hover {
+    background-color: #B37A7A;
     transition: all 0.6s ease;
 }
 
