@@ -19,6 +19,36 @@ function check_if_scenario_exists(){
     })
 }
 
+function fetchScenarios() {
+    const scenarioList = document.getElementById('scenario-list');
+
+    fetch('/api/v1/scenarios', {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+        }
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            // Populate the list
+            scenarioList.innerHTML = '';
+            data.forEach(scenario => {
+                const listItem = document.createElement('li');
+                listItem.textContent = scenario.name;
+                scenarioList.appendChild(listItem);
+            });
+        })
+        .catch(error => {
+            console.error('Error fetching scenarios:', error);
+            scenarioList.innerHTML = '<li>Error loading scenarios.</li>';
+        });
+}
+
 function updateSearchDisplay(){
     const confirmBtn = document.getElementById('confirm-btn');
     let search_display = document.getElementById("search_display")
@@ -67,21 +97,23 @@ export function showPopup() {
                 
                     <div class="popup-section">
 
-                        <label>Name<br>
-                            <input type="text" id="scenario-name" placeholder="Enter Name of Scenario">
-                            <button id="search-button"><i class="material-icons">&#xe8b6;</i></button>
-                        </label>
-                        
-                        <br>
-                        
-                        <span id="search_display"></span>
-                        
-                        <br>
+                            <div class="popup-search-bar">
+                                <label>Name<br>
+                                <input type="text" id="scenario-name" placeholder="Enter Name of Scenario">
+                                <button id="search-button"><i class="material-icons">&#xe8b6;</i></button>
+                                </label>
+
+                                <span id="search_display"></span>
+                            </div>
                     </div>
-                    
+
+                    <div class="popup-section" id="scenario-list-section">
+                        <h4>Available Scenarios</h4>
+                        <ul id="scenario-list"></ul>
+                    </div>
                 </div>
             </div>`
-    }
+    };
 
     const popupOverlay = document.getElementById('popup-overlay');
     const popup = document.getElementById('popup');
@@ -94,7 +126,9 @@ export function showPopup() {
     popupContent.innerHTML = data.content;
 
     document.getElementById('search-button').addEventListener('click', updateSearchDisplay);
-    confirmBtn.disabled = true
+    confirmBtn.disabled = true;
+
+    fetchScenarios();
 
     popupOverlay.style.display = 'block';
     popup.style.display = 'block';
