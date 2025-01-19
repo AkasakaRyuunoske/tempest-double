@@ -5,6 +5,7 @@ export function createNode(id, label, x, y, node_info) {
     node.innerHTML = `
                 <span>${label}</span>
                 <div class="connection-handle"></div>
+                <br>
                 <button class="delete-btn" data-id="${id}">✖</button>
             `;
     node.style.left = `${x}px`;
