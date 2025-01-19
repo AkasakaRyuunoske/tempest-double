@@ -27,16 +27,11 @@ document.addEventListener('DOMContentLoaded', () => {
                         <div class="popup-section">
                             <h4>Generic Data</h4>
                             
-                            <label>Name<br>
+                            <label>Name
                                 <input type="text" id="name" placeholder="Enter name" oninput="updatePreview()">
-                            </label><br>
+                            </label>
                             
-                            <label>Type<br>
-                                <select id="asset-type-select">
-                                </select>
-                            </label><br>
-                            
-                            <label>Role<br>
+                            <label>Role
                                 <div class="radio-group">
                                     <label>
                                         <input type="radio" name="role" value="Consumer" id="type-consumer"> 
@@ -49,6 +44,10 @@ document.addEventListener('DOMContentLoaded', () => {
                                 </div>
                             </label>
                             
+                            <label>Type
+                                <select id="asset-type-select">
+                                </select>
+                            </label>
                         </div>
 
                         <div class="popup-preview">
@@ -101,73 +100,73 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const optionsConfig = {
         solar_panel: `
-            <label>Nominal Power (W)<br>
+            <label>Nominal Power (W)
                 <input type="number" id="nominal-power" placeholder="Enter nominal power" name="asset-info">
-            </label><br>
+            </label>
             
-            <label>Area (m²)<br>
+            <label>Area (m²)
                 <input type="number" id="area" placeholder="Enter area" name="asset-info">
-            </label><br>
+            </label>
             
-            <label>Temperature (°C)<br>
+            <label>Temperature (°C)
                 <input type="number" id="temperature" placeholder="Enter temperature" name="asset-info">
-            </label><br>
+            </label>
             
-            <label>Efficiency (%)<br>
+            <label>Efficiency (%)
                 <input type="number" id="efficiency" placeholder="Enter efficiency" name="asset-info">
-            </label><br>
+            </label>
         `,
         accumulator: `
-            <label>Capacity (A/h)<br>
+            <label>Capacity (A/h)
                 <input type="number" id="capacity" placeholder="Enter capacity" name="asset-info">
-            </label><br>
+            </label>
             
-            <label>Nominal Voltage (Wh)<br>
+            <label>Nominal Voltage (Wh)
                 <input type="number" id="nominal-voltage" placeholder="Enter nominal voltage" name="asset-info">
-            </label><br>
+            </label>
             
-            <label>Current Charge (A/h)<br>
+            <label>Current Charge (A/h)
                 <input type="number" id="current-charge" placeholder="Enter current charge" name="asset-info">
-            </label><br>
+            </label>
         `,
         wind_turbine: `
-            <label>Nominal Power (W)<br>
+            <label>Nominal Power (W)
                 <input type="number" id="nominal-power" placeholder="Enter nominal power" name="asset-info">
-            </label><br>
+            </label>
             
-            <label>Blade Length (m)<br>
+            <label>Blade Length (m)
                 <input type="number" id="blade-length" placeholder="Enter blade length" name="asset-info">
-            </label><br>
+            </label>
             
-            <label>Dissipation Factor<br>
+            <label>Dissipation Factor
                 <input type="number" id="dissipation-factor" placeholder="Enter dissipation factor" name="asset-info">
-            </label><br>
+            </label>
         `,
         fuel_cell: `
-            <label>Nominal Power (W)<br>
+            <label>Nominal Power (W)
                 <input type="number" id="nominal-power" placeholder="Enter nominal power" name="asset-info">
-            </label><br>
+            </label>
             
-            <label>Fuel Capacity (l)<br>
+            <label>Fuel Capacity (l)
                 <input type="number" id="fuel-capacity" placeholder="Enter fuel capacity" name="asset-info">
-            </label><br>
+            </label>
             
-            <label>Current Fuel (l)<br>
+            <label>Current Fuel (l)
                 <input type="number" id="current-fuel" placeholder="Enter current fuel" name="asset-info">
-            </label><br>
+            </label>
         `,
         generic_consumer: `
-            <label>Nominal Power (W)<br>
+            <label>Nominal Power (W)
                 <input type="number" id="nominal-power" placeholder="Enter nominal power" name="asset-info">
-            </label><br>
+            </label>
             
-            <label>Min Consumption (W)<br>
+            <label>Min Consumption (W)
                 <input type="number" id="min-consumption" placeholder="Enter min consumption" name="asset-info">
             </label><br>
             
-            <label>Tau (s)<br>
+            <label>Tau (s)
                 <input type="number" id="tau" placeholder="Enter tau" name="asset-info" value="6">
-            </label><br>
+            </label>
         `
     };
 
