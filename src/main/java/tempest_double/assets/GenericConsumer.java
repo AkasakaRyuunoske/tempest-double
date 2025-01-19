@@ -32,8 +32,8 @@ public class GenericConsumer extends Asset {
         double availablePower = (double) input;
 
         // Determine target consumption based on available power
-        if (availablePower <= 0) {
-            targetConsumption = 0;
+        if (availablePower <= 0 || availablePower < minConsumption) {
+            return 0;
         } else {
             targetConsumption = Math.min(maxConsumption, availablePower);
             targetConsumption = Math.max(targetConsumption, minConsumption);
@@ -44,7 +44,7 @@ public class GenericConsumer extends Asset {
         // For 1-second steps, dt = 1
         double stepResponse = 1 - Math.exp(-1.0 / timeConstant);
         currentConsumption += (Math.max(targetConsumption, maxConsumption) - currentConsumption) * stepResponse;
-
+        currentConsumption = Math.min(currentConsumption, availablePower);
         return currentConsumption;
     }
 }
