@@ -2,17 +2,17 @@ package tempest_double;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.ResultActions;
+import tempest_double.backEndAPI.service.ScenarioAPI;
 import tempest_double.entity.Scenario.Scenario;
-import tempest_double.entity.Scenario.ScenarioAPI;
 import tempest_double.entity.Scenario.ScenarioService;
 
 import java.util.List;
@@ -23,13 +23,12 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 @WebMvcTest(ScenarioAPI.class)
-@ExtendWith(MockitoExtension.class)
 public class ScenarioAPITests {
 
     @Autowired
     private MockMvc mockMvc;
 
-    @Mock
+    @MockBean
     private ScenarioService scenarioService;
 
     @Test
@@ -75,7 +74,7 @@ public class ScenarioAPITests {
     @Test
     void testCreateScenario() throws Exception {
         Scenario scenario = new Scenario(0, Map.of(), Map.of(), Map.of(), "NewScenario", "NewDescription");
-        when(scenarioService.postScenario(Mockito.any())).thenReturn(Map.of("message", "Success", "status", "200"));
+        when(scenarioService.postScenario(Mockito.any())).thenReturn((ResponseEntity<Map<String, String>>) Map.of("message", "Success", "status", "200"));
 
         mockMvc.perform(post("/api/scenarios")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -91,7 +90,7 @@ public class ScenarioAPITests {
     @Test
     void testUpdateScenario() throws Exception {
         Scenario scenario = new Scenario(1, Map.of(), Map.of(), Map.of(), "UpdatedScenario", "UpdatedDescription");
-        when(scenarioService.updateScenario(eq(1), any())).thenReturn(Map.of("message", "Success"));
+        when(scenarioService.updateScenario(eq(1), any())).thenReturn((ResponseEntity<Map<String, String>>) Map.of("message", "Success"));
 
         mockMvc.perform(put("/api/scenarios/1")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -106,7 +105,7 @@ public class ScenarioAPITests {
 
     @Test
     void testDeleteScenario() throws Exception {
-        when(scenarioService.deleteScenario(1)).thenReturn(Map.of("message", "Success"));
+        when(scenarioService.deleteScenario(1)).thenReturn((ResponseEntity<Map<String, String>>) Map.of("message", "Success"));
 
         mockMvc.perform(delete("/api/scenarios/1"))
                 .andExpect(status().isOk())
@@ -117,7 +116,7 @@ public class ScenarioAPITests {
 
     @Test
     void testDeleteScenarioNotFound() throws Exception {
-        when(scenarioService.deleteScenario(1)).thenReturn(Map.of("message", "Scenario not found"));
+        when(scenarioService.deleteScenario(1)).thenReturn((ResponseEntity<Map<String, String>>) Map.of("message", "Scenario not found"));
 
         mockMvc.perform(delete("/api/scenarios/1"))
                 .andExpect(status().isNotFound())
