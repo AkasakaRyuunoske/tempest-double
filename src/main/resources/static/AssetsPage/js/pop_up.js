@@ -290,10 +290,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 if (!response.ok) {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
-                return response.json();
             })
-            .then((data) => {
-                console.log("Successfully saved asset:", data);
+            .then(() => {
                 const newId = `node${Date.now()}`;
                 const newNode = createNode(newId, name, 300, 300, "custom created node");
                 jsPlumb.repaintEverything();
@@ -361,10 +359,8 @@ document.addEventListener('DOMContentLoaded', () => {
                     throw new Error(`HTTP error! status: ${response.status}`);
                 }
 
-                return response.json();
             })
-            .then((data) => {
-                console.log("Successfully deleted scenario:", data);
+            .then(() => {
                 closePopup();
             })
             .catch((error) => {

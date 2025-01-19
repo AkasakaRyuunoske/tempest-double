@@ -11,8 +11,8 @@ public class FuelCell extends Asset {
     private final double fuelCapacity;   // in kg
     private double currentFuel;    // remaining fuel
     private final double nominalPower;    // maximum power output
-
     private final double specificConsumption = 0.3; // kg of fuel per kWh
+    private double currentPower = 0.0;    // current power output
 
     public FuelCell(String name, String type, String role, double efficiency, double fuelCapacity, double nominalPower, double currentFuel) {
         super(name, type, role, efficiency);
@@ -20,7 +20,6 @@ public class FuelCell extends Asset {
         this.nominalPower = nominalPower;
         this.currentFuel = currentFuel;
     }
-
 
     // Calculate fuel consumption
     public double calculateFuelConsumption(double powerOutput) {
@@ -37,16 +36,22 @@ public class FuelCell extends Asset {
     @Override
     public double simulate(Object input) {
         if (currentFuel <= 0) {
+            currentPower = 0;
             return 0;
         }
 
-        // Generate power at rated capacity or remaining fuel capacity
-        double potentialPower = Math.min(nominalPower * efficiency, currentFuel * 3000); // 3000 Conversion factor
+        // Calculate potential power output
+        double potentialPower = Math.min(nominalPower, currentFuel * 1000 / specificConsumption); // Max power limited by fuel
 
-        // Consume fuel
-        double fuelConsumed = calculateFuelConsumption(potentialPower);
-        currentFuel -= fuelConsumed / 1000;
+        // First-order response to adjust `currentPower` towards `potentialPower`
+        double responseFactor = 0.2; // Adjust for smoother or quicker response
+        currentPower += (potentialPower - currentPower) * responseFactor;
 
-        return potentialPower;
+        // Calculate fuel consumption based on `currentPower`
+        double fuelConsumed = calculateFuelConsumption(currentPower) / 5;
+        currentFuel = Math.max(0, currentFuel - fuelConsumed);
+
+        return currentPower;
     }
 }
+
