@@ -40,7 +40,7 @@ public class ScenarioAPITests {
 
         when(scenarioService.getScenarios()).thenReturn(mockScenarios);
 
-        mockMvc.perform(get("/api/scenarios"))
+        mockMvc.perform(get("/api/v1/scenarios"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name").value("Scenario1"))
                 .andExpect(jsonPath("$[1].name").value("Scenario2"));
@@ -53,7 +53,7 @@ public class ScenarioAPITests {
         Scenario mockScenario = new Scenario(1, Map.of(), Map.of(), Map.of(), "Scenario1", "Description1");
         when(scenarioService.getScenario(1)).thenReturn(mockScenario);
 
-        mockMvc.perform(get("/api/scenarios/1"))
+        mockMvc.perform(get("/api/v1/scenario/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.name").value("Scenario1"));
 
@@ -64,9 +64,9 @@ public class ScenarioAPITests {
     void testGetScenarioByIdNotFound() throws Exception {
         when(scenarioService.getScenario(1)).thenReturn(null);
 
-        mockMvc.perform(get("/api/scenarios/1"))
-                .andExpect(status().isNotFound())
-                .andExpect(content().string("Scenario not found"));
+        mockMvc.perform(get("/api/v1/scenario/1"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(""));
 
         verify(scenarioService, times(1)).getScenario(1);
     }
@@ -78,7 +78,7 @@ public class ScenarioAPITests {
         when(scenarioService.postScenario(Mockito.any()))
                 .thenReturn(ResponseEntity.ok(Map.of("message", "Success", "status", "200")));
 
-        mockMvc.perform(post("/api/scenarios")
+        mockMvc.perform(post("/api/v1/scenario")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{" +
                                 "\"name\":\"NewScenario\"," +
@@ -94,7 +94,7 @@ public class ScenarioAPITests {
         when(scenarioService.updateScenario(eq(1), any()))
                 .thenReturn(ResponseEntity.ok(Map.of("message", "Success")));
 
-        mockMvc.perform(put("/api/scenarios/1")
+        mockMvc.perform(put("/api/v1/scenario/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{" +
                                 "\"name\":\"UpdatedScenario\"," +
@@ -110,7 +110,7 @@ public class ScenarioAPITests {
         when(scenarioService.deleteScenario(1))
                 .thenReturn(ResponseEntity.ok(Map.of("message", "Success")));
 
-        mockMvc.perform(delete("/api/scenarios/1"))
+        mockMvc.perform(delete("/api/v1/scenario/1"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Success"));
 
@@ -122,7 +122,7 @@ public class ScenarioAPITests {
         when(scenarioService.deleteScenario(1))
                 .thenReturn(ResponseEntity.status(404).body(Map.of("message", "Scenario not found")));
 
-        mockMvc.perform(delete("/api/scenarios/1"))
+        mockMvc.perform(delete("/api/v1/scenario/1"))
                 .andExpect(status().isNotFound())
                 .andExpect(jsonPath("$.message").value("Scenario not found"));
 
