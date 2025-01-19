@@ -66,15 +66,33 @@ document.addEventListener('DOMContentLoaded', () => {
         delete: {
             title: "Delete Scenario",
             content: `
-                <p>Name</p>
-                <input type="text" placeholder="Scenario Name" id="scenario-name">
-                <button id="search-button-load">&#x1F50E;</button>` // Search symbol
+                <div class="scenario-search-section">
+                    <div>
+                    <p>Name</p>
+                    <input type="text" placeholder="Scenario Name" id="scenario-name">
+                    <button id="search-button-load"><i class="material-icons">&#xe8b6;</i></button>
+                    </div>
+                    <div id="scenario-list-section">
+                        <h4>Available Scenarios</h4>
+                        <hr>
+                        <ul id="scenario-list"></ul>
+                    </div>
+                </div>`
         },
         load: {
             title: "Load Scenario",
-            content: `<p>Name</p>
-                      <input type="text" placeholder="Scenario Name" id="scenario-name">
-                      <button id="search-button-load">&#x1F50E;</button>` // Search symbol
+            content: `<div class="scenario-search-section">
+                    <div>
+                    <p>Name</p>
+                    <input type="text" placeholder="Scenario Name" id="scenario-name">
+                    <button id="search-button-load"><i class="material-icons">&#xe8b6;</i></button>
+                    </div>
+                    <div id="scenario-list-section">
+                        <h4>Available Scenarios</h4>
+                        <hr>
+                        <ul id="scenario-list"></ul>
+                    </div>
+                </div>`
         },
         save: {
             title: "Save Scenario",
@@ -212,6 +230,36 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
+    function fetchScenarios() {
+        const scenarioList = document.getElementById('scenario-list');
+
+        fetch('/api/v1/scenarios', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Populate the list
+                scenarioList.innerHTML = '';
+                data.forEach(scenario => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = scenario.name;
+                    scenarioList.appendChild(listItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching scenarios:', error);
+                scenarioList.innerHTML = '<li>Error loading scenarios.</li>';
+            });
+    }
+
     function showPopup(type) {
         const data = popupData[type];
         popupTitle.innerText = data.title;
@@ -237,11 +285,13 @@ document.addEventListener('DOMContentLoaded', () => {
         if(type === "load"){
             document.getElementById("search-button-load").addEventListener("click", check_if_scenario_exists)
             confirmBtn.addEventListener("click", load_listener);
+            fetchScenarios();
         }
 
         if(type === "delete"){
             document.getElementById("search-button-load").addEventListener("click", check_if_scenario_exists)
             confirmBtn.addEventListener("click", delete_listener);
+            fetchScenarios();
         }
 
         popupOverlay.style.display = 'block';

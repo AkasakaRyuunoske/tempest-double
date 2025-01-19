@@ -7,10 +7,10 @@ body {
     font-family: Verdana, monospace;
     display: flex;
     flex-direction: column;
-    height: 100vh;      /* Only for assets page */
+    height: 100vh; /* Only for assets page */
 }
 
-main{
+main {
     flex: 1;
     padding: 1.1rem;
 }
@@ -81,6 +81,7 @@ main{
     text-align: center;
     padding: 0.8rem;
     font-size: 1.2rem;
+
     h3 {
         font-weight: 500;
     }
@@ -203,12 +204,12 @@ main{
     transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
-#type-producer:checked{
+#type-producer:checked {
     background-color: #F98491;
     border-color: #F98491;
 }
 
-#type-consumer:checked{
+#type-consumer:checked {
     background-color: #597445;
     border-color: #597445;
 }
@@ -224,7 +225,7 @@ main{
     font-weight: normal;
 }
 
-.delete-btn{
+.delete-btn {
     color: #000000;
     background: none;
     border: none;
@@ -238,16 +239,62 @@ main{
 #asset-type-select {
     border: none;
     border-bottom: #455271 2px solid;
+    outline: none;
 
     option {
         color: #0B1215FF;
+        outline: none;
     }
-    option:focus-within {
-        background-color: #7A8BB3;
-    }
-
 }
 
-#asset-type-select:focus {
+#search-button-load {
+    padding: 0.1rem;
+    border-radius: 0.3rem;
+    border: 0.1rem #455271 solid;
+    background-color: transparent;
+    transition: all 0.6s ease;
+
+    i {
+        display: flex;
+    }
+}
+
+#search-button-load:hover {
+    background-color: #7A8BB3;
+    transition: all 0.6s ease;
+}
+
+#scenario-name {
     border: none;
+    border-bottom: #455271 2px solid;
+    outline: none;
+}
+
+.scenario-search-section {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+#scenario-list-section {
+    display: flex;
+    flex-direction: column;
+    hr {
+        width: -webkit-fill-available;
+    }
+
+    h4 {
+        font-size: 1rem;
+        font-weight: 500;
+        text-align: center;
+        margin-bottom: 0.3rem;
+    }
+}
+
+#scenario-list {
+    list-style-type: none;
+
+    li {
+        margin: 0.1rem;
+    }
 }
