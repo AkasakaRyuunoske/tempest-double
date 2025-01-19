@@ -89,15 +89,16 @@ public class ScenarioAPITests {
 
     @Test
     void testUpdateScenario() throws Exception {
-        Scenario scenario = new Scenario(1, Map.of(), Map.of(), Map.of(), "UpdatedScenario", "UpdatedDescription");
-        when(scenarioService.updateScenario(eq(1), any())).thenReturn((ResponseEntity<Map<String, String>>) Map.of("message", "Success"));
+        ResponseEntity<Map<String, String>> responseEntity = ResponseEntity.ok(Map.of("message", "Success"));
+
+        when(scenarioService.updateScenario(eq(1), any())).thenReturn(responseEntity);
 
         mockMvc.perform(put("/api/scenarios/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{" +
                                 "\"name\":\"UpdatedScenario\"," +
                                 "\"description\":\"UpdatedDescription\"}"))
-                .andExpect(status().isOk())
+                .andExpect(status().isOk()) // Assicura che il mock restituisca 200
                 .andExpect(jsonPath("$.message").value("Success"));
 
         verify(scenarioService, times(1)).updateScenario(eq(1), any());
