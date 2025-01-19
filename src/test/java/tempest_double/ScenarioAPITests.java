@@ -74,7 +74,9 @@ public class ScenarioAPITests {
     @Test
     void testCreateScenario() throws Exception {
         Scenario scenario = new Scenario(0, Map.of(), Map.of(), Map.of(), "NewScenario", "NewDescription");
-        when(scenarioService.postScenario(Mockito.any())).thenReturn((ResponseEntity<Map<String, String>>) Map.of("message", "Success", "status", "200"));
+
+        when(scenarioService.postScenario(Mockito.any()))
+                .thenReturn(ResponseEntity.ok(Map.of("message", "Success", "status", "200")));
 
         mockMvc.perform(post("/api/scenarios")
                         .contentType(MediaType.APPLICATION_JSON)
@@ -89,16 +91,15 @@ public class ScenarioAPITests {
 
     @Test
     void testUpdateScenario() throws Exception {
-        ResponseEntity<Map<String, String>> responseEntity = ResponseEntity.ok(Map.of("message", "Success"));
-
-        when(scenarioService.updateScenario(eq(1), any())).thenReturn(responseEntity);
+        when(scenarioService.updateScenario(eq(1), any()))
+                .thenReturn(ResponseEntity.ok(Map.of("message", "Success")));
 
         mockMvc.perform(put("/api/scenarios/1")
                         .contentType(MediaType.APPLICATION_JSON)
                         .content("{" +
                                 "\"name\":\"UpdatedScenario\"," +
                                 "\"description\":\"UpdatedDescription\"}"))
-                .andExpect(status().isOk()) // Assicura che il mock restituisca 200
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.message").value("Success"));
 
         verify(scenarioService, times(1)).updateScenario(eq(1), any());
@@ -106,7 +107,8 @@ public class ScenarioAPITests {
 
     @Test
     void testDeleteScenario() throws Exception {
-        when(scenarioService.deleteScenario(1)).thenReturn((ResponseEntity<Map<String, String>>) Map.of("message", "Success"));
+        when(scenarioService.deleteScenario(1))
+                .thenReturn(ResponseEntity.ok(Map.of("message", "Success")));
 
         mockMvc.perform(delete("/api/scenarios/1"))
                 .andExpect(status().isOk())
@@ -117,7 +119,8 @@ public class ScenarioAPITests {
 
     @Test
     void testDeleteScenarioNotFound() throws Exception {
-        when(scenarioService.deleteScenario(1)).thenReturn((ResponseEntity<Map<String, String>>) Map.of("message", "Scenario not found"));
+        when(scenarioService.deleteScenario(1))
+                .thenReturn(ResponseEntity.status(404).body(Map.of("message", "Scenario not found")));
 
         mockMvc.perform(delete("/api/scenarios/1"))
                 .andExpect(status().isNotFound())
