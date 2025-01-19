@@ -313,30 +313,38 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Add new node functionality
     function add_listener() {
-        const name = document.getElementById("name").value;
-        const inputs = document.getElementsByName("asset-info");
-        const role = document.querySelector('input[name="role"]:checked').value;
+        const name = document.getElementById("name").value; // Get the asset name
+        const inputs = document.getElementsByName("asset-info"); // Get dynamic inputs for the asset
+        const role = document.querySelector('input[name="role"]:checked')?.value; // Get the selected role (Consumer/Producer)
 
-        const type = document.getElementById("asset-type-select").value
-        let asset_info = {}
+        if (!name || !role) {
+            alert("Please provide a name and select a role for the asset.");
+            return; // Exit if required fields are missing
+        }
 
+        const type = document.getElementById("asset-type-select").value; // Get the selected asset type
+        let asset_info = {};
+
+        // Collect all dynamic input values into the asset_info object
         inputs.forEach(input => {
             asset_info[input.id] = input.value;
         });
 
+        // Construct the asset object
         const asset = {
-            configuration: asset_info,
-            type: type,
-            name: name,
-            role: role
+            configuration: asset_info, // Dynamic inputs
+            type: type,               // Selected type (e.g., solar_panel)
+            name: name,               // Asset name
+            role: role                // Selected role (Consumer/Producer)
         };
 
+        // Send the asset to the backend API
         fetch("/api/v1/asset", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
             },
-            body: JSON.stringify(asset),
+            body: JSON.stringify(asset), // Serialize the asset object
         })
             .then((response) => {
                 if (!response.ok) {
@@ -344,14 +352,19 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             })
             .then(() => {
-                const newId = `node${Date.now()}`;
-                const newNode = createNode(newId, name, 300, 300, "custom created node");
+                const newId = `node${Date.now()}`; // Generate a unique ID for the node
+                console.log(`Creating node with id: ${newId}, role: ${role}, type: ${type}`);
+
+                // Create the new node on the canvas
+                const newNode = createNode(newId, name, 300, 300, asset); // Pass the full asset object as node_info
+
+                // Repaint connections and close the popup
                 jsPlumb.repaintEverything();
                 closePopup();
             })
             .catch((error) => {
                 console.error("Error saving asset:", error);
-                alert("Failed to save asset. Try to use another name");
+                alert("Failed to save asset. Try using a different name.");
             });
     }
 
