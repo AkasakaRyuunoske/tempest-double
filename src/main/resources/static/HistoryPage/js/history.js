@@ -1,3 +1,30 @@
+const mockScenarios = [
+    {
+        name: "Scenario 1",
+        startDate: new Date("2023-01-01T10:00:00"),
+        endDate: new Date("2023-01-01T14:00:00"),
+        duration: { hours: 4, minutes: 0, seconds: 0 },
+        assetNames: ["Solar Panel", "Wind Turbine"],
+        records: [],
+    },
+    {
+        name: "Scenario 2",
+        startDate: new Date("2023-02-01T08:00:00"),
+        endDate: new Date("2023-02-01T12:00:00"),
+        duration: { hours: 4, minutes: 0, seconds: 0 },
+        assetNames: ["Fuel Cell", "Accumulator"],
+        records: [],
+    },
+    {
+        name: "Scenario 3",
+        startDate: new Date("2023-03-01T09:00:00"),
+        endDate: new Date("2023-03-01T17:00:00"),
+        duration: { hours: 8, minutes: 0, seconds: 0 },
+        assetNames: ["Generic Consumer"],
+        records: [],
+    },
+];
+
 function handleScrollAnimation() {
     const elements = document.querySelectorAll('.animate-slide-in-left');
     elements.forEach(element => {
@@ -246,7 +273,7 @@ window.addEventListener('DOMContentLoaded', () => {
             console.log("Successfully found scenario:", data);
 
             const scenarios = groupScenarios(data);
-            renderScenarios(scenarios);
+            renderScenarios(mockScenarios);
 
             select_deselect_all_cards();
         })

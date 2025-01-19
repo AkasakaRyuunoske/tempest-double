@@ -8,6 +8,21 @@ body {
     padding-left: 5%; /* internal space */
     padding-right: 5%;
     transition: padding-left 0.5s ease; /* transition for padding */
+
+    button {
+        font-family: Verdana, monospace;
+        font-size: 1rem;
+        padding: 0.4rem;
+        border-radius: 0.3rem;
+        border: 0.1rem #455271 solid;
+        background-color: transparent;
+        transition: all 0.6s ease;
+    }
+
+    button:hover {
+        background-color: #7A8BB3;
+        transition: all 0.6s ease;
+    }
 }
 
 .select-delete-container {
@@ -27,20 +42,14 @@ body {
     gap: 0.5rem;
 }
 
-.delete-button {
-    background-color: #e74c3c;
-    color: white;
-    border: none;
-    padding: 0.5rem 1rem;
-    border-radius: 0.25rem;
-    cursor: pointer;
-    font-size: 0.875rem;
-    transition: background-color 0.3s ease;
+#delete-selected {
+    border-color: #C3423F;
+    transition: all 0.6s ease;
 }
 
-.delete-button:hover {
-    background-color: #c0392b;
-    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1);
+#delete-selected:hover {
+    background-color: rgba(179, 122, 122, 0.8);
+    transition: all 0.6s ease;
 }
 
 .session-card {
@@ -137,6 +146,7 @@ body {
     justify-content: center;
     align-items: center;
 }
+
 #modal-content {
     background: #fff;
     padding: 20px;
@@ -167,9 +177,7 @@ body {
 .card-header h3 {
     margin-left: 8px;
 }
-.card-checkbox {
-    margin-right: 8px;
-}
+
 .card-content p {
     margin: 4px 0;
 }
