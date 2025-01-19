@@ -1,36 +1,34 @@
 export function createNode(id, label, x, y, node_info) {
+    if (!node_info || !node_info.role) {
+        console.warn(`Node created without a role! id: ${id}, node_info:`, node_info);
+    }
+
+    const role = node_info?.role || "Undefined"; // Fallback to "Undefined" if role is missing
+    const borderColor = role === "Consumer" ? "#597445" : role === "Producer" ? "#F98491" : "#cccccc";
+
     const node = document.createElement("div");
     node.id = id;
     node.className = "node";
+    node.style.borderLeft = `1rem solid ${borderColor}`;
     node.innerHTML = `
-                <span>${label}</span>
-                <div class="connection-handle"></div>
-                <br>
-                <button class="delete-btn" data-id="${id}">✖</button>
-            `;
+        <span>${label}</span>
+        <div class="connection-handle"></div>
+        <button class="delete-btn" data-id="${id}">✖</button>
+    `;
     node.style.left = `${x}px`;
     node.style.top = `${y}px`;
+
+    const canvas = document.getElementById("canvas");
     canvas.appendChild(node);
 
-    node.info = node_info
+    node.info = node_info;
 
-    // Make the node draggable
-    jsPlumb.draggable(node, {containment: "parent"});
-
-    // Enable text editing on double-click
+    jsPlumb.draggable(node, { containment: "parent" });
     enableTextEditing(node);
-
-    // Add connection points
     enableConnectionPoints(node);
 
-    // allow a node to be deleted
     const deleteBtn = node.querySelector(".delete-btn");
-    deleteBtn.addEventListener("click", (event) => {
-        console.log(node.info)
-        console.log("node.info")
-        const nodeId = event.target.dataset.id;
-        deleteNode(nodeId);
-    });
+    deleteBtn.addEventListener("click", () => deleteNode(id));
 
     return node;
 }
