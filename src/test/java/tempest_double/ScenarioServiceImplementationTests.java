@@ -146,3 +146,15 @@ class ScenarioServiceImplementationTests {
         verify(scenarioRepository, times(1)).existsById(id);
     }
 
+    @Test
+    void testDeleteScenarioByName() {
+        String name = "TestScenario";
+        when(scenarioRepository.deleteByName(name)).thenReturn(1);
+
+        ResponseEntity<Map<String, String>> response = scenarioService.deleteScenarioByName(name);
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals("Scenario deleted successfully", response.getBody().get("message"));
+        verify(scenarioRepository, times(1)).deleteByName(name);
+    }
+
