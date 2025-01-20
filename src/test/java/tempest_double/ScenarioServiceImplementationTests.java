@@ -39,6 +39,7 @@ class ScenarioServiceImplementationTests {
         assertTrue(scenarios.isEmpty());
         verify(scenarioRepository, times(1)).findAll();
     }
+
     @Test
     void testGetScenario() {
         int id = 1;
@@ -50,5 +51,18 @@ class ScenarioServiceImplementationTests {
         assertNotNull(result);
         assertEquals(scenario, result);
         verify(scenarioRepository, times(1)).findById(id);
+    }
+
+    @Test
+    void testGetScenarioByName() {
+        String name = "TestScenario";
+        Scenario scenario = new Scenario();
+        when(scenarioRepository.findByName(name)).thenReturn(scenario);
+
+        ResponseEntity<Object> response = scenarioService.getScenarioByName(name);
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(scenario, response.getBody());
+        verify(scenarioRepository, times(1)).findByName(name);
     }
 
