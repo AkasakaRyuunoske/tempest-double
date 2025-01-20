@@ -213,8 +213,6 @@ export function startSimulation(scenario_name){
         return response.json();
     })
         .then((data) => {
-            console.log("Got some data too")
-            console.log(data)
             generateConsumers(data);
             generateProducers(data);
             if (!updateInterval) {

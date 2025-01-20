@@ -51,13 +51,22 @@ public class ScenarioServiceImplementation implements ScenarioService{
 
     @Override
     public ResponseEntity<Map<String, String>> deleteScenario(int id) {
-        scenarioRepository.deleteById(id);
-
         Map<String, String> response = new HashMap<>();
-        response.put(message, "Success");
-        response.put(status, "200");
 
-        return new ResponseEntity<>(response, HttpStatus.OK);
+        if (scenarioRepository.existsById(id)){
+            scenarioRepository.deleteById(id);
+
+            response.put(message, "Success");
+            response.put(status, "200");
+
+            return new ResponseEntity<>(response, HttpStatus.OK);
+
+        } else {
+            response.put(message, "Scenario not found");
+
+            return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @Override
