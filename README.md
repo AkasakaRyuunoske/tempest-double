@@ -1,5 +1,5 @@
 <div align="center">
-    <img src="src/main/resources/static/HeaderComponent/img/logo.jpg" alt="Tempest Double Logo" width="360px" height="360px">
+    <img src="src/main/resources/static/HeaderComponent/img/logo_readme.png" alt="Tempest Double Logo" width="360px" height="360px">
 </div>
 
 Project dedicated to simulating and optimizing IoT and energy systems.
