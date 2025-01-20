@@ -118,3 +118,18 @@ class ScenarioServiceImplementationTests {
         verify(scenarioRepository, times(1)).existsById(id);
     }
 
+    @Test
+    void testUpdateScenario() {
+        int id = 1;
+        Scenario scenario = new Scenario();
+        when(scenarioRepository.existsById(id)).thenReturn(true);
+        when(scenarioRepository.save(scenario)).thenReturn(scenario);
+
+        ResponseEntity<Map<String, String>> response = scenarioService.updateScenario(id, scenario);
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals("Success", response.getBody().get("message"));
+        verify(scenarioRepository, times(1)).existsById(id);
+        verify(scenarioRepository, times(1)).save(scenario);
+    }
+
