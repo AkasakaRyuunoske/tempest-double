@@ -158,3 +158,15 @@ class ScenarioServiceImplementationTests {
         verify(scenarioRepository, times(1)).deleteByName(name);
     }
 
+    @Test
+    void testDeleteScenarioByNameNotFound() {
+        String name = "NonExistent";
+        when(scenarioRepository.deleteByName(name)).thenReturn(0);
+
+        ResponseEntity<Map<String, String>> response = scenarioService.deleteScenarioByName(name);
+
+        assertEquals(404, response.getStatusCodeValue());
+        assertEquals("Scenario not found", response.getBody().get("message"));
+        verify(scenarioRepository, times(1)).deleteByName(name);
+    }
+}
