@@ -55,15 +55,10 @@ To run the application:
 
 # Technologies Used
 
-- **Backend**: Java (Spring Boot 2.6.6, JPA, Hibernate)
+- **Backend**: Java (Spring Boot, JPA, Hibernate)
 - **Frontend**: HTML5, CSS3, JavaScript, Thymeleaf
 - **Database**: MySQL
 - **Build Tool**: Maven
-- **API Security**: JWT Tokens
-
-# Why?
-
-To support energy professionals, researchers, and enthusiasts in improving system efficiency and reducing environmental impact. This project encourages sustainable practices through data-driven optimization.
 
 ---
 
