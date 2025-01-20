@@ -186,30 +186,30 @@ document.addEventListener("DOMContentLoaded", function () {
         // Get canvas and add initial nodes
         const canvas = document.getElementById("canvas");
 
-        const node1 = createNode("node1", "Wind Turbine", 50, 50, "example node");
-        const node2 = createNode("node2", "Air Condition", 200, 50, "example node");
-        const node3 = createNode("node3", "Generic Consumer", 350, 50, "example node");
+        // const node1 = createNode("node1", "Wind Turbine", 50, 50, "example node");
+        // const node2 = createNode("node2", "Air Condition", 200, 50, "example node");
+        // const node3 = createNode("node3", "Generic Consumer", 350, 50, "example node");
 
         // Connect initial nodes
-        jsPlumb.connect({
-            source: "node1",
-            target: "node2",
-            anchors: ["Right", "Left"],
-            connector: "Straight",
-            paintStyle: {stroke: "blue", strokeWidth: 2},
-            endpoint: ["Dot", {radius: 5}],
-            endpointStyle: {fill: "blue"},
-        });
-
-        jsPlumb.connect({
-            source: "node2",
-            target: "node3",
-            anchors: ["Right", "Left"],
-            connector: "Straight",
-            paintStyle: {stroke: "blue", strokeWidth: 2},
-            endpoint: ["Dot", {radius: 5}],
-            endpointStyle: {fill: "red"},
-        });
+        // jsPlumb.connect({
+        //     source: "node1",
+        //     target: "node2",
+        //     anchors: ["Right", "Left"],
+        //     connector: "Straight",
+        //     paintStyle: {stroke: "blue", strokeWidth: 2},
+        //     endpoint: ["Dot", {radius: 5}],
+        //     endpointStyle: {fill: "blue"},
+        // });
+        //
+        // jsPlumb.connect({
+        //     source: "node2",
+        //     target: "node3",
+        //     anchors: ["Right", "Left"],
+        //     connector: "Straight",
+        //     paintStyle: {stroke: "blue", strokeWidth: 2},
+        //     endpoint: ["Dot", {radius: 5}],
+        //     endpointStyle: {fill: "red"},
+        // });
 
     });
 });
