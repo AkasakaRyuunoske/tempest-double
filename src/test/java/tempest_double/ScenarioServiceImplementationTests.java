@@ -66,3 +66,15 @@ class ScenarioServiceImplementationTests {
         verify(scenarioRepository, times(1)).findByName(name);
     }
 
+    @Test
+    void testGetScenarioByNameNotFound() {
+        String name = "NonExistent";
+        when(scenarioRepository.findByName(name)).thenReturn(null);
+
+        ResponseEntity<Object> response = scenarioService.getScenarioByName(name);
+
+        assertEquals(404, response.getStatusCodeValue());
+        assertEquals("Scenario not found", response.getBody());
+        verify(scenarioRepository, times(1)).findByName(name);
+    }
+
