@@ -10,7 +10,6 @@ Project dedicated to simulating and optimizing IoT and energy systems.
 3. <a href="#how-to-use">How to Use</a>
 4. <a href="#features">Features</a>
 5. <a href="#technologies-used">Technologies Used</a>
-6. <a href="#why">Why?</a>
 
 # Objectives
 
