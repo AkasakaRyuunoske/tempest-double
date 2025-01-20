@@ -133,3 +133,16 @@ class ScenarioServiceImplementationTests {
         verify(scenarioRepository, times(1)).save(scenario);
     }
 
+    @Test
+    void testUpdateScenarioNotFound() {
+        int id = 1;
+        Scenario scenario = new Scenario();
+        when(scenarioRepository.existsById(id)).thenReturn(false);
+
+        ResponseEntity<Map<String, String>> response = scenarioService.updateScenario(id, scenario);
+
+        assertEquals(404, response.getStatusCodeValue());
+        assertEquals("Error: Scenario with provided ID not found.", response.getBody().get("message"));
+        verify(scenarioRepository, times(1)).existsById(id);
+    }
+
