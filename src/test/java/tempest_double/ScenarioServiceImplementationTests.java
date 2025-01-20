@@ -78,3 +78,16 @@ class ScenarioServiceImplementationTests {
         verify(scenarioRepository, times(1)).findByName(name);
     }
 
+    @Test
+    void testPostScenario() {
+        Scenario scenario = new Scenario();
+        when(scenarioRepository.save(scenario)).thenReturn(scenario);
+
+        ResponseEntity<Map<String, String>> response = scenarioService.postScenario(scenario);
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals("Success", response.getBody().get("message"));
+        assertEquals("200", response.getBody().get("status"));
+        verify(scenarioRepository, times(1)).save(scenario);
+    }
+
