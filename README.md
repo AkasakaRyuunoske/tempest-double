@@ -58,6 +58,7 @@ To run the application:
 - **Frontend**: HTML5, CSS3, JavaScript, Thymeleaf
 - **Database**: MySQL
 - **Build Tool**: Maven
+- **CI/CD tool**: <a href="https://app.circleci.com/home">CircleCI</a>
 
 ---
 
