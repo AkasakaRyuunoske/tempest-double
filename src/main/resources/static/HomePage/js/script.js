@@ -50,19 +50,43 @@ function getResponsiveZones(img) {
 
 function showPopup(zoneId) {
     const popup = document.querySelector('.popup');
-    const popupContent = document.querySelector('.popup-content');
     const title = document.getElementById("popup-title");
     const description = document.getElementById("popup-description");
 
     const zoneData = {
-        1: "hai cliccato sulla zona 1",
-        2: "Zona 2",
-        3: "Zona 3",
-        // Add other zones
+        1: { title: "Sicurezza in tempo reale", description: "Sorveglia ogni angolo della tua casa grazie alla " +
+                "possibilità di visionare le telecamere in tempo reale." },
+        2: { title: "Pianificazione intelligente", description: "Programma gli orari di accensione/spegnimento dei " +
+                "dispositivi. Sincronizza le attività con i ritmi quotidiani della casa." },
+        3: { title: "Controllo dell'illuminazione", description: "Regola l'illuminazione in base alle esigenze. " +
+                "Ottimizza il consumo energetico grazie all'illuminazione automatizzata basata su orari o rilevamento " +
+                "di presenza." },
+        4: { title: "Sicurezza degli accessi", description: "Controlla le serrature di porte e finestre da remoto. " +
+                "Abilita notifiche in tempo reale per ogni accesso registrato." },
+        5: { title: "Gestione della temperatura", description: "Configura il termostato per mantenere una temperatura " +
+                "ottimale. Riduci i consumi con programmazioni intelligenti e sensori ambientali." },
+        6: { title: "Gestione dei contenuti multimediali", description: "Gestisci i tuoi contenuti multimediali con un " +
+                "semplice tocco." },
+        7: { title: "Sistema di blocco", description: "Assicura la tua casa con un sistema di blocco elettronico di " +
+                "ultima generazione." },
+        8: { title: "Sensori ambientali", description: "Monitora qualità dell'aria, umidità e altri parametri. Integra " +
+                "i dati per automatizzare i sistemi di ventilazione o purificazione." },
+        9: { title: "Monitoraggio elettrodomestici", description: "Controlla lo stato e il consumo degli elettrodomestici. " +
+                "Pianifica l'uso per ottimizzare l'efficienza energetica." },
+        10: { title: "Controllo dei consumi elettrici", description: "Monitora il consumo dei dispositivi connessi. " +
+                "Disattiva le prese quando non in uso per ridurre gli sprechi." },
     };
 
-    title.textContent = `Esempio ${zoneId}`;
-    description.textContent = zoneData[zoneId] || "no info";
+    // Recupera dati per la zona selezionata
+    const data = zoneData[zoneId];
+
+    if (data) {
+        title.textContent = data.title;
+        description.textContent = data.description;
+    } else {
+        title.textContent = "Zona non definita";
+        description.textContent = "Nessuna informazione disponibile per questa zona.";
+    }
 
     popup.classList.add('show');
 }
