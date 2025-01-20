@@ -39,4 +39,16 @@ class ScenarioServiceImplementationTests {
         assertTrue(scenarios.isEmpty());
         verify(scenarioRepository, times(1)).findAll();
     }
+    @Test
+    void testGetScenario() {
+        int id = 1;
+        Scenario scenario = new Scenario();
+        when(scenarioRepository.findById(id)).thenReturn(java.util.Optional.of(scenario));
+
+        Scenario result = scenarioService.getScenario(id);
+
+        assertNotNull(result);
+        assertEquals(scenario, result);
+        verify(scenarioRepository, times(1)).findById(id);
+    }
 
