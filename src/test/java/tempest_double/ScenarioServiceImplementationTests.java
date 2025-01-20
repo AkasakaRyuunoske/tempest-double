@@ -91,3 +91,18 @@ class ScenarioServiceImplementationTests {
         verify(scenarioRepository, times(1)).save(scenario);
     }
 
+    @Test
+    void testDeleteScenario() {
+        int id = 1;
+        when(scenarioRepository.existsById(id)).thenReturn(true);
+        doNothing().when(scenarioRepository).deleteById(id);
+
+        ResponseEntity<Map<String, String>> response = scenarioService.deleteScenario(id);
+
+        assertEquals(200, response.getStatusCodeValue());
+        assertEquals("Success", response.getBody().get("message"));
+        assertEquals("200", response.getBody().get("status"));
+        verify(scenarioRepository, times(1)).existsById(id);
+        verify(scenarioRepository, times(1)).deleteById(id);
+    }
+
