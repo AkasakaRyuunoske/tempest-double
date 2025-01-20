@@ -77,7 +77,6 @@ function showPopup(zoneId) {
                 "Disattiva le prese quando non in uso per ridurre gli sprechi." },
     };
 
-    // Recupera dati per la zona selezionata
     const data = zoneData[zoneId];
 
     if (data) {
