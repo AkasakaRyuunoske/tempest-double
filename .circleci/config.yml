@@ -9,13 +9,21 @@ jobs:
           MYSQL_DATABASE: test
           MYSQL_USER: ghostmountain
           MYSQL_PASSWORD: 123
-      - image: selenium/standalone-chrome
+      - image: selenium/standalone-chrome  # Selenium container
         environment:
           SCREEN_WIDTH: 1920
           SCREEN_HEIGHT: 1080
           SCREEN_DEPTH: 24
     steps:
       - checkout
+      - run:
+          name: Wait for Selenium
+          command: |
+            echo "Waiting for Selenium to be ready..."
+            until curl -s http://selenium:4444/wd/hub/status | grep '"ready":true'; do
+              sleep 3
+            done
+            echo "Selenium is ready!"
       - run:
           name: Create .env file
           command: |
