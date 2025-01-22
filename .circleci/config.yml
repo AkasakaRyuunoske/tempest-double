@@ -21,7 +21,7 @@ jobs:
           name: Wait for Selenium
           command: |
             echo "Waiting for Selenium to be ready..."
-            until curl -s http://10.89.2.3:4444/wd/hub/status | grep '"ready":true'; do
+            until curl -s http://selenium:4444/wd/hub/status | grep '"ready":true'; do
               sleep 3
             done
             echo "Selenium is ready!"
