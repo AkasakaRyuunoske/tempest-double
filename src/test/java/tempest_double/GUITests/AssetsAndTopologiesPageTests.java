@@ -9,10 +9,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import org.openqa.selenium.remote.RemoteWebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
+import java.net.URL;
 import java.time.Duration;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,16 +24,21 @@ public class AssetsAndTopologiesPageTests {
 
     @BeforeEach
     void setUp() {
-        // Set up ChromeDriver in headless mode for CI
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless"); // Run in headless mode
-        options.addArguments("--disable-gpu");
-        options.addArguments("--window-size=1920,1080");
+        try {
+            // Set up ChromeOptions for Selenium Grid
+            ChromeOptions options = new ChromeOptions();
+            options.addArguments("--headless"); // Run in headless mode
+            options.addArguments("--disable-gpu");
+            options.addArguments("--window-size=1920,1080");
 
-        driver = new ChromeDriver(options);
+            // Connect to the Selenium Grid running on CircleCI
+            driver = new RemoteWebDriver(new URL("http://selenium:4444/wd/hub"), options);
 
-        // Launch the application (replace with the actual URL)
-        driver.get("http://localhost:8080/assets");
+            // Launch the application (replace with the actual URL)
+            driver.get("http://localhost:8080/assets");
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to set up WebDriver: " + e.getMessage(), e);
+        }
     }
 
     @AfterEach

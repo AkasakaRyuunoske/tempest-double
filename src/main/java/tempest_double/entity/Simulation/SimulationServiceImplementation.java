@@ -124,7 +124,23 @@ public class SimulationServiceImplementation implements SimulationService {
                     assetInfo.put("nominal_power", nominalPower);
                     response.put("Asset_" + i, assetInfo);
                 }
-//                case "accumulator" -> System.out.println("It's a Accumulator!");
+                case "accumulator" -> {
+                    double nominalVoltage = Double.parseDouble(assetFromDb.getConfiguration().get("nominal-voltage").toString());
+                    double capacity = Double.parseDouble(assetFromDb.getConfiguration().get("capacity").toString());
+                    double currentCharge = Double.parseDouble(assetFromDb.getConfiguration().get("current-charge").toString());
+                    assetToSimulate = new Accumulator(name, type, "Consumer", 0.85, nominalVoltage,
+                            50, 50,capacity, currentCharge);
+                    assets.add(assetToSimulate);
+                    assetInfo = new HashMap<>();
+                    assetInfo.put("name", name);
+                    assetInfo.put("type", type);
+                    assetInfo.put("role", "Consumer");
+                    assetInfo.put("nominal_voltage", nominalVoltage);
+                    assetInfo.put("min_consumption", nominalVoltage);
+                    assetInfo.put("capacity", nominalVoltage);
+                    response.put("Asset_" + i, assetInfo);
+                }
+
                 case "generic_consumer" -> {
                     nominalPower = Double.parseDouble(assetFromDb.getConfiguration().get("nominal-power").toString());
                     double tau = Double.parseDouble(assetFromDb.getConfiguration().get("tau").toString());
@@ -155,7 +171,7 @@ public class SimulationServiceImplementation implements SimulationService {
         double simulationResult;
         double totalEnergyProduced = 0.0;
         double totalEnergyConsumed = 0.0;
-
+        double totalEnergyCharged = 0.0;
         SimulationStatus simulationStatus = new SimulationStatus();
 
         // Loop Through Producers
@@ -169,7 +185,7 @@ public class SimulationServiceImplementation implements SimulationService {
                     simulationResult = asset.simulate(null); // doesn't require a input
                 }
 
-                default -> log.info("Not supported");
+                default -> log.info("Producer " + asset.getName() + " Not supported");
             }
             totalEnergyProduced += simulationResult;
             result.put(asset.getName(), simulationResult);
@@ -184,11 +200,16 @@ public class SimulationServiceImplementation implements SimulationService {
                 case "accumulator" -> {
                     asset.simulate(null); // doesn't require a input
 
-                    double amountCharged = ((Accumulator) asset).charge(totalEnergyProduced);
+                    ((Accumulator) asset).charge(totalEnergyProduced);
 
-                    totalEnergyProduced -= amountCharged;
-                    totalEnergyConsumed += amountCharged;
                     simulationResult = ((Accumulator) asset).getCurrentCharge();
+
+                    if (totalEnergyProduced > 0){
+                        totalEnergyProduced -= simulationResult;
+                        totalEnergyConsumed += simulationResult;
+                    }
+
+                    totalEnergyCharged += simulationResult;
 
                     result.put(asset.getName(), simulationResult);
                     assetResults.put(asset.getName(), simulationResult);
@@ -204,11 +225,12 @@ public class SimulationServiceImplementation implements SimulationService {
                     assetResults.put(asset.getName(), simulationResult);
                 }
 
-                default -> log.info("Not supported");
+                default -> log.info("Consumer " + asset.getName() + " Not supported");
             }
         }
 
         result.put("total_energy_consumed", totalEnergyConsumed);
+        result.put("total_energy_charged", totalEnergyCharged);
 
         environmentChanges.put("date", LocalDateTime.now().toString());
 

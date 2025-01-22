@@ -14,7 +14,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const popup = document.getElementById('popup');
     const popupTitle = document.getElementById('popup-title');
     const popupContent = document.getElementById('popup-content');
-    const confirmBtn = document.getElementById('confirm-btn');
+    let confirmBtn = document.getElementById('confirm-btn');
     const cancelBtn = document.getElementById('cancel-btn');
 
     const popupData = {
@@ -262,6 +262,11 @@ document.addEventListener('DOMContentLoaded', () => {
         popupTitle.innerText = data.title;
         popupContent.innerHTML = data.content;
 
+        // Replace confirm button to remove all previous listeners
+        const newConfirmBtn = confirmBtn.cloneNode(true);
+        confirmBtn.parentNode.replaceChild(newConfirmBtn, confirmBtn);
+        confirmBtn = newConfirmBtn; // Update reference to the new button
+
         if (type === "add") {
             const radioButtons = document.getElementsByName("role");
             updateSelectOptions("Producer"); // Initialize with default options
@@ -279,14 +284,14 @@ document.addEventListener('DOMContentLoaded', () => {
             confirmBtn.addEventListener("click", save_listener);
         }
 
-        if(type === "load"){
-            document.getElementById("search-button-load").addEventListener("click", check_if_scenario_exists)
+        if (type === "load") {
+            document.getElementById("search-button-load").addEventListener("click", check_if_scenario_exists);
             confirmBtn.addEventListener("click", load_listener);
             fetchScenarios();
         }
 
-        if(type === "delete"){
-            document.getElementById("search-button-load").addEventListener("click", check_if_scenario_exists)
+        if (type === "delete") {
+            document.getElementById("search-button-load").addEventListener("click", check_if_scenario_exists);
             confirmBtn.addEventListener("click", delete_listener);
             fetchScenarios();
         }
