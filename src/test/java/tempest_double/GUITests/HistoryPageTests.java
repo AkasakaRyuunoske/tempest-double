@@ -27,12 +27,8 @@ public class HistoryPageTests {
         try {
             // Set up ChromeOptions for Selenium Grid
             ChromeOptions options = new ChromeOptions();
-            options.addArguments("--headless"); // Run in headless mode
-            options.addArguments("--disable-gpu");
-            options.addArguments("--window-size=1920,1080");
 
-            // Connect to the Selenium Grid running on CircleCI
-            driver = new RemoteWebDriver(new URL("http://selenium:4444/wd/hub"), options);
+            driver = new ChromeDriver(options);
 
             // Launch the application (replace with the actual URL)
             driver.get("http://localhost:8080/history");
