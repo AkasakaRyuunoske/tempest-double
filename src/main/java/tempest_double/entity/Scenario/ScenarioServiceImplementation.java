@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 import tempest_double.entity.Simulation.Simulation;
 import tempest_double.entity.Simulation.SimulationRepository;
-import tempest_double.entity.SimulationStatus.SimulationStatus;
 import tempest_double.entity.SimulationStatus.SimulationStatusRepository;
 
 import java.util.HashMap;
@@ -18,7 +17,7 @@ import java.util.Map;
 
 @Service
 @Log4j2
-public class ScenarioServiceImplementation implements ScenarioService{
+public class ScenarioServiceImplementation implements ScenarioService {
     @Autowired
     private ScenarioRepository scenarioRepository;
 
@@ -33,6 +32,7 @@ public class ScenarioServiceImplementation implements ScenarioService{
     public List<Scenario> getScenarios() {
         return scenarioRepository.findAll();
     }
+
     @Override
     public Scenario getScenario(int id) {
         return scenarioRepository.findById(id).orElse(null);
@@ -65,7 +65,7 @@ public class ScenarioServiceImplementation implements ScenarioService{
     public ResponseEntity<Map<String, String>> deleteScenario(int id) {
         Map<String, String> response = new HashMap<>();
 
-        if (scenarioRepository.existsById(id)){
+        if (scenarioRepository.existsById(id)) {
             scenarioRepository.deleteById(id);
 
             response.put(message, "Success");
@@ -84,7 +84,7 @@ public class ScenarioServiceImplementation implements ScenarioService{
     @Override
     public ResponseEntity<Map<String, String>> updateScenario(int id, @RequestBody Scenario scenario) {
         Map<String, String> response = new HashMap<>();
-        if (!scenarioRepository.existsById(id)){
+        if (!scenarioRepository.existsById(id)) {
             response.put(message, "Error: Scenario with provided ID not found.");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
@@ -103,17 +103,24 @@ public class ScenarioServiceImplementation implements ScenarioService{
         Scenario scenario = scenarioRepository.findByName(name);
         Map<String, String> response = new HashMap<>();
 
-        if (scenario == null){
+        if (scenario == null) {
             response.put(message, "Scenario not found");
             return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
         }
         List<Simulation> simulations = simulationRepository.findAllByScenarioId(scenario.getId());
 
-        for(Simulation simulation : simulations){
+        if (simulations == null) {
+            scenarioRepository.deleteByName(name);
+
+            response.put(message, "Scenario deleted successfully");
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+
+        for (Simulation simulation : simulations) {
             simulationStatusRepository.deleteAllSimulationStatusBySimulationId(simulation.getId());
         }
 
-        for (Simulation simulation : simulations){
+        for (Simulation simulation : simulations) {
             simulationRepository.deleteById(simulation.getId());
         }
 
