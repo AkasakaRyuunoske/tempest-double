@@ -60,6 +60,3 @@ To run the application:
 - **Build Tool**: Maven
 - **CI/CD tool**: <a href="https://app.circleci.com/home">CircleCI</a>
 
----
-
-Feel free to suggest changes or request enhancements!
