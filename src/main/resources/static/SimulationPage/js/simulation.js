@@ -1,36 +1,23 @@
 import {showPopup} from "./pop_up.js";
 
 let updateInterval = null;
-let scenario_name = null;
 let assetsProducers = [];
 const startButton = document.querySelector(".start-button button");
 let assetColors = {};
-
-const maxCapacities = {
-    satisfaction: 100,
-    production: 200,
-    accumulator: 150,
-    washingMachine: 5,
-    refrigerator: 2,
-    airConditioner: 3,
-    solarPanel: 10,
-    windTurbine: 15,
-    accumulatorBar: 20
-};
 
 let productionData = [];
 let xValue = 0;
 
 const hexToRgb = hex => {
     const bigint = parseInt(hex.replace(/^#/, ''), 16);
-    return { r: (bigint >> 16) & 255, g: (bigint >> 8) & 255, b: bigint & 255 };
+    return {r: (bigint >> 16) & 255, g: (bigint >> 8) & 255, b: bigint & 255};
 };
 
 const rgbToHex = (r, g, b) =>
     `#${[r, g, b].map(c => Math.min(255, Math.max(0, Math.round(c))).toString(16).padStart(2, '0')).join('')}`;
 
 const generateColorNearBase = (baseColor, range = 40) => {
-    const { r, g, b } = hexToRgb(baseColor);
+    const {r, g, b} = hexToRgb(baseColor);
 
     const rShift = Math.random() * range * 2 - range;
     const gShift = Math.random() * range * 2 - range;
@@ -43,21 +30,17 @@ const generateColorNearBase = (baseColor, range = 40) => {
     return rgbToHex(newR, newG, newB);
 };
 
-const washingMachineColor = generateColorNearBase("#FF8A8A");
-const refrigeratorColor = generateColorNearBase("#FF8A8A");
-const airConditionerColor = generateColorNearBase("#FF8A8A");
-
 const consumptionGraph = new CanvasJS.Chart("consumptionGraph", {
-    title: { text: "Consumption", fontSize: 25, fontFamily: "Verdana" },
-    axisX: { gridThickness: 1, gridDashType: "solid" },
-    axisY: { title: "W", includeZero: false, gridThickness: 1, gridDashType: "solid" },
+    title: {text: "Consumption", fontSize: 25, fontFamily: "Verdana"},
+    axisX: {gridThickness: 1, gridDashType: "solid"},
+    axisY: {title: "W", includeZero: false, gridThickness: 1, gridDashType: "solid"},
     data: []
 });
 
 const productionGraph = new CanvasJS.Chart("productionGraph", {
-    title: { text: "Production", fontSize: 25, fontFamily: "Verdana" },
-    axisX: { gridThickness: 1, gridDashType: "solid" },
-    axisY: { title: "W", includeZero: false, gridThickness: 1, gridDashType: "solid" },
+    title: {text: "Production", fontSize: 25, fontFamily: "Verdana"},
+    axisX: {gridThickness: 1, gridDashType: "solid"},
+    axisY: {title: "W", includeZero: false, gridThickness: 1, gridDashType: "solid"},
     data: [
         {
             type: "line",
@@ -68,12 +51,6 @@ const productionGraph = new CanvasJS.Chart("productionGraph", {
         }
     ]
 });
-
-function setProgressBarColors() {
-    document.getElementById("washingMachineBar").style.backgroundColor = washingMachineColor;
-    document.getElementById("refrigeratorBar").style.backgroundColor = refrigeratorColor;
-    document.getElementById("airConditionerBar").style.backgroundColor = airConditionerColor;
-}
 
 function updateProgressBar(id, value, maxCapacity, valueDisplayId) {
     const bar = document.getElementById(id);
@@ -86,11 +63,6 @@ function updateProgressBar(id, value, maxCapacity, valueDisplayId) {
     if (valueDisplay) {
         valueDisplay.textContent = value.toFixed(2) + " W";
     }
-}
-
-function updateWValues(currentId, maxId, currentValue, maxValue) {
-    document.getElementById(currentId).textContent = currentValue.toFixed(2);
-    document.getElementById(maxId).textContent = maxValue.toFixed(2);
 }
 
 function updateDashboard(data) {
@@ -124,7 +96,14 @@ function updateDashboard(data) {
                     return; // skip
                 }
 
-                if (assetsProducers.includes(name)){
+                if (name === "total_energy_charged") {
+                    document.getElementById("current-charge").innerText = value.toFixed(2);
+                    let max_value = document.getElementById("max-charge").innerText
+                    updateProgressBar(`accumulatorChargeBar`, value, Number(max_value), `${name}-value-display`);
+                    return; // skip
+                }
+
+                if (assetsProducers.includes(name)) {
                     // Handle dynamic devices
                     let deviceIndex = productionGraph.options.data.findIndex(
                         (line) => line.name === name
@@ -143,7 +122,7 @@ function updateDashboard(data) {
                             color: assetColors[name],
                             name: name,
                             showInLegend: true,
-                            dataPoints: [{ x: xValue, y: value }],
+                            dataPoints: [{x: xValue, y: value}],
                         });
                     }
                 } else {
@@ -165,13 +144,12 @@ function updateDashboard(data) {
                             color: assetColors[name],
                             name: name,
                             showInLegend: true,
-                            dataPoints: [{ x: xValue, y: value }],
+                            dataPoints: [{x: xValue, y: value}],
                         });
                     }
                 }
 
                 let max_value = document.getElementById(`${name}-max-value`).innerText
-                console.log("Max value for " + name + " is => " + max_value)
                 updateProgressBar(`${name}-progress-bar`, value, Number(max_value), `${name}-value-display`);
             });
         })
@@ -189,9 +167,6 @@ function updateDashboard(data) {
                 updateInterval = null;
             }
         });
-    function getRandomColor() {
-        return `#${Math.floor(Math.random() * 16777215).toString(16)}`;
-    }
 
     consumptionGraph.render();
     productionGraph.render();
@@ -199,13 +174,13 @@ function updateDashboard(data) {
     xValue++;
 }
 
-export function startSimulation(scenario_name){
+export function startSimulation(scenario_name) {
     return fetch("/api/v1/simulation/start", {
-    method: "POST",
-    headers: {
-        "Content-Type": "application/json"
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
         },
-    body: JSON.stringify({name: scenario_name})
+        body: JSON.stringify({name: scenario_name})
     }).then((response) => {
         if (!response.ok) {
             throw new Error(`HTTP error! status: ${response.status}`);
@@ -247,22 +222,30 @@ export function toggleStartStop(scenario_name) {
 
 let total_satisfaction = 0;
 let total_production = 0;
+let total_charge = 0;
 
-function getAssetsByRole(data, role){
+function getAssetsByRole(data, role) {
     const assets = [];
     // Iterate over the key-value pairs of the JSON object
     Object.entries(data).forEach(([key, value]) => {
         if (value.role === role) {
-            assets.push({ id: key, ...value }); // Add key as 'id' along with asset properties
-            if(role === "Consumer") total_satisfaction += value.nominal_power
-            else total_production += value.nominal_power
+            assets.push({id: key, ...value}); // Add key as 'id' along with asset properties
+            if (role === "Consumer") {
+                if (value.type === "accumulator") {
+                    total_charge += value.capacity
+                } else {
+                    total_satisfaction += value.nominal_power
+                }
+            } else {
+                total_production += value.nominal_power
+            }
         }
     });
 
     return assets;
 }
 
-function generateConsumers(data){
+function generateConsumers(data) {
     const role = "Consumer";
 
     const assets = getAssetsByRole(data, role);
@@ -276,7 +259,7 @@ function generateConsumers(data){
         // Save the color for reuse
         assetColors[asset.name] = color;
 
-        const assetHtml = `
+        let assetHtml = `
         <div class="consumption-unit">
             <div class="consumption-unit-info">
                 <img src="/SimulationPage/img/washingMachine.svg" alt="Washing Machine">
@@ -290,14 +273,37 @@ function generateConsumers(data){
                 <span id="${asset.name}-max-value">${asset.nominal_power}</span> W
             </div>
         </div>`
-            consumersContainer.innerHTML += assetHtml;
-        });
+
+        if (asset.type === "accumulator") {
+            assetHtml = `
+            <div class="consumption-unit">
+                <div class="consumption-unit-info">
+                    <img src="/SimulationPage/img/accumulator.svg" alt="Accumulator">
+                        <h3>${asset.name}</h3>
+                </div>
+                <div class="progress-bar-container">
+                    <div class="progress-bar" style="background-color: ${color}" id="${asset.name}-progress-bar">0 MW</div>
+                </div>
+                <div>
+                    <span id="${asset.name}-value-display" class="value-display">0 W / </span>
+                    <span id="${asset.name}-max-value">${asset.capacity}</span> W
+                </div>
+            </div>`
+        }
+
+        consumersContainer.innerHTML += assetHtml;
+
+    });
 
     let max_satisfaction_container = document.getElementById("max-satisfaction")
     max_satisfaction_container.innerText = total_satisfaction;
+
+    let max_charge_container = document.getElementById("max-charge")
+    max_charge_container.innerText = total_charge;
+
 }
 
-function generateProducers(data){
+function generateProducers(data) {
     const role = "Producer"
     const assets = getAssetsByRole(data, role);
 

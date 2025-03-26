@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import tempest_double.entity.Scenario.Scenario;
 import tempest_double.entity.Scenario.ScenarioRepository;
 import tempest_double.entity.Scenario.ScenarioServiceImplementation;
+import tempest_double.entity.Simulation.SimulationRepository;
+import tempest_double.entity.SimulationStatus.SimulationStatusRepository;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -21,6 +23,12 @@ class ScenarioServiceImplementationTests {
 
     @Mock
     private ScenarioRepository scenarioRepository;
+
+    @Mock
+    private SimulationRepository simulationRepository;
+
+    @Mock
+    private SimulationStatusRepository simulationStatusRepository;
 
     @InjectMocks
     private ScenarioServiceImplementation scenarioService;
@@ -150,6 +158,10 @@ class ScenarioServiceImplementationTests {
     void testDeleteScenarioByName() {
         String name = "TestScenario";
         when(scenarioRepository.deleteByName(name)).thenReturn(1);
+        Scenario scenario = new Scenario();
+        scenario.setId(0);
+        when(scenarioRepository.findByName(name)).thenReturn(scenario);
+        when(simulationRepository.findAllByScenarioId(scenario.getId())).thenReturn(null);
 
         ResponseEntity<Map<String, String>> response = scenarioService.deleteScenarioByName(name);
 
@@ -167,6 +179,6 @@ class ScenarioServiceImplementationTests {
 
         assertEquals(404, response.getStatusCodeValue());
         assertEquals("Scenario not found", response.getBody().get("message"));
-        verify(scenarioRepository, times(1)).deleteByName(name);
+        verify(scenarioRepository, times(0)).deleteByName(name);
     }
 }

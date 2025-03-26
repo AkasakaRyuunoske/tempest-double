@@ -99,11 +99,22 @@
 			<scope>runtime</scope>
 		</dependency>
 
-		<!-- Byte Buddy (if needed for instrumentation) -->
 		<dependency>
 			<groupId>net.bytebuddy</groupId>
 			<artifactId>byte-buddy</artifactId>
 			<version>1.14.19</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.seleniumhq.selenium</groupId>
+			<artifactId>selenium-java</artifactId>
+			<version>4.7.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>io.github.bonigarcia</groupId>
+			<artifactId>webdrivermanager</artifactId>
+			<version>5.3.2</version> <!-- Use the latest version -->
 		</dependency>
 
 	</dependencies>
